@@ -1,6 +1,6 @@
 # @fmtk/cfntypes
 
-Typescript types AWS CloudFormation types.
+Typescript types for AWS CloudFormation types.
 
 ## Resource Types
 
