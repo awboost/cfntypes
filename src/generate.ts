@@ -7,7 +7,7 @@ import { convertName } from './convertName';
 import { TypeKind } from './types/TypeKind';
 import { SimpleTypeCommonDefinition } from './types/normaliseSimpleType';
 import { TypeSource } from './types/TypeSource';
-import { getNamesace } from './types/getNamespace';
+import { getNamespace } from './types/getNamespace';
 
 generate(process.argv[2]).then(
   () => {
@@ -34,29 +34,40 @@ function convertTypes(specs: TypeDefinition[]): string {
   return [
     specs.map(convertDefinition).join('\n\n'),
     makeResourceTypeMap(specs),
-    makeAttribtueTypeMap(specs),
+    makeAttributeTypeMap(specs),
   ].join('\n\n');
 }
 
 function makeResourceTypeMap(specs: TypeDefinition[]): string {
+  const resources = specs.filter(x => x.source === TypeSource.ResourceType);
+
   return [
-    `export interface ResourceTypes {`,
-    ...specs
-      .filter(x => x.source === TypeSource.ResourceType)
-      .map(x => `  "${x.name}": ${convertName(x.name)};`),
+    `export enum ResourceType {`,
+    ...resources.map(x => `  ${convertName(x.name)} = "${x.name}",`),
     `}`,
     ``,
-    `export type ResourceType = keyof ResourceTypes;`,
+    `export interface ResourceTypes {`,
+    ...resources.map(
+      x => `  [ResourceType.${convertName(x.name)}]: ${convertName(x.name)};`,
+    ),
+    `}`,
   ].join('\n');
 }
 
-function makeAttribtueTypeMap(specs: TypeDefinition[]): string {
+function makeAttributeTypeMap(specs: TypeDefinition[]): string {
   return [
     `export interface AttributeTypes {`,
     ...specs
       .filter(x => x.source === TypeSource.AttributeType)
-      .map(x => `  "${getNamesace(x.name)}": ${convertName(x.name)};`),
+      .map(
+        x =>
+          `  [ResourceType.${convertName(getNamespace(x.name))}]: ` +
+          convertName(x.name) +
+          `;`,
+      ),
     `}`,
+    ``,
+    `export type AttributeTypeFor<T extends ResourceType> = T extends keyof AttributeTypes ? AttributeTypes[T] : never;`,
   ].join('\n');
 }
 

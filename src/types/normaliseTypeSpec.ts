@@ -5,7 +5,7 @@ import {
   normaliseSimpleType,
   SimpleTypeCommonSpecification,
 } from './normaliseSimpleType';
-import { getNamesace } from './getNamespace';
+import { getNamespace } from './getNamespace';
 import { NameResolver } from './NameResolver';
 
 export interface ComplexTypeCommonSpecification {
@@ -26,7 +26,7 @@ export function normaliseTypeSpec(
   source: TypeSource,
   resolve: NameResolver,
 ): TypeDefinition {
-  const ns = getNamesace(name);
+  const ns = getNamespace(name);
 
   if (spec.Properties) {
     return {

@@ -9,11 +9,8 @@ The resource types are all defined individually as interfaces with predictable n
 ```typescript
 import { ResourceTypes, ResourceType } from '@fmtk/cfntypes';
 
-type ApiGatewayProps = ResourceTypes['AWS::ApiGateway::RestApi'];
+type ApiGatewayProps = ResourceTypes[ResourceType.ApiGatewayRestApi];
 // also exported as ApiGatewayRestApi
-
-// the ResourceType type is defined as keyof ResourceTypes
-const key: ResourceType = 'AWS::ApiGateway::RestApi';
 ```
 
 ## Attribute Types
@@ -21,8 +18,12 @@ const key: ResourceType = 'AWS::ApiGateway::RestApi';
 The attribute types are all defined individually as interfaces with predictable names, and also as properties of the `AttributeTypes` interface keyed by the CloudFormation resource type. Note that not all resource types have attributes.
 
 ```typescript
-import { AttributeTypes } from '@fmtk/cfntypes';
+import { AttributeTypes, AttributeTypeFor } from '@fmtk/cfntypes';
 
-type ApiGatewayAttribs = AttributeTypes['AWS::ApiGateway::RestApi'];
+type ApiGatewayAttribs = AttributeTypes[ResourceType.ApiGatewayRestApi];
 // also exported as ApiGatewayRestApiAttributes
+
+// the AttributeTypeFor helper returns `never` for resources
+// with no attributes defined
+type NeverAttribs = AttributeTypeFor<ResourceType.ApiGatewayAccount>;
 ```

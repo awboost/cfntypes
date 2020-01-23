@@ -1,8 +1,9 @@
 {
   "name": "@fmtk/cfntypes",
   "version": "0.1.1",
-  "main": "",
-  "types": "lib/index.d.ts",
+  "main": "lib/bundle.js",
+  "module": "lib/bundle.esm.js",
+  "types": "lib/index.generated.d.ts",
   "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
   "repository": "https://github.com/futurematik/cfntypes",
   "license": "MIT",
@@ -14,18 +15,23 @@
     "lib/"
   ],
   "scripts": {
-    "build": "yarn clean && yarn generate",
+    "build": "yarn clean && yarn generate && yarn compile",
     "bumpfeat": "npm version minor && npm publish",
     "bumpfix": "npm version patch && npm publish",
     "bumpmajor": "npm version major && npm publish",
     "clean": "rm -rf lib/ dist/",
-    "generate": "node -r ts-node/register src/generate.ts lib/index.d.ts",
+    "compile": "rollup -c",
+    "generate": "node -r ts-node/register src/generate.ts src/index.generated.ts",
     "lint": "eslint src/ --ext=ts,tsx",
     "postversion": "git push --follow-tags",
     "prepare": "yarn build",
     "preversion": "yarn build"
   },
   "devDependencies": {
+    "@fmtk/cfnspec": "^0.1.1",
+    "@fmtk/rollup-plugin-ts": "^0.3.2",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
     "@types/jest": "^24.0.25",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
@@ -35,6 +41,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
+    "rollup": "^1.29.1",
     "ts-jest": "^24.3.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
