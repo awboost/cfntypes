@@ -2,6 +2,16 @@
 
 Typescript types for AWS CloudFormation types.
 
+## Specification Version
+
+The specification version is available via the `ResourceSpecificationVersion` export and via `awsResourceSpecificationVersion` in `package.json`.
+
+```typescript
+import { ResourceSpecificationVersion } from '@fmtk/cfntypes';
+
+console.log(`using version ${ResourceSpecificationVersion}`);
+```
+
 ## Resource Types
 
 The resource types are all defined individually as interfaces with predictable names, and also as properties of the `ResourceTypes` interface keyed by the CloudFormation resource type.

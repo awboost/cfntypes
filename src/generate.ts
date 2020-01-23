@@ -9,7 +9,7 @@ import { SimpleTypeCommonDefinition } from './types/normaliseSimpleType';
 import { TypeSource } from './types/TypeSource';
 import { getNamespace } from './types/getNamespace';
 
-generate(process.argv[2]).then(
+generate().then(
   () => {
     process.exit(0);
   },
@@ -19,15 +19,26 @@ generate(process.argv[2]).then(
   },
 );
 
-export async function generate(outputFileName: string): Promise<void> {
+export async function generate(): Promise<void> {
   const spec = await getLatestSpec();
   const norm = normaliseSpec(spec);
-  const output = convertTypes(norm);
 
-  const outputPath = path.resolve(outputFileName);
+  const version = spec.ResourceSpecificationVersion;
+
+  const output =
+    `export const ResourceSpecificationVersion = "${version}";\n\n` +
+    convertTypes(norm);
+
+  const outputPath = path.resolve(__dirname, 'index.generated.ts');
   const outputDir = path.dirname(outputPath);
+
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputPath, output, 'utf8');
+
+  const pkgPath = path.resolve(__dirname, '../package.json');
+  const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8'));
+  pkg.awsResourceSpecificationVersion = spec.ResourceSpecificationVersion;
+  await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
 function convertTypes(specs: TypeDefinition[]): string {
