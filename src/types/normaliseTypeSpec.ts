@@ -34,7 +34,7 @@ export function normaliseTypeSpec(
       name,
       properties: Object.entries(spec.Properties).map(([name, prop]) => ({
         ...normaliseSimpleType(name, prop, resolve, ns),
-        optional: !prop.Required,
+        optional: prop.Required === false,
       })),
       source,
       typeKind: 'object',
