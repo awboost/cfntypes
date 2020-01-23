@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "declarationMap": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -10,6 +9,7 @@
     "lib": ["es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noEmit": true,
     "noErrorTruncation": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
