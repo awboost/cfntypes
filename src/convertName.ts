@@ -1,3 +1,3 @@
-export function convertName(name: string): string {
-  return name.replace(/^AWS|::|\./g, '');
+export function convertName(name: string, namespace?: string): string {
+  return ((namespace || '') + name).replace(/^AWS|::|\./g, '');
 }

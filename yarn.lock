@@ -138,10 +138,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@fmtk/cfnspec@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@fmtk/cfnspec/-/cfnspec-0.1.1.tgz#c19b7c4e48d8517d45df4d15cb2056ed609354da"
-  integrity sha512-0tpyA/aYGJkxpFnECWJLIrDcf5cRJYIgxzQSkiJXHee3UwDP0hljx/fFQHoJJqojHATsshe0at8eQocxby1oCA==
+"@fmtk/cfnspec@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@fmtk/cfnspec/-/cfnspec-0.1.4.tgz#080e1001eaa01a56e0bf4a8c117a352b39f1965b"
+  integrity sha512-NYIh01VK0pt7cS8+DXkiKpQTSh4vUe7O23QjPkQ1nUtR6jMnZIvw5IYLOays7yiEihFNyHcKHPONTbJWKkDrqA==
   dependencies:
     "@fmtk/validation" "^3.5.2"
 

@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "main": "lib/bundle.js",
   "module": "lib/bundle.esm.js",
-  "types": "lib/index.generated.d.ts",
+  "types": "lib/index.d.ts",
   "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
   "repository": "https://github.com/futurematik/cfntypes",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "preversion": "yarn build"
   },
   "devDependencies": {
-    "@fmtk/cfnspec": "^0.1.1",
+    "@fmtk/cfnspec": "^0.1.4",
     "@fmtk/rollup-plugin-ts": "^0.3.2",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
@@ -46,5 +46,5 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
   },
-  "awsResourceSpecificationVersion": "10.3.0"
+  "awsResourceSpecificationVersion": "10.4.0"
 }

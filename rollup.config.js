@@ -4,17 +4,17 @@ import commonjs from '@rollup/plugin-commonjs';
 
 export default [
   {
-    input: './src/index.generated.ts',
+    input: './src/index.ts',
     output: [
       {
         file: 'lib/bundle.js',
         format: 'cjs',
-        sourcemap: true,
+        sourcemap: false,
       },
       {
         file: 'lib/bundle.esm.js',
         format: 'esm',
-        sourcemap: true,
+        sourcemap: false,
       },
     ],
 

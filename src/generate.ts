@@ -1,13 +1,20 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { getLatestSpec } from '@fmtk/cfnspec';
-import { normaliseSpec } from './types/normaliseSpec';
-import { TypeDefinition, ComplexTypeDefinition } from './types/TypeDefinition';
+import {
+  getLatestSpec,
+  normaliseSpec,
+  TypeDefinition,
+  TypeSource,
+  TypeDefinitionKind,
+  ObjectTypeDefinition,
+  PropertyDefinition,
+  DataTypeRef,
+  DataType,
+  DataTypeKind,
+  StringMap,
+} from '@fmtk/cfnspec';
 import { convertName } from './convertName';
-import { TypeKind } from './types/TypeKind';
-import { SimpleTypeCommonDefinition } from './types/normaliseSimpleType';
-import { TypeSource } from './types/TypeSource';
-import { getNamespace } from './types/getNamespace';
+import { primitive } from './primitive';
 
 generate().then(
   () => {
@@ -29,7 +36,7 @@ export async function generate(): Promise<void> {
     `export const ResourceSpecificationVersion = "${version}";\n\n` +
     convertTypes(norm);
 
-  const outputPath = path.resolve(__dirname, 'index.generated.ts');
+  const outputPath = path.resolve(__dirname, 'interfaces.generated.ts');
   const outputDir = path.dirname(outputPath);
 
   await fs.mkdir(outputDir, { recursive: true });
@@ -46,6 +53,7 @@ function convertTypes(specs: TypeDefinition[]): string {
     specs.map(convertDefinition).join('\n\n'),
     makeResourceTypeMap(specs),
     makeAttributeTypeMap(specs),
+    makeAttributeFieldList(specs),
   ].join('\n\n');
 }
 
@@ -59,7 +67,8 @@ function makeResourceTypeMap(specs: TypeDefinition[]): string {
     ``,
     `export interface ResourceTypes {`,
     ...resources.map(
-      x => `  [ResourceType.${convertName(x.name)}]: ${convertName(x.name)};`,
+      x =>
+        `  [ResourceType.${convertName(x.name)}]: ${convertName(x.name)}Props;`,
     ),
     `}`,
   ].join('\n');
@@ -70,43 +79,94 @@ function makeAttributeTypeMap(specs: TypeDefinition[]): string {
     `export interface AttributeTypes {`,
     ...specs
       .filter(x => x.source === TypeSource.AttributeType)
-      .map(
-        x =>
-          `  [ResourceType.${convertName(getNamespace(x.name))}]: ` +
-          convertName(x.name) +
-          `;`,
-      ),
+      .map(x => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const resource = convertName(x.namespace!);
+        return `  [ResourceType.${resource}]: ${resource}Attributes`;
+      }),
     `}`,
     ``,
     `export type AttributeTypeFor<T extends ResourceType> = T extends keyof AttributeTypes ? AttributeTypes[T] : never;`,
   ].join('\n');
 }
 
-function convertDefinition(def: TypeDefinition): string {
-  if (def.typeKind === 'object') {
-    return convertComplexDef(def);
-  }
-  return [
-    generateJsDoc(def),
-    `export type ${convertName(def.name)} = ${getSimpleTypeName(def)};`,
-  ].join('\n');
-}
+function makeAttributeFieldList(specs: TypeDefinition[]): string {
+  const attributeFields = specs
+    .filter(x => x.source === TypeSource.AttributeType)
+    .reduce(
+      (a, x) => ({
+        ...a,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        [x.namespace!]: (x as ObjectTypeDefinition).properties.map(
+          p => `"${p.name}"`,
+        ),
+      }),
+      {} as StringMap<string[]>,
+    );
 
-function convertComplexDef(def: ComplexTypeDefinition): string {
   return [
-    generateJsDoc(def),
-    `export interface ${convertName(def.name)} {`,
-    ...def.properties.map(
-      x => `  ${x.name}${x.optional ? '?' : ''}: ${getSimpleTypeName(x)};`,
-    ),
+    `export type AttributesFor<T extends ResourceType> = T extends keyof AttributeTypes ? keyof AttributeTypes[T] : never;`,
+    ``,
+    `export type ResourceAttributeMap = {`,
+    `  [K in ResourceType]: (AttributesFor<K>)[]`,
+    `};`,
+    ``,
+    `export const ResourceAttributes: ResourceAttributeMap = {`,
+    ...specs
+      .filter(x => x.source === TypeSource.ResourceType)
+      .map(x => {
+        const fields = attributeFields[x.name] || [];
+        const resource = convertName(x.name);
+        return `  [ResourceType.${resource}]: [${fields.join(', ')}],`;
+      }),
     `}`,
   ].join('\n');
 }
 
+function convertDefinition(def: TypeDefinition): string {
+  if (def.kind === TypeDefinitionKind.Object) {
+    return convertObjectDef(def);
+  }
+
+  const name = convertName(def.name, def.namespace);
+  let target: string;
+
+  if (def.kind === TypeDefinitionKind.Empty) {
+    target = 'any';
+  } else {
+    target = getDataTypeName(def.type);
+  }
+  return [generateJsDoc(def), `export type ${name} = ${target};`].join('\n');
+}
+
+function convertObjectDef(def: ObjectTypeDefinition): string {
+  const name = convertName(def.name, def.namespace);
+  const suffix = def.source === TypeSource.ResourceType ? 'Props' : '';
+
+  return [
+    generateJsDoc(def),
+    `export interface ${name}${suffix} {`,
+    ...def.properties.map(convertPropertyDef),
+    `}`,
+  ].join('\n');
+}
+
+function convertPropertyDef(def: PropertyDefinition): string {
+  const flag = def.required === false ? '?' : '';
+  const type = getDataTypeName(def.type);
+  return `  ${quoteName(def.name)}${flag}: ${type};`;
+}
+
 function generateJsDoc(def: TypeDefinition): string {
+  const name =
+    def.source === TypeSource.AttributeType
+      ? def.namespace + ' Attributes'
+      : def.namespace
+      ? `${def.namespace}.${def.name}`
+      : def.name;
   return [
     `/**`,
-    ` * Type definition for ${def.name}.`,
+    ` * Type definition for ${name}.`,
     def.documentation && ` * @see ${def.documentation}`,
     ` */`,
   ]
@@ -114,18 +174,29 @@ function generateJsDoc(def: TypeDefinition): string {
     .join('\n');
 }
 
-function getSimpleTypeName(def: SimpleTypeCommonDefinition): string {
-  const typeName = def.typePrimitive ? def.typeName : convertName(def.typeName);
-
-  switch (def.typeKind) {
-    case TypeKind.Scalar:
-      return typeName;
-    case TypeKind.List:
-      return `${typeName}[]`;
-    case TypeKind.Map:
-      return `{ [key: string]: ${typeName} }`;
-
-    default:
-      throw new Error(`unknown type kind`);
+function getTypeRefName(def: DataTypeRef): string {
+  if (def.isPrimitive) {
+    return primitive(def.name);
   }
+  return convertName(def.name, def.namespace);
+}
+
+function getDataTypeName(def: DataType): string {
+  const type = getTypeRefName(def.type);
+
+  switch (def.kind) {
+    case DataTypeKind.List:
+      return type + '[]';
+    case DataTypeKind.Map:
+      return `{ [name: string]: ${type}; }`;
+    default:
+      return type;
+  }
+}
+
+function quoteName(name: string): string {
+  if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
+    return `"${name}"`;
+  }
+  return name;
 }
