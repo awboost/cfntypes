@@ -15,15 +15,16 @@ export function convertDefinition(
   debug(`convertDefinition ${name} (resource ${resource})`);
 
   if (def.Properties) {
-    return convertObjectDef(name, def, resolve, resource);
+    return convertObjectDef(name, def, resolve, resource).output;
   }
 
   const target = getDataTypeName(def, resolve, resource);
   const typeName = convertName(name);
   debug(`convertDefinition ${name} = ${typeName}`);
 
-  return [
-    generateJsDoc(name, def),
-    `export type ${typeName} = ${target};`,
-  ].join('\n');
+  let output = generateJsDoc(name, def);
+  output += '\n';
+  output += `export type ${typeName} = ${target};`;
+
+  return output;
 }

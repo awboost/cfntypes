@@ -2,7 +2,7 @@
 
 Typescript types for AWS CloudFormation types.
 
-## Specification Version
+## Specification Version
 
 The specification version is available via the `ResourceSpecificationVersion` export and via `awsResourceSpecificationVersion` in `package.json`.
 

@@ -1,6 +1,7 @@
 import { CloudFormationSpec, PrimitiveType } from '@fmtk/cfnspec';
 import { debug } from './debug';
 import { primitive } from './primitive';
+import { SpecError } from './SpecError';
 
 export type NameResolver = (
   name: string,
@@ -27,10 +28,13 @@ export function resolver(spec: CloudFormationSpec): NameResolver {
       // some resources have this set in Type/ItemType by mistake
       return primitive(PrimitiveType.Json);
     }
-    throw new Error(
-      `can't find name '${name}' ${
+    throw new SpecError(
+      `resolver: can't find name '${name}' ${
         namespace ? `in namespace '${namespace}'` : ''
       }`,
+      {
+        resource: namespace,
+      },
     );
   };
 }

@@ -10,3 +10,4 @@ tsconfig.build.json
 .DS_Store
 cdk.out/
 .aws-sam/
+spec.json

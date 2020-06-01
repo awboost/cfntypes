@@ -45,14 +45,11 @@ function getTypeRefName(
     `convertPropertyDef type=${type}, primitiveType=${primitiveType} (ns ${namespace})`,
   );
 
-  if (type && primitiveType) {
-    throw new Error(`either type or primitiveType should be specified`);
-  }
   if (type) {
     return convertName(resolve(type, namespace));
-  } else if (primitiveType) {
-    return primitive(primitiveType);
-  } else {
-    return 'any';
   }
+  if (primitiveType) {
+    return primitive(primitiveType);
+  }
+  return 'any';
 }

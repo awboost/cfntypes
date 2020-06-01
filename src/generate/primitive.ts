@@ -1,4 +1,5 @@
 import { PrimitiveType } from '@fmtk/cfnspec';
+import { SpecError } from './SpecError';
 
 export function primitive(type: PrimitiveType): string {
   switch (type) {
@@ -15,6 +16,6 @@ export function primitive(type: PrimitiveType): string {
       return 'string';
 
     default:
-      throw new Error(`unknown primitive type: '${type}'`);
+      throw new SpecError(`unknown primitive type: '${type}'`);
   }
 }
