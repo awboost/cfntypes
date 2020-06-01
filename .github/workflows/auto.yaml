@@ -62,7 +62,7 @@ jobs:
           git config user.name "Github Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git add package.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update spec"; git push origin master)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "bump version"; git push origin master)
 
       - name: NPM publish
         if: github.ref == 'refs/heads/master'
