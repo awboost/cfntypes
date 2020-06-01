@@ -54,7 +54,7 @@ jobs:
         run: yarn build
 
       - name: Git Commit
-        if: github.ref == 'refs/head/master'
+        if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
@@ -65,7 +65,7 @@ jobs:
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update spec"; git push origin master)
 
       - name: NPM publish
-        if: github.ref == 'refs/head/master'
+        if: github.ref == 'refs/heads/master'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish
