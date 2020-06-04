@@ -1,9 +1,7 @@
 {
   "name": "@fmtk/cfntypes",
   "version": "0.3.3",
-  "main": "lib/bundle.js",
-  "module": "lib/bundle.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/index.js",
   "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
   "repository": "https://github.com/futurematik/cfntypes",
   "license": "MIT",
