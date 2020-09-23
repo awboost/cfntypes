@@ -11,3 +11,4 @@ tsconfig.build.json
 cdk.out/
 .aws-sam/
 spec.json
+coverage/
