@@ -1,6 +1,6 @@
 {
   "name": "@fmtk/cfntypes",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "lib/index.js",
   "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
   "repository": "https://github.com/futurematik/cfntypes",
@@ -41,5 +41,5 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
-  "awsResourceSpecificationVersion": "20.2.0"
+  "awsResourceSpecificationVersion": "20.3.0"
 }
