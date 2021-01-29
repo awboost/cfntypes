@@ -135,13 +135,15 @@ export function convertTypes(spec: CloudFormationSpec): string {
     output += typeStr + '\n\n';
   }
 
-  //// ResourceType enum
-  output += `export enum ResourceType {\n`;
+  //// ResourceType const
+  output += `export const ResourceType = {\n`;
 
   for (const [name, convertedName] of resourceNameMap) {
-    output += `  ${convertedName} = "${name}",\n`;
+    output += `  ${convertedName}: "${name}",\n`;
   }
-  output += `}\n\n`;
+  output += `} as const\n\n`;
+
+  output += `export type ResourceType = typeof ResourceType[keyof typeof ResourceType];\n\n`;
 
   //// ResourceTypes interface
   output += `export interface ResourceTypes {\n`;
