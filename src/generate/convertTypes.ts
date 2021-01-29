@@ -12,6 +12,8 @@ export function convertTypes(spec: CloudFormationSpec): string {
   const resourceNameMap: [string, string][] = [];
   const resourceAttributeMap: [string, string[]][] = [];
 
+  const propertyTypeNames = new Set(Object.keys(spec.PropertyTypes));
+
   // ResourceTypes and Attributes interfaces
   for (const [name, def] of Object.entries(spec.ResourceTypes)) {
     const convertedName = convertName(name);
@@ -40,8 +42,29 @@ export function convertTypes(spec: CloudFormationSpec): string {
       let attributesOutput: ConvertObjectDefResult;
 
       try {
+        // do this for backwards compatibility
+        const defaultAttributesName = `${name}.Attributes`;
+        let attributesName = defaultAttributesName;
+
+        if (propertyTypeNames.has(attributesName)) {
+          attributesName = `${name}.CfnOutputAttributes`;
+
+          let i = 0;
+          while (propertyTypeNames.has(attributesName)) {
+            attributesName = `${name}.CfnOutputAttributes${++i}`;
+          }
+        }
+
+        if (attributesName !== defaultAttributesName) {
+          console.warn(
+            `resource %s attribute type will be called %s due to a name clash`,
+            name,
+            convertName(attributesName),
+          );
+        }
+
         attributesOutput = convertObjectDef(
-          `${name}.Attributes`,
+          attributesName,
           { Properties: def.Attributes },
           resolve,
           name,
