@@ -1,10 +1,12 @@
 import { CloudFormationSpec } from '@fmtk/cfnspec';
+import createDebug from 'debug';
 import { resolver } from './resolver';
 import { convertDefinition } from './convertDefinition';
 import { convertName } from './convertName';
 import { SpecError } from './SpecError';
 import { convertObjectDef, ConvertObjectDefResult } from './convertObjectDef';
-import { debug } from './debug';
+
+const debug = createDebug(`cfntypes:convertTypes`);
 
 export function convertTypes(spec: CloudFormationSpec): string {
   const resolve = resolver(spec);
@@ -14,8 +16,11 @@ export function convertTypes(spec: CloudFormationSpec): string {
 
   const propertyTypeNames = new Set(Object.keys(spec.PropertyTypes));
 
+  debug(`converting resource types`);
+
   // ResourceTypes and Attributes interfaces
   for (const [name, def] of Object.entries(spec.ResourceTypes)) {
+    debug(`resource type %s`, name);
     const convertedName = convertName(name);
     resourceNameMap.push([name, convertedName]);
 
@@ -37,11 +42,14 @@ export function convertTypes(spec: CloudFormationSpec): string {
     output += typeStr + '\n\n';
 
     if (!def.Attributes) {
+      debug(`resource %s: no attributes`, name);
       resourceAttributeMap.push([convertedName, []]);
     } else {
       let attributesOutput: ConvertObjectDefResult;
 
       try {
+        debug(`resource %s: creating attributes type`, name);
+
         // do this for backwards compatibility
         const defaultAttributesName = `${name}.Attributes`;
         let attributesName = defaultAttributesName;
@@ -93,13 +101,21 @@ export function convertTypes(spec: CloudFormationSpec): string {
         x => !attributesOutput.skippedProps.includes(x),
       );
 
-      debug(`attributes for %s: %O`, convertedName, filteredAttribs);
+      debug(
+        `resource %s: attributes for %s: %O`,
+        name,
+        convertedName,
+        filteredAttribs,
+      );
       resourceAttributeMap.push([convertedName, filteredAttribs]);
     }
   }
 
+  debug(`converting property types`);
+
   //// PropertyTypes interfaces
   for (const [name, def] of Object.entries(spec.PropertyTypes)) {
+    debug(`property type %s`, name);
     let typeStr: string;
 
     try {

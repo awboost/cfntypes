@@ -1,7 +1,9 @@
 import { CloudFormationSpec, PrimitiveType } from '@fmtk/cfnspec';
-import { debug } from './debug';
+import createDebug from 'debug';
 import { primitive } from './primitive';
 import { SpecError } from './SpecError';
+
+const debug = createDebug('cfntypes:resolver');
 
 export type NameResolver = (
   name: string,

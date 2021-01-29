@@ -1,9 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import semver from 'semver';
+import createDebug from 'debug';
 import { getLatestSpec } from '@fmtk/cfnspec';
 import { convertTypes } from './convertTypes';
-import { debug } from './debug';
+
+const debug = createDebug(`cfntypes:generate`);
 
 generate().then(
   () => {

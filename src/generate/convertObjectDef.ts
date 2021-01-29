@@ -1,11 +1,12 @@
 import { TypeDefinition } from '@fmtk/cfnspec';
+import createDebug from 'debug';
 import { NameResolver } from './resolver';
 import { convertName } from './convertName';
 import { generateJsDoc } from './generateJsDoc';
-import { getDataTypeName } from './getDataTypeName';
-import { quoteName } from './quoteName';
-import { debug } from './debug';
 import { SpecError } from './SpecError';
+import { convertPropertyDef } from './convertPropertyDef';
+
+const debug = createDebug('cfntypes:convertObjectDef');
 
 export interface ConvertObjectDefResult {
   output: string;
@@ -18,7 +19,7 @@ export function convertObjectDef(
   resolve: NameResolver,
   resource?: string,
 ): ConvertObjectDefResult {
-  debug(`convertObjectDef ${name} (resource ${resource})`);
+  debug(`${name} (resource ${resource})`);
 
   if (!def.Properties) {
     throw new SpecError(`expected type to have properties`, {
@@ -30,11 +31,9 @@ export function convertObjectDef(
   const skippedProps: string[] = [];
   const suffix = name === resource ? 'Props' : '';
   const typeName = convertName(name) + suffix;
-  debug(`convertObjectDef ${name} = ${typeName}`);
+  debug(`${name} = ${typeName}`);
 
   let output = generateJsDoc(name, def);
-  output += `\n`;
-
   output += `export interface ${typeName} {\n`;
 
   for (const [name, prop] of Object.entries(def.Properties)) {
@@ -63,17 +62,4 @@ export function convertObjectDef(
     output,
     skippedProps,
   };
-}
-
-function convertPropertyDef(
-  name: string,
-  def: TypeDefinition,
-  resolve: NameResolver,
-  resource?: string,
-): string {
-  debug(`convertPropertyDef ${name} (resource ${resource})`);
-
-  const flag = def.Required === false ? '?' : '';
-  const type = getDataTypeName(def, resolve, resource);
-  return `  ${quoteName(name)}${flag}: ${type};`;
 }
