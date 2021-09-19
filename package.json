@@ -1,6 +1,6 @@
 {
   "name": "@fmtk/cfntypes",
-  "version": "0.26.2",
+  "version": "0.26.3",
   "main": "lib/index.js",
   "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
   "repository": "https://github.com/futurematik/cfntypes",
