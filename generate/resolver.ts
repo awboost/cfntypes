@@ -1,7 +1,7 @@
-import { CloudFormationSpec, PrimitiveType } from '@fmtk/cfnspec';
+import { CloudFormationSpec, PrimitiveType } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { primitive } from './primitive';
-import { SpecError } from './SpecError';
+import { primitive } from './primitive.js';
+import { SpecError } from './SpecError.js';
 
 const debug = createDebug('cfntypes:resolver');
 

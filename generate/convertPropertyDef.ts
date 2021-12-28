@@ -1,8 +1,8 @@
-import { TypeDefinition } from '@fmtk/cfnspec';
+import { TypeDefinition } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { NameResolver } from './resolver';
-import { getDataTypeName } from './getDataTypeName';
-import { quoteName } from './quoteName';
+import { getDataTypeName } from './getDataTypeName.js';
+import { quoteName } from './quoteName.js';
+import { NameResolver } from './resolver.js';
 
 const debug = createDebug(`cfntypes:convertPropertyDef`);
 

@@ -1,8 +1,8 @@
-import { PrimitiveType } from '@fmtk/cfnspec';
+import { PrimitiveType } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { NameResolver } from './resolver';
-import { convertName } from './convertName';
-import { primitive } from './primitive';
+import { convertName } from './convertName.js';
+import { primitive } from './primitive.js';
+import { NameResolver } from './resolver.js';
 
 const debug = createDebug(`cfntypes:getTypeRefName`);
 

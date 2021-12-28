@@ -1,7 +1,7 @@
-import { TypeDefinition } from '@fmtk/cfnspec';
+import { TypeDefinition } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { NameResolver } from './resolver';
-import { getTypeRefName } from './getTypeRefName';
+import { getTypeRefName } from './getTypeRefName.js';
+import { NameResolver } from './resolver.js';
 
 export const debug = createDebug(`cfntypes:getDataTypeName`);
 

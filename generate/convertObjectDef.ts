@@ -1,10 +1,10 @@
-import { TypeDefinition } from '@fmtk/cfnspec';
+import { TypeDefinition } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { NameResolver } from './resolver';
-import { convertName } from './convertName';
-import { generateJsDoc } from './generateJsDoc';
-import { SpecError } from './SpecError';
-import { convertPropertyDef } from './convertPropertyDef';
+import { convertName } from './convertName.js';
+import { convertPropertyDef } from './convertPropertyDef.js';
+import { generateJsDoc } from './generateJsDoc.js';
+import { NameResolver } from './resolver.js';
+import { SpecError } from './SpecError.js';
 
 const debug = createDebug('cfntypes:convertObjectDef');
 

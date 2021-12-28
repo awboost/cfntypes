@@ -1,30 +1,32 @@
 {
-  "name": "@fmtk/cfntypes",
-  "version": "0.36.0",
+  "name": "@cfnboost/resources",
+  "version": "0.36.3",
   "main": "lib/index.js",
-  "author": "Gordon Leigh <gordon.leigh@futurematik.co.uk>",
-  "repository": "https://github.com/futurematik/cfntypes",
+  "type": "module",
+  "author": "Gordon Leigh",
+  "repository": "https://github.com/cfnboost/resources",
   "license": "MIT",
   "private": false,
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "lib/*.js",
-    "lib/*.d.ts"
+    "lib/index.js",
+    "lib/index.d.ts"
   ],
   "scripts": {
-    "build": "yarn clean && yarn generate && yarn compile",
-    "clean": "rm -rf lib/ dist/",
-    "compile": "tsc",
-    "generate": "ts-node src/generate/index.ts",
+    "build": "npm run clean && npm run check && npm run generate && npm run compile",
+    "check": "tsc",
+    "clean": "rm -rf lib/",
+    "compile": "tsc -p tsconfig.lib.json",
+    "generate": "node --loader=ts-node/esm generate/index.ts",
     "lint": "eslint src/ --ext=ts,tsx",
     "watch:compile": "tsc -w --incremental"
   },
   "devDependencies": {
-    "@fmtk/cfnspec": "^0.2.4",
+    "@cfnboost/spec": "^0.3.1",
+    "@swc/core": "^1.2.123",
     "@types/debug": "^4.1.5",
-    "@types/jest": "^24.0.25",
     "@types/node": "^13.9.2",
     "@types/semver": "^7.2.0",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
@@ -34,12 +36,10 @@
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "semver": "^7.3.2",
-    "ts-jest": "^24.3.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   },
   "awsResourceSpecificationVersion": "51.0.0"
 }

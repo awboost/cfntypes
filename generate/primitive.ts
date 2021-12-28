@@ -1,5 +1,5 @@
-import { PrimitiveType } from '@fmtk/cfnspec';
-import { SpecError } from './SpecError';
+import { PrimitiveType } from '@cfnboost/spec';
+import { SpecError } from './SpecError.js';
 
 export function primitive(type: PrimitiveType): string {
   switch (type) {

@@ -1,10 +1,12 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-import semver from 'semver';
+import { getLatestSpec } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { getLatestSpec } from '@fmtk/cfnspec';
-import { convertTypes } from './convertTypes';
+import { promises as fs } from 'fs';
+import path, { dirname } from 'path';
+import semver from 'semver';
+import { fileURLToPath } from 'url';
+import { convertTypes } from './convertTypes.js';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const debug = createDebug(`cfntypes:generate`);
 
 generate().then(
@@ -27,13 +29,13 @@ export async function generate(): Promise<void> {
     `export const ResourceSpecificationVersion = "${version}";\n\n` +
     convertTypes(spec);
 
-  const outputPath = path.resolve(__dirname, '../interfaces.generated.ts');
+  const outputPath = path.resolve(__dirname, '../lib/index.ts');
   const outputDir = path.dirname(outputPath);
 
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputPath, output, 'utf8');
 
-  const pkgPath = path.resolve(__dirname, '../../package.json');
+  const pkgPath = path.resolve(__dirname, '../package.json');
   const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8'));
 
   if (pkg.awsResourceSpecificationVersion) {

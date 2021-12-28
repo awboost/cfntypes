@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "lib": ["es2017"],
-    "module": "commonjs",
+    "lib": ["es2020"],
+    "module": "esnext",
     "moduleResolution": "node",
+    "noEmit": true,
     "noErrorTruncation": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
     "target": "es2017",
-    "types": ["node"],
-    "outDir": "lib",
-    "rootDir": "src"
+    "types": ["node"]
   },
-  "include": ["src/"],
-  "exclude": ["node_modules/", "lib/", "dist/"]
+  "ts-node": {
+    "transpileOnly": true,
+    "transpiler": "ts-node/transpilers/swc-experimental"
+  },
+  "include": ["generate/"]
 }

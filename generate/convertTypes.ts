@@ -1,10 +1,13 @@
-import { CloudFormationSpec } from '@fmtk/cfnspec';
+import { CloudFormationSpec } from '@cfnboost/spec';
 import createDebug from 'debug';
-import { resolver } from './resolver';
-import { convertDefinition } from './convertDefinition';
-import { convertName } from './convertName';
-import { SpecError } from './SpecError';
-import { convertObjectDef, ConvertObjectDefResult } from './convertObjectDef';
+import { convertDefinition } from './convertDefinition.js';
+import { convertName } from './convertName.js';
+import {
+  convertObjectDef,
+  ConvertObjectDefResult,
+} from './convertObjectDef.js';
+import { resolver } from './resolver.js';
+import { SpecError } from './SpecError.js';
 
 const debug = createDebug(`cfntypes:convertTypes`);
 
