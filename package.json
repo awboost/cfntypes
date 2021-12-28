@@ -1,6 +1,6 @@
 {
   "name": "@cfnboost/resources",
-  "version": "0.36.3",
+  "version": "0.36.4",
   "main": "lib/index.js",
   "type": "module",
   "author": "Gordon Leigh",
