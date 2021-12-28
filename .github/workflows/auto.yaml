@@ -54,7 +54,7 @@ jobs:
         run: yarn build
 
       - name: Git Commit
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
@@ -62,10 +62,10 @@ jobs:
           git config user.name "Github Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git add package.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "bump version"; git push origin master)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "bump version"; git push origin main)
 
       - name: NPM publish
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish
