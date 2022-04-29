@@ -35,6 +35,7 @@ jobs:
         with:
           node-version: '12.x'
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: NPM install
         run: npm ci
