@@ -1,6 +1,6 @@
 {
   "name": "@cfnboost/resources",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "main": "lib/index.js",
   "type": "module",
   "author": "Gordon Leigh",
@@ -41,5 +41,5 @@
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
-  "awsResourceSpecificationVersion": "68.0.0"
+  "awsResourceSpecificationVersion": "69.0.0"
 }
