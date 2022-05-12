@@ -38,36 +38,46 @@ export async function generate(): Promise<void> {
   const pkgPath = path.resolve(__dirname, '../package.json');
   const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8'));
 
-  if (pkg.awsResourceSpecificationVersion) {
-    const maj = semver.major(pkg.version);
-
-    const diff = semver.diff(
-      pkg.awsResourceSpecificationVersion,
-      spec.ResourceSpecificationVersion,
-    );
-    switch (diff) {
-      case 'major':
-        if (maj === 0) {
-          pkg.version = semver.inc(pkg.version, 'minor');
-        } else {
-          pkg.version = semver.inc(pkg.version, 'major');
-        }
-        break;
-
-      case 'minor':
-        if (maj === 0) {
-          pkg.version = semver.inc(pkg.version, 'patch');
-        } else {
-          pkg.version = semver.inc(pkg.version, 'minor');
-        }
-        break;
-
-      default:
-        pkg.version = semver.inc(pkg.version, 'patch');
-        break;
-    }
-  }
-
+  pkg.version = incrementVersion(
+    pkg.version,
+    pkg.awsResourceSpecificationVersion,
+    spec.ResourceSpecificationVersion,
+  );
   pkg.awsResourceSpecificationVersion = spec.ResourceSpecificationVersion;
   await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+}
+
+function incrementVersion(
+  pkgVersion: string,
+  currentAwsVersion: string | undefined,
+  newAwsVersion: string,
+): string {
+  const pre = semver.prerelease(pkgVersion);
+  if (pre) {
+    return semver.inc(pkgVersion, 'prerelease') as string;
+  }
+
+  const maj = semver.major(pkgVersion);
+
+  const diff =
+    currentAwsVersion && semver.diff(currentAwsVersion, newAwsVersion);
+
+  switch (diff) {
+    case 'major':
+      if (maj === 0) {
+        return semver.inc(pkgVersion, 'minor') as string;
+      } else {
+        return semver.inc(pkgVersion, 'major') as string;
+      }
+
+    case 'minor':
+      if (maj === 0) {
+        return semver.inc(pkgVersion, 'patch') as string;
+      } else {
+        return semver.inc(pkgVersion, 'minor') as string;
+      }
+
+    default:
+      return semver.inc(pkgVersion, 'patch') as string;
+  }
 }
