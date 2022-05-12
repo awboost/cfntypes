@@ -138,15 +138,13 @@ export function convertTypes(spec: CloudFormationSpec): string {
     output += typeStr + '\n\n';
   }
 
-  //// ResourceType const
-  output += `export const ResourceType = {\n`;
+  //// ResourceType enum
+  output += `export enum ResourceType {\n`;
 
   for (const [name, convertedName] of resourceNameMap) {
-    output += `  ${convertedName}: "${name}",\n`;
+    output += `  ${convertedName} = "${name}",\n`;
   }
-  output += `} as const\n\n`;
-
-  output += `export type ResourceType = typeof ResourceType[keyof typeof ResourceType];\n\n`;
+  output += `}\n\n`;
 
   //// ResourceTypes interface
   output += `export interface ResourceTypes {\n`;
@@ -205,5 +203,5 @@ function getNamespace(name: string): string | undefined {
   if (i < 0) {
     return;
   }
-  return name.substr(0, i);
+  return name.slice(0, i);
 }
