@@ -13,7 +13,7 @@ generate().then(
   () => {
     process.exit(0);
   },
-  err => {
+  (err) => {
     console.error(`fatal error`, err);
     process.exit(1);
   },

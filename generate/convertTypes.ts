@@ -101,7 +101,7 @@ export function convertTypes(spec: CloudFormationSpec): string {
       output += attributesOutput.output + '\n\n';
 
       const filteredAttribs = Object.keys(def.Attributes).filter(
-        x => !attributesOutput.skippedProps.includes(x),
+        (x) => !attributesOutput.skippedProps.includes(x),
       );
 
       debug(
