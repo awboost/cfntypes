@@ -11,11 +11,16 @@ import { SpecError } from './SpecError.js';
 
 const debug = createDebug(`cfntypes:convertTypes`);
 
+interface AttributeInfo {
+  attributes: string[];
+  interfaceName: string;
+}
+
 export function convertTypes(spec: CloudFormationSpec): string {
   const resolve = resolver(spec);
   let output = '';
   const resourceNameMap: [string, string][] = [];
-  const resourceAttributeMap: [string, string[]][] = [];
+  const resourceAttributeMap: [string, AttributeInfo | undefined][] = [];
 
   const propertyTypeNames = new Set(Object.keys(spec.PropertyTypes));
 
@@ -46,23 +51,23 @@ export function convertTypes(spec: CloudFormationSpec): string {
 
     if (!def.Attributes) {
       debug(`resource %s: no attributes`, name);
-      resourceAttributeMap.push([convertedName, []]);
+      resourceAttributeMap.push([convertedName, undefined]);
     } else {
       let attributesOutput: ConvertObjectDefResult;
+
+      // do this for backwards compatibility
+      const defaultAttributesName = `${name}.Attributes`;
+      let attributesName = defaultAttributesName;
 
       try {
         debug(`resource %s: creating attributes type`, name);
 
-        // do this for backwards compatibility
-        const defaultAttributesName = `${name}.Attributes`;
-        let attributesName = defaultAttributesName;
-
         if (propertyTypeNames.has(attributesName)) {
-          attributesName = `${name}.CfnOutputAttributes`;
+          attributesName = `${name}.Attribs`;
 
           let i = 0;
           while (propertyTypeNames.has(attributesName)) {
-            attributesName = `${name}.CfnOutputAttributes${++i}`;
+            attributesName = `${name}.${''.padStart(++i, '_')}Attribs$`;
           }
         }
 
@@ -88,6 +93,7 @@ export function convertTypes(spec: CloudFormationSpec): string {
           if (err.location) {
             console.warn(`error details:`, err.location);
           }
+          resourceAttributeMap.push([convertedName, undefined]);
           continue;
         }
         throw err;
@@ -110,7 +116,13 @@ export function convertTypes(spec: CloudFormationSpec): string {
         convertedName,
         filteredAttribs,
       );
-      resourceAttributeMap.push([convertedName, filteredAttribs]);
+      resourceAttributeMap.push([
+        convertedName,
+        {
+          interfaceName: convertName(attributesName),
+          attributes: filteredAttribs,
+        },
+      ]);
     }
   }
 
@@ -158,8 +170,8 @@ export function convertTypes(spec: CloudFormationSpec): string {
   output += `export interface AttributeTypes {\n`;
 
   for (const [convertedName, attribs] of resourceAttributeMap) {
-    if (attribs.length) {
-      output += `  [ResourceType.${convertedName}]: ${convertedName}Attributes,\n`;
+    if (attribs) {
+      output += `  [ResourceType.${convertedName}]: ${attribs.interfaceName},\n`;
     }
   }
   output += `}\n\n`;
@@ -186,12 +198,15 @@ export function convertTypes(spec: CloudFormationSpec): string {
   for (const [name, attribs] of resourceAttributeMap) {
     output += `  [ResourceType.${name}]: [`;
 
-    for (let i = 0; i < attribs.length; ++i) {
-      if (i) {
-        output += ', ';
+    if (attribs) {
+      for (let i = 0; i < attribs.attributes.length; ++i) {
+        if (i) {
+          output += ', ';
+        }
+        output += `"${attribs.attributes[i]}"`;
       }
-      output += `"${attribs[i]}"`;
     }
+
     output += `], \n`;
   }
   output += `};\n\n`;
