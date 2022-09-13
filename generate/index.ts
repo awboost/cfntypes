@@ -1,4 +1,4 @@
-import { getLatestSpec } from '@cfnboost/spec';
+import { getLatestSpec } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { promises as fs } from 'fs';
 import path, { dirname } from 'path';

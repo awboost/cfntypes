@@ -1,4 +1,4 @@
-import { CloudFormationSpec } from '@cfnboost/spec';
+import { CloudFormationSpec } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { convertDefinition } from './convertDefinition.js';
 import { convertName } from './convertName.js';

@@ -1,4 +1,4 @@
-import { TypeDefinition } from '@cfnboost/spec';
+import { TypeDefinition } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { getTypeRefName } from './getTypeRefName.js';
 import { NameResolver } from './resolver.js';

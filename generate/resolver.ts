@@ -1,4 +1,4 @@
-import { CloudFormationSpec, PrimitiveType } from '@cfnboost/spec';
+import { CloudFormationSpec, PrimitiveType } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { primitive } from './primitive.js';
 import { SpecError } from './SpecError.js';

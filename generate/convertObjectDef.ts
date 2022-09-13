@@ -1,4 +1,4 @@
-import { TypeDefinition } from '@cfnboost/spec';
+import { TypeDefinition } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { convertName } from './convertName.js';
 import { convertPropertyDef } from './convertPropertyDef.js';

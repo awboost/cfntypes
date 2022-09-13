@@ -1,4 +1,4 @@
-import { PrimitiveType } from '@cfnboost/spec';
+import { PrimitiveType } from '@awboost/cfnspec';
 import { SpecError } from './SpecError.js';
 
 export function primitive(type: PrimitiveType): string {

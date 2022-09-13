@@ -1,4 +1,4 @@
-import { TypeDefinition } from '@cfnboost/spec';
+import { TypeDefinition } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { getDataTypeName } from './getDataTypeName.js';
 import { quoteName } from './quoteName.js';

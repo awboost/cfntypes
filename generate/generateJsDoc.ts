@@ -1,4 +1,4 @@
-import { TypeDefinition } from '@cfnboost/spec';
+import { TypeDefinition } from '@awboost/cfnspec';
 
 export function generateJsDoc(name: string, def: TypeDefinition): string {
   let output = ``;
