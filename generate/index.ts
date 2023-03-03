@@ -11,9 +11,9 @@ import { compileSourceFile } from './util/compileSourceFile.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const debug = createDebug(`cfntypes:generate`);
 
-await generate();
+await generate(process.argv.slice(2));
 
-export async function generate(): Promise<void> {
+export async function generate(argv: string[]): Promise<void> {
   const spec = await getLatestSpec();
 
   const version = spec.ResourceSpecificationVersion;
@@ -22,6 +22,15 @@ export async function generate(): Promise<void> {
   // generate AST
   const builder = new AstBuilder(spec);
   const sourceFile = builder.build();
+
+  const outputDir = resolve(__dirname, '../lib');
+  await mkdir(outputDir, { recursive: true });
+
+  if (argv[0] === 'source') {
+    const output = ts.createPrinter().printFile(sourceFile);
+    await writeFile(join(outputDir, 'index.ts'), output, 'utf8');
+    return;
+  }
 
   // compile AST
   const outputESM = compileSourceFile(sourceFile, {
@@ -37,9 +46,6 @@ export async function generate(): Promise<void> {
       target: ts.ScriptTarget.ES2020,
     },
   });
-
-  const outputDir = resolve(__dirname, '../lib');
-  await mkdir(outputDir, { recursive: true });
 
   if (!outputESM.definitions) {
     throw new Error(`failed to generate definitions file`);

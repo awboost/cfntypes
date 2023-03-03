@@ -22,11 +22,12 @@ import { quoteName } from './util/quoteName.js';
 import { hasProperty, RequiredBy } from './util/types.js';
 
 const Names = {
+  AttributeNamesConst: 'AttributeNames',
   AttributeNamesForUtil: 'AttributesFor',
   AttributeTypeForUtil: 'AttributeTypeFor',
-  ResourceAttributeMap: 'AttributeTypes',
+  ResourceToAttributeTypeMap: 'AttributeTypes',
   ResourceAttributeMapType: 'ResourceAttributeMap',
-  ResourceNameConsts: 'ResourceType',
+  ResourceNamesConst: 'ResourceType',
   ResourceNameType: 'ResourceType',
   ResourceTypeMap: 'ResourceTypes',
   VersionConst: 'ResourceSpecificationVersion',
@@ -60,11 +61,12 @@ export class AstBuilder {
         this.makeVersionConst(),
         ...this.interfaces,
         this.makeResourceTypeMap(),
-        this.makeResourceAttributeMap(),
+        this.makeResourceToAttributeTypeMap(),
         this.makeAttributeTypeForUtil('types'),
         this.makeAttributeTypeForUtil('names'),
         this.makeResourceAttributeMapType(),
-        this.makeResourceNameMap(),
+        this.makeResourceNamesConst(),
+        this.makeAttributeNamesConst(),
         this.makeResourceNameType(),
       ],
       ts.factory.createToken(ts.SyntaxKind.EndOfFileToken),
@@ -168,7 +170,7 @@ export class AstBuilder {
 
     this.attributes.push(
       ts.factory.createPropertyAssignment(
-        resourceName,
+        ts.factory.createStringLiteral(resourceName),
         ts.factory.createArrayLiteralExpression(
           attributes.map((attr) => ts.factory.createStringLiteral(attr)),
         ),
@@ -176,10 +178,30 @@ export class AstBuilder {
     );
   }
 
-  private makeResourceAttributeMap(): ts.InterfaceDeclaration {
+  private makeAttributeNamesConst(): ts.Statement {
+    return ts.factory.createVariableStatement(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            Names.AttributeNamesConst,
+            undefined,
+            undefined,
+            ts.factory.createAsExpression(
+              ts.factory.createObjectLiteralExpression(this.attributes, true),
+              ts.factory.createTypeReferenceNode('const'),
+            ),
+          ),
+        ],
+        ts.NodeFlags.Const,
+      ),
+    );
+  }
+
+  private makeResourceToAttributeTypeMap(): ts.InterfaceDeclaration {
     return ts.factory.createInterfaceDeclaration(
       [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      Names.ResourceAttributeMap,
+      Names.ResourceToAttributeTypeMap,
       undefined,
       undefined,
       this.attributeTypes,
@@ -221,13 +243,13 @@ export class AstBuilder {
     );
   }
 
-  private makeResourceNameMap(): ts.Statement {
+  private makeResourceNamesConst(): ts.Statement {
     return ts.factory.createVariableStatement(
       [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
       ts.factory.createVariableDeclarationList(
         [
           ts.factory.createVariableDeclaration(
-            Names.ResourceNameConsts,
+            Names.ResourceNamesConst,
             undefined,
             undefined,
             ts.factory.createAsExpression(
@@ -251,12 +273,12 @@ export class AstBuilder {
       undefined,
       ts.factory.createIndexedAccessTypeNode(
         ts.factory.createTypeQueryNode(
-          ts.factory.createIdentifier(Names.ResourceNameConsts),
+          ts.factory.createIdentifier(Names.ResourceNamesConst),
         ),
         ts.factory.createTypeOperatorNode(
           ts.SyntaxKind.KeyOfKeyword,
           ts.factory.createTypeQueryNode(
-            ts.factory.createIdentifier(Names.ResourceNameConsts),
+            ts.factory.createIdentifier(Names.ResourceNamesConst),
           ),
         ),
       ),
@@ -277,7 +299,7 @@ export class AstBuilder {
     type: 'types' | 'names',
   ): ts.TypeAliasDeclaration {
     const indexNode = ts.factory.createIndexedAccessTypeNode(
-      ts.factory.createTypeReferenceNode(Names.ResourceAttributeMap),
+      ts.factory.createTypeReferenceNode(Names.ResourceToAttributeTypeMap),
       ts.factory.createTypeReferenceNode('T'),
     );
     return ts.factory.createTypeAliasDeclaration(
@@ -296,7 +318,7 @@ export class AstBuilder {
         ts.factory.createTypeReferenceNode('T'),
         ts.factory.createTypeOperatorNode(
           ts.SyntaxKind.KeyOfKeyword,
-          ts.factory.createTypeReferenceNode(Names.ResourceAttributeMap),
+          ts.factory.createTypeReferenceNode(Names.ResourceToAttributeTypeMap),
         ),
         type === 'names'
           ? ts.factory.createTypeOperatorNode(
