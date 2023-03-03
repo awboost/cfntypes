@@ -24,11 +24,11 @@ import { hasProperty, RequiredBy } from './util/types.js';
 const Names = {
   AttributeNamesConst: 'AttributeNames',
   AttributeNamesForUtil: 'AttributesFor',
+  AttributeNamesType: 'AttributeNameMap',
   AttributeTypeForUtil: 'AttributeTypeFor',
-  ResourceToAttributeTypeMap: 'AttributeTypes',
-  ResourceAttributeMapType: 'ResourceAttributeMap',
   ResourceNamesConst: 'ResourceType',
   ResourceNameType: 'ResourceType',
+  ResourceToAttributeTypeMap: 'AttributeTypes',
   ResourceTypeMap: 'ResourceTypes',
   VersionConst: 'ResourceSpecificationVersion',
 };
@@ -186,11 +186,8 @@ export class AstBuilder {
           ts.factory.createVariableDeclaration(
             Names.AttributeNamesConst,
             undefined,
-            undefined,
-            ts.factory.createAsExpression(
-              ts.factory.createObjectLiteralExpression(this.attributes, true),
-              ts.factory.createTypeReferenceNode('const'),
-            ),
+            ts.factory.createTypeReferenceNode(Names.AttributeNamesType),
+            ts.factory.createObjectLiteralExpression(this.attributes, true),
           ),
         ],
         ts.NodeFlags.Const,
@@ -211,7 +208,7 @@ export class AstBuilder {
   private makeResourceAttributeMapType(): ts.TypeAliasDeclaration {
     return ts.factory.createTypeAliasDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      Names.ResourceAttributeMapType,
+      Names.AttributeNamesType,
       undefined,
       ts.factory.createMappedTypeNode(
         undefined,
