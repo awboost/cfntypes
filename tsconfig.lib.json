@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["lib/index.ts"],
-  "compilerOptions": {
-    "declaration": true,
-    "noEmit": false
-  }
-}
