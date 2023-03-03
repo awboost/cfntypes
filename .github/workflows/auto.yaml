@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '12.x'
+          node-version: '16.x'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '12.x'
+          node-version: '16.x'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
