@@ -100,11 +100,9 @@ export class AstBuilder {
   }
 
   private buildResourceType(fullName: string, def: ResourceType): void {
-    const mangledName = mangleName(fullName, NameType.Resource);
-
     this.resourceTypeNames.push(
       ts.factory.createPropertyAssignment(
-        mangledName,
+        mangleName(fullName, NameType.Const),
         ts.factory.createStringLiteral(fullName),
       ),
     );
@@ -113,7 +111,9 @@ export class AstBuilder {
         undefined,
         ts.factory.createStringLiteral(fullName),
         undefined,
-        ts.factory.createTypeReferenceNode(mangledName),
+        ts.factory.createTypeReferenceNode(
+          mangleName(fullName, NameType.Resource),
+        ),
       ),
     );
     this.interfaces.push(

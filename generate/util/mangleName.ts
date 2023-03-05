@@ -4,6 +4,7 @@ const debug = Debug('util:mangleName');
 
 export enum NameType {
   Attributes = 'Attributes',
+  Const = 'Const',
   Resource = 'Resource',
   Type = 'Type',
 }
