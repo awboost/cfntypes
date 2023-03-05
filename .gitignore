@@ -4,8 +4,6 @@ dist/
 build/
 .local/
 lib/
-*.generated.*
-tsconfig.build.json
 *.tsbuildinfo
 .DS_Store
 cdk.out/

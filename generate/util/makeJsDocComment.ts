@@ -5,6 +5,7 @@ export function attachJsDocComment<TNode extends ts.Node>(
   text: string,
   see?: string,
   seeLinkText?: string,
+  group?: string,
 ): TNode {
   let comment = `*\n * ${text}\n *\n`;
   if (see) {
@@ -13,6 +14,9 @@ export function attachJsDocComment<TNode extends ts.Node>(
       link += ' | ' + seeLinkText;
     }
     comment += ` * @see {@link ${link}}\n`;
+  }
+  if (group) {
+    comment += ` * @group ${group}\n`;
   }
   comment += ` `;
 

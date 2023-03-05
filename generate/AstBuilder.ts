@@ -13,23 +13,62 @@ import {
 } from '@awboost/cfnspec';
 import ts from 'typescript';
 import { inspect } from 'util';
+import { getAwsService } from './util/getAwsService.js';
 import { getNamespace } from './util/getNamespace.js';
 import { attachJsDocComment } from './util/makeJsDocComment.js';
 import { makePrimitiveTypeNode } from './util/makePrimitiveTypeNode.js';
 import { makeSpecialTypeNode } from './util/makeSpecialTypeNode.js';
 import { mangleName, NameType } from './util/mangleName.js';
 import { quoteName } from './util/quoteName.js';
-import { hasProperty, RequiredBy } from './util/types.js';
+import { hasProperty } from './util/types.js';
 
+/**
+ * A list of the export names in the generated code.
+ */
 const Names = {
+  /**
+   * A map of Resource Types to Output Attribute Names. Each key is a Resource
+   * Type and each value is an array with the names of Output Attributes for
+   * that Resource Type.
+   */
   AttributeNamesConst: 'AttributeNames',
+  /**
+   * A utility type that evaluates to the string union type of valid Output
+   * Attribute Names for the Resource Type, or `never` if the resource has no
+   * attributes.
+   */
   AttributeNamesForUtil: 'AttributesFor',
+  /**
+   * The type definition for the AttributeNamesConst value.
+   */
   AttributeNamesType: 'AttributeNameMap',
+  /**
+   * A utility type that evaluates to the type of the complete Output Attributes
+   * object for each Resource Type, or `never` if the resource has no
+   * attributes.
+   */
   AttributeTypeForUtil: 'AttributeTypeFor',
+  /**
+   * A dictionary of Resource Types.
+   */
   ResourceNamesConst: 'ResourceType',
+  /**
+   * A string union type of all valid Resource Types.
+   */
   ResourceNameType: 'ResourceType',
+  /**
+   * A type map of Resource Types to Output Attributes object types. Only
+   * Resource Types which have Output Attributes defined appear in this map.
+   */
   ResourceToAttributeTypeMap: 'AttributeTypes',
+  /**
+   * A type map of Resource Types to Resource Properties types.
+   */
   ResourceTypeMap: 'ResourceTypes',
+  /**
+   * A string const containing the version of the CloudFormation Resource
+   * Specification that these types have been generated from.
+   */
   VersionConst: 'ResourceSpecificationVersion',
 };
 
@@ -95,10 +134,14 @@ export class AstBuilder {
         `Type definition for ${fullName}`,
         def.Documentation,
         fullName,
+        getAwsService(fullName),
       ),
     );
   }
 
+  /**
+   * Process each ResourceType item in the specification.
+   */
   private buildResourceType(fullName: string, def: ResourceType): void {
     this.resourceTypeNames.push(
       ts.factory.createPropertyAssignment(
@@ -122,19 +165,36 @@ export class AstBuilder {
         `Type definition for ${fullName}`,
         def.Documentation,
         fullName,
+        getAwsService(fullName),
       ),
     );
-    this.buildResourceAttributeNames(fullName, def);
-
-    if (hasProperty(def, 'Attributes')) {
-      this.buildResourceAttributes(fullName, def);
-    }
+    this.buildResourceAttributes(fullName, def);
   }
 
+  /**
+   * Process attributes for a ResourceType.
+   */
   private buildResourceAttributes(
     resourceName: string,
-    resource: RequiredBy<ResourceType, 'Attributes'>,
+    resource: ResourceType,
   ): void {
+    const attributes = resource.Attributes
+      ? Object.keys(resource.Attributes)
+      : [];
+
+    this.attributes.push(
+      ts.factory.createPropertyAssignment(
+        ts.factory.createStringLiteral(resourceName),
+        ts.factory.createArrayLiteralExpression(
+          attributes.map((attr) => ts.factory.createStringLiteral(attr)),
+        ),
+      ),
+    );
+
+    if (!hasProperty(resource, 'Attributes')) {
+      return;
+    }
+
     this.attributeTypes.push(
       ts.factory.createPropertySignature(
         undefined,
@@ -156,28 +216,16 @@ export class AstBuilder {
         `Attributes type definition for ${resourceName}`,
         resource.Documentation,
         resourceName,
+        getAwsService(resourceName),
       ),
     );
   }
 
-  private buildResourceAttributeNames(
-    resourceName: string,
-    resource: ResourceType,
-  ): void {
-    const attributes = resource.Attributes
-      ? Object.keys(resource.Attributes)
-      : [];
-
-    this.attributes.push(
-      ts.factory.createPropertyAssignment(
-        ts.factory.createStringLiteral(resourceName),
-        ts.factory.createArrayLiteralExpression(
-          attributes.map((attr) => ts.factory.createStringLiteral(attr)),
-        ),
-      ),
-    );
-  }
-
+  /**
+   * Output a map of Resource Types to Output Attribute Names. Each key is a
+   * Resource Type and each value is an array with the names of Output
+   * Attributes for that Resource Type.
+   */
   private makeAttributeNamesConst(): ts.Statement {
     return ts.factory.createVariableStatement(
       [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
@@ -195,103 +243,12 @@ export class AstBuilder {
     );
   }
 
-  private makeResourceToAttributeTypeMap(): ts.InterfaceDeclaration {
-    return ts.factory.createInterfaceDeclaration(
-      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      Names.ResourceToAttributeTypeMap,
-      undefined,
-      undefined,
-      this.attributeTypes,
-    );
-  }
-
-  private makeResourceAttributeMapType(): ts.TypeAliasDeclaration {
-    return ts.factory.createTypeAliasDeclaration(
-      [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      Names.AttributeNamesType,
-      undefined,
-      ts.factory.createMappedTypeNode(
-        undefined,
-        ts.factory.createTypeParameterDeclaration(
-          undefined,
-          ts.factory.createIdentifier('K'),
-          ts.factory.createTypeReferenceNode(
-            ts.factory.createIdentifier(Names.ResourceNameType),
-          ),
-          undefined,
-        ),
-        undefined,
-        undefined,
-        ts.factory.createArrayTypeNode(
-          ts.factory.createParenthesizedType(
-            ts.factory.createTypeReferenceNode(
-              ts.factory.createIdentifier('AttributesFor'),
-              [
-                ts.factory.createTypeReferenceNode(
-                  ts.factory.createIdentifier('K'),
-                  undefined,
-                ),
-              ],
-            ),
-          ),
-        ),
-        undefined,
-      ),
-    );
-  }
-
-  private makeResourceNamesConst(): ts.Statement {
-    return ts.factory.createVariableStatement(
-      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      ts.factory.createVariableDeclarationList(
-        [
-          ts.factory.createVariableDeclaration(
-            Names.ResourceNamesConst,
-            undefined,
-            undefined,
-            ts.factory.createAsExpression(
-              ts.factory.createObjectLiteralExpression(
-                this.resourceTypeNames,
-                true,
-              ),
-              ts.factory.createTypeReferenceNode('const'),
-            ),
-          ),
-        ],
-        ts.NodeFlags.Const,
-      ),
-    );
-  }
-
-  private makeResourceNameType(): ts.TypeAliasDeclaration {
-    return ts.factory.createTypeAliasDeclaration(
-      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      Names.ResourceNameType,
-      undefined,
-      ts.factory.createIndexedAccessTypeNode(
-        ts.factory.createTypeQueryNode(
-          ts.factory.createIdentifier(Names.ResourceNamesConst),
-        ),
-        ts.factory.createTypeOperatorNode(
-          ts.SyntaxKind.KeyOfKeyword,
-          ts.factory.createTypeQueryNode(
-            ts.factory.createIdentifier(Names.ResourceNamesConst),
-          ),
-        ),
-      ),
-    );
-  }
-
-  private makeResourceTypeMap(): ts.InterfaceDeclaration {
-    return ts.factory.createInterfaceDeclaration(
-      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      Names.ResourceTypeMap,
-      undefined,
-      undefined,
-      this.resourceTypes,
-    );
-  }
-
+  /**
+   * Make a utility type that evaluates to either the string union type of valid
+   * Output Attribute Names, or the type of the complete Output Attributes
+   * Object for the Resource Type. In both cases the type will evalutate to
+   * `never` if the resource has no attributes.
+   */
   private makeAttributeTypeForUtil(
     type: 'types' | 'names',
   ): ts.TypeAliasDeclaration {
@@ -328,6 +285,123 @@ export class AstBuilder {
     );
   }
 
+  /**
+   * Output a type map of Resource Types to Output Attributes object types. Only
+   * Resource Types which have Output Attributes defined appear in this map.
+   */
+  private makeResourceToAttributeTypeMap(): ts.InterfaceDeclaration {
+    return ts.factory.createInterfaceDeclaration(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      Names.ResourceToAttributeTypeMap,
+      undefined,
+      undefined,
+      this.attributeTypes,
+    );
+  }
+
+  /**
+   * Output the type definition for the AttributeNamesConst value.
+   */
+  private makeResourceAttributeMapType(): ts.TypeAliasDeclaration {
+    return ts.factory.createTypeAliasDeclaration(
+      [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+      Names.AttributeNamesType,
+      undefined,
+      ts.factory.createMappedTypeNode(
+        undefined,
+        ts.factory.createTypeParameterDeclaration(
+          undefined,
+          ts.factory.createIdentifier('K'),
+          ts.factory.createTypeReferenceNode(
+            ts.factory.createIdentifier(Names.ResourceNameType),
+          ),
+          undefined,
+        ),
+        undefined,
+        undefined,
+        ts.factory.createArrayTypeNode(
+          ts.factory.createParenthesizedType(
+            ts.factory.createTypeReferenceNode(
+              ts.factory.createIdentifier('AttributesFor'),
+              [
+                ts.factory.createTypeReferenceNode(
+                  ts.factory.createIdentifier('K'),
+                  undefined,
+                ),
+              ],
+            ),
+          ),
+        ),
+        undefined,
+      ),
+    );
+  }
+
+  /**
+   * Output a dictionary of Resource Types.
+   */
+  private makeResourceNamesConst(): ts.Statement {
+    return ts.factory.createVariableStatement(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            Names.ResourceNamesConst,
+            undefined,
+            undefined,
+            ts.factory.createAsExpression(
+              ts.factory.createObjectLiteralExpression(
+                this.resourceTypeNames,
+                true,
+              ),
+              ts.factory.createTypeReferenceNode('const'),
+            ),
+          ),
+        ],
+        ts.NodeFlags.Const,
+      ),
+    );
+  }
+
+  /**
+   * Output a string union type of all valid Resource Types.
+   */
+  private makeResourceNameType(): ts.TypeAliasDeclaration {
+    return ts.factory.createTypeAliasDeclaration(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      Names.ResourceNameType,
+      undefined,
+      ts.factory.createIndexedAccessTypeNode(
+        ts.factory.createTypeQueryNode(
+          ts.factory.createIdentifier(Names.ResourceNamesConst),
+        ),
+        ts.factory.createTypeOperatorNode(
+          ts.SyntaxKind.KeyOfKeyword,
+          ts.factory.createTypeQueryNode(
+            ts.factory.createIdentifier(Names.ResourceNamesConst),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /**
+   * Output a type map of Resource Types to Resource Properties types.
+   */
+  private makeResourceTypeMap(): ts.InterfaceDeclaration {
+    return ts.factory.createInterfaceDeclaration(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      Names.ResourceTypeMap,
+      undefined,
+      undefined,
+      this.resourceTypes,
+    );
+  }
+
+  /**
+   * Output a string const containing the version of the CloudFormation Resource
+   * Specification that these types have been generated from.
+   */
   private makeVersionConst(): ts.Statement {
     return ts.factory.createVariableStatement(
       [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],

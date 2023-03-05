@@ -1,6 +1,6 @@
 {
   "name": "@awboost/cfntypes",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.10",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/awboost/cfntypes#readme",
   "license": "MIT",
-  "main": "./lib/index-cjs.js",
+  "main": "./lib/cjs/index.js",
   "module": "./lib/index.js",
   "types": "lib/index.d.ts",
   "exports": {
@@ -29,13 +29,17 @@
     "!lib/**/*.test.*"
   ],
   "scripts": {
-    "build": "npm run check && npm run clean && npm run lint && npm run generate",
+    "build": "npm run check && npm run clean && npm run lint && npm run generate && npm run compile",
     "check": "tsc",
-    "clean": "rm -rf lib/",
-    "generate": "node --loader=ts-node/esm generate/index.ts",
-    "lint": "eslint generate/ --ext=ts,tsx",
+    "clean": "rm -rf lib/ src/*.generated.ts",
+    "compile": "npm run index && npm run compile:esm && npm run compile:cjs",
+    "compile:cjs": "tsc -p tsconfig.cjs.json",
+    "compile:esm": "tsc -p tsconfig.lib.json",
+    "generate": "node --loader=ts-node/esm generate/index.ts src/types.generated.ts",
+    "index": "node makeIndex.js src/",
+    "lint": "eslint generate/ src/ --ext=ts",
     "postversion": "git push --follow-tags",
-    "watch": "tsc -w --incremental"
+    "watch": "tsc -w"
   },
   "devDependencies": {
     "@awboost/cfnspec": "^0.3.6",

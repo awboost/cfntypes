@@ -1,19 +1,21 @@
 import { getLatestSpec } from '@awboost/cfnspec';
 import createDebug from 'debug';
 import { mkdir, readFile, writeFile } from 'fs/promises';
-import path, { dirname, join, resolve } from 'path';
+import path, { dirname, resolve } from 'path';
 import semver from 'semver';
 import ts from 'typescript';
 import { fileURLToPath } from 'url';
 import { AstBuilder } from './AstBuilder.js';
-import { compileSourceFile } from './util/compileSourceFile.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const debug = createDebug(`cfntypes:generate`);
 
-await generate(process.argv.slice(2));
+await generate(process.argv[2], process.argv[3] !== 'no-version');
 
-export async function generate(argv: string[]): Promise<void> {
+export async function generate(
+  outputFileName: string,
+  incrementPackageVersion: boolean,
+): Promise<void> {
   const spec = await getLatestSpec();
 
   const version = spec.ResourceSpecificationVersion;
@@ -23,48 +25,24 @@ export async function generate(argv: string[]): Promise<void> {
   const builder = new AstBuilder(spec);
   const sourceFile = builder.build();
 
-  const outputDir = resolve(__dirname, '../lib');
+  const outputPath = resolve(outputFileName);
+  const outputDir = dirname(outputPath);
   await mkdir(outputDir, { recursive: true });
 
-  if (argv[0] === 'source') {
-    const output = ts.createPrinter().printFile(sourceFile);
-    await writeFile(join(outputDir, 'index.ts'), output, 'utf8');
-    return;
-  }
-
-  // compile AST
-  const outputESM = compileSourceFile(sourceFile, {
-    compilerOptions: {
-      declaration: true,
-      module: ts.ModuleKind.ES2020,
-      target: ts.ScriptTarget.ES2020,
-    },
-  });
-  const outputCJS = compileSourceFile(sourceFile, {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2020,
-    },
-  });
-
-  if (!outputESM.definitions) {
-    throw new Error(`failed to generate definitions file`);
-  }
-
-  // write output files
-  await writeFile(join(outputDir, 'index.js'), outputESM.output, 'utf8');
-  await writeFile(join(outputDir, 'index-cjs.js'), outputCJS.output, 'utf8');
-  await writeFile(join(outputDir, 'index.d.ts'), outputESM.definitions, 'utf8');
+  const output = ts.createPrinter().printFile(sourceFile);
+  await writeFile(outputPath, output, 'utf8');
 
   // increment the package version according to the new Resource Spec version
   const pkgPath = path.resolve(__dirname, '../package.json');
   const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
 
-  pkg.version = incrementVersion(
-    pkg.version,
-    pkg.awsResourceSpecificationVersion,
-    spec.ResourceSpecificationVersion,
-  );
+  if (incrementPackageVersion) {
+    pkg.version = incrementVersion(
+      pkg.version,
+      pkg.awsResourceSpecificationVersion,
+      spec.ResourceSpecificationVersion,
+    );
+  }
 
   // save the Resource Spec version in the package.json
   pkg.awsResourceSpecificationVersion = spec.ResourceSpecificationVersion;
