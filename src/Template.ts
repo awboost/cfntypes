@@ -73,7 +73,7 @@ export interface Template {
    *
    * @see {@link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html | Mappings}
    */
-  Mappings?: TemplateMap<TemplateMap<IntrinsicValue>>;
+  Mappings?: TemplateMap<TemplateMap<TemplateMap<IntrinsicValue>>>;
 
   /**
    * You can use the optional `Metadata` section to include arbitrary JSON or
