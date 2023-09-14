@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   check:
@@ -18,9 +18,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: NPM install
         run: npm ci
@@ -42,9 +42,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "16.x"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: NPM install
         run: npm ci
@@ -67,4 +67,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: npm publish -w packages/cfntypes

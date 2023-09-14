@@ -1,63 +1,33 @@
 {
-  "name": "@awboost/cfntypes",
-  "version": "1.0.0-beta.41",
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
   "type": "module",
-  "author": {
-    "email": "gordonmleigh@gmail.com",
-    "name": "Gordon Leigh"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/awboost/cfntypes.git"
-  },
-  "homepage": "https://github.com/awboost/cfntypes#readme",
-  "license": "MIT",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports": {
-    ".": "./lib/index.js"
-  },
-  "files": [
-    "lib/**/*.js",
-    "lib/**/*.d.ts",
-    "lib/**/*.map",
-    "!lib/**/*.test.*"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "npm run check && npm run clean && npm run lint && npm run generate && npm run compile",
-    "check": "tsc",
-    "clean": "rm -rf lib/ src/*.generated.ts",
-    "compile": "npm run index && npm run compile:esm && npm run compile:cjs",
-    "compile:cjs": "tsc -p tsconfig.cjs.json",
-    "compile:esm": "tsc -p tsconfig.lib.json",
-    "generate": "node --loader=ts-node/esm generate/index.ts src/types.generated.ts",
-    "index": "node makeIndex.js src/",
-    "lint": "eslint generate/ src/ --ext=ts",
-    "postversion": "git push --follow-tags",
-    "watch": "tsc -w"
+    "build": "npm run clean && npm run generate && npm run compile",
+    "clean": "rimraf --glob '**/*.tsbuildinfo' 'packages/*/lib'",
+    "compile": "node tsbuild.js",
+    "generate": "npm start -w packages/generate -- ../cfntypes/src/resources.generated.ts",
+    "lint": "npm run --workspaces --if-present lint",
+    "watch:compile": "node tsbuild.js -w"
   },
   "devDependencies": {
     "@awboost/cfnspec": "^0.3.6",
-    "@swc/core": "^1.3.35",
-    "@types/debug": "^4.1.5",
-    "@types/node": "^16.11.7",
-    "@types/semver": "^7.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
-    "debug": "^4.1.1",
-    "eslint": "^8.15.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "2.6.2",
-    "semver": "^7.3.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
-  },
-  "awsResourceSpecificationVersion": "139.0.0"
+    "@swc-node/register": "^1.6.7",
+    "@types/debug": "^4.1.8",
+    "@types/node": "^16.18.50",
+    "@types/semver": "^7.5.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "debug": "^4.3.4",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "glob": "^10.3.4",
+    "prettier": "^3.0.3",
+    "semver": "^7.5.4",
+    "typescript": "^5.2.2"
+  }
 }

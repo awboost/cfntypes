@@ -1,0 +1,8 @@
+{
+  "name": "@w/generate",
+  "private": true,
+  "scripts": {
+    "lint": "eslint src/ --ext=ts",
+    "start": "node --loader=@swc-node/register/esm src/main.ts"
+  }
+}

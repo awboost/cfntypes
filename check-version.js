@@ -1,8 +1,8 @@
-import { readFileSync } from 'fs';
-import { getLatestSpec } from '@awboost/cfnspec';
+import { readFileSync } from "fs";
+import { getLatestSpec } from "@awboost/cfnspec";
 
 const { awsResourceSpecificationVersion: pkgVer } = JSON.parse(
-  readFileSync('package.json'),
+  readFileSync("package.json"),
 );
 
 getLatestSpec().then(

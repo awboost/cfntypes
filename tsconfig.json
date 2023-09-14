@@ -1,24 +1,12 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["es2020"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noErrorTruncation": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "sourceMap": false,
-    "strict": true,
-    "target": "es2017",
-    "types": ["node"]
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc-experimental"
-  },
-  "include": ["generate/", "src/"]
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "packages/generate"
+    },
+    {
+      "path": "packages/cfntypes"
+    }
+  ]
 }
