@@ -60,7 +60,7 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "Github Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          git add package.json
+          git add -A
           git diff --quiet && git diff --staged --quiet || (git commit -m "bump version"; git push origin main)
 
       - name: NPM publish
