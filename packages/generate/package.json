@@ -1,6 +1,7 @@
 {
   "name": "@w/generate",
   "private": true,
+  "type": "module",
   "scripts": {
     "lint": "eslint src/ --ext=ts",
     "start": "node --loader=@swc-node/register/esm src/main.ts"

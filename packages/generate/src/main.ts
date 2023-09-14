@@ -16,6 +16,12 @@ export async function generate(
 ): Promise<void> {
   const spec = await getLatestSpec();
 
+  // save the spec file so that changes can be tracked
+  await writeFile(
+    "CloudFormationResourceSpecification.json",
+    JSON.stringify(spec, null, 2),
+  );
+
   const version = spec.ResourceSpecificationVersion;
   debug(`version ${version}`);
 
