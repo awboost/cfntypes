@@ -123,7 +123,7 @@ async function addRefsToTsConfig(configPath, references, contents) {
   );
   await writeFile(
     configPath,
-    Prettier.format(output, {
+    await Prettier.format(output, {
       filepath: configPath,
       ...prettierConfig,
     }),
