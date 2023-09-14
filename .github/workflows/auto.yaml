@@ -57,11 +57,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
+          set -e
           git config user.email "actions@github.com"
           git config user.name "Github Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "bump version"; git push origin main)
+          git commit -m "v${cfntypes_package_version}"
+          git tag -m "v${cfntypes_package_version}" -a "v${cfntypes_package_version}"
+          git push --follow-tags origin main
 
       - name: NPM publish
         if: github.ref == 'refs/heads/main'

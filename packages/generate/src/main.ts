@@ -1,6 +1,6 @@
 import { getLatestSpec } from "@awboost/cfnspec";
 import createDebug from "debug";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { appendFile, mkdir, readFile, writeFile } from "fs/promises";
 import path, { dirname, resolve } from "path";
 import semver from "semver";
 import ts from "typescript";
@@ -45,6 +45,15 @@ export async function generate(
       pkg.version,
       pkg.awsResourceSpecificationVersion,
       spec.ResourceSpecificationVersion,
+    );
+  }
+
+  console.log(`v${pkg.version}`);
+
+  if (process.env.GITHUB_ENV) {
+    await appendFile(
+      process.env.GITHUB_ENV,
+      `cfntypes_package_version=${pkg.version}\n`,
     );
   }
 
