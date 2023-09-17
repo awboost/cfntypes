@@ -30,8 +30,8 @@
       "default": "./lib/resources.generated.js"
     },
     "./template": {
-      "types": "./lib/templattemplatee.d.ts",
-      "default": "./lib/definitions.js"
+      "types": "./lib/template.d.ts",
+      "default": "./lib/template.js"
     },
     "./util": {
       "types": "./lib/util.d.ts",
