@@ -317,7 +317,7 @@ export type AwsResourceDefinition = {
 }[ResourceType];
 
 /**
- * The base type of custom resource properties. All custom resource defintions
+ * The base type of custom resource properties. All custom resource definitions
  * must specify a `ServiceToken`, which is the ARN of the Lambda function or SNS
  * topic which handles this custom resource.
  */
@@ -334,9 +334,12 @@ export type CustomResourceType<T extends string = string> = `Custom::${T}`;
  * Represents a custom resource definition.
  */
 export type CustomResourceDefinition<
-  P extends CustomResourcePropertiesBase = CustomResourcePropertiesBase,
+  P = any,
   T extends string = string,
-> = ResourceDefinitionBase<P, CustomResourceType<T>>;
+> = ResourceDefinitionBase<
+  P & CustomResourcePropertiesBase,
+  CustomResourceType<T>
+>;
 
 /**
  * Represents an AWS or custom resource definition.
