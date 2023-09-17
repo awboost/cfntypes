@@ -334,7 +334,7 @@ export type CustomResourceType<T extends string = string> = `Custom::${T}`;
  * Represents a custom resource definition.
  */
 export type CustomResourceDefinition<
-  P = any,
+  P = unknown,
   T extends string = string,
 > = ResourceDefinitionBase<
   P & CustomResourcePropertiesBase,
