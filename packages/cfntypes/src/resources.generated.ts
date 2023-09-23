@@ -1,4 +1,4 @@
-export const ResourceSpecificationVersion = "140.0.0";
+export const ResourceSpecificationVersion = "141.0.0";
 /**
  * Type definition for AWS::ACMPCA::Certificate.ApiPassthrough
  *
@@ -15295,6 +15295,27 @@ export interface EFSFileSystemLifecyclePolicy {
     TransitionToPrimaryStorageClass?: string;
 }
 /**
+ * Type definition for AWS::EFS::FileSystem.ReplicationConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-efs-filesystem-replicationconfiguration.html | AWS::EFS::FileSystem.ReplicationConfiguration}
+ * @group AWS::EFS
+ */
+export interface EFSFileSystemReplicationConfiguration {
+    Destinations?: any[];
+}
+/**
+ * Type definition for AWS::EFS::FileSystem.ReplicationDestination
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-efs-filesystem-replicationdestination.html | AWS::EFS::FileSystem.ReplicationDestination}
+ * @group AWS::EFS
+ */
+export interface EFSFileSystemReplicationDestination {
+    KmsKeyId?: string;
+    AvailabilityZoneName?: string;
+    FileSystemId?: string;
+    Region?: string;
+}
+/**
  * Type definition for AWS::EKS::Cluster.ClusterLogging
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-eks-cluster-clusterlogging.html | AWS::EKS::Cluster.ClusterLogging}
@@ -28328,6 +28349,16 @@ export interface LightsailContainerContainerServiceDeployment {
     PublicEndpoint?: LightsailContainerPublicEndpoint;
 }
 /**
+ * Type definition for AWS::Lightsail::Container.EcrImagePullerRole
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-ecrimagepullerrole.html | AWS::Lightsail::Container.EcrImagePullerRole}
+ * @group AWS::Lightsail
+ */
+export interface LightsailContainerEcrImagePullerRole {
+    PrincipalArn?: string;
+    IsActive?: boolean;
+}
+/**
  * Type definition for AWS::Lightsail::Container.EnvironmentVariable
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-environmentvariable.html | AWS::Lightsail::Container.EnvironmentVariable}
@@ -28360,6 +28391,15 @@ export interface LightsailContainerHealthCheckConfig {
 export interface LightsailContainerPortInfo {
     Port?: string;
     Protocol?: string;
+}
+/**
+ * Type definition for AWS::Lightsail::Container.PrivateRegistryAccess
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-privateregistryaccess.html | AWS::Lightsail::Container.PrivateRegistryAccess}
+ * @group AWS::Lightsail
+ */
+export interface LightsailContainerPrivateRegistryAccess {
+    EcrImagePullerRole?: LightsailContainerEcrImagePullerRole;
 }
 /**
  * Type definition for AWS::Lightsail::Container.PublicDomainName
@@ -61672,8 +61712,8 @@ export interface AlexaASKSkillSkillPackage {
  * @group Tag
  */
 export interface Tag {
-    Value: string;
     Key: string;
+    Value: string;
 }
 /**
  * Type definition for AWS::ACMPCA::Certificate
@@ -66961,6 +67001,30 @@ export interface ConnectSecurityKeyAttribs {
     AssociationId?: string;
 }
 /**
+ * Type definition for AWS::Connect::SecurityProfile
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-connect-securityprofile.html | AWS::Connect::SecurityProfile}
+ * @group AWS::Connect
+ */
+export interface ConnectSecurityProfileProps {
+    AllowedAccessControlTags?: any[];
+    Description?: string;
+    InstanceArn: string;
+    Permissions?: any[];
+    SecurityProfileName: string;
+    TagRestrictedResources?: any[];
+    Tags?: any[];
+}
+/**
+ * Attributes type definition for AWS::Connect::SecurityProfile
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-connect-securityprofile.html | AWS::Connect::SecurityProfile}
+ * @group AWS::Connect
+ */
+export interface ConnectSecurityProfileAttribs {
+    SecurityProfileArn?: string;
+}
+/**
  * Type definition for AWS::Connect::TaskTemplate
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-connect-tasktemplate.html | AWS::Connect::TaskTemplate}
@@ -69426,6 +69490,7 @@ export interface EC2RouteProps {
     TransitGatewayId?: string;
     VpcPeeringConnectionId?: string;
     EgressOnlyInternetGatewayId?: string;
+    DestinationPrefixListId?: string;
     NatGatewayId?: string;
 }
 /**
@@ -70054,8 +70119,17 @@ export interface EC2VPCEndpointAttribs {
 export interface EC2VPCEndpointConnectionNotificationProps {
     ConnectionEvents: any[];
     VPCEndpointId?: string;
-    ServiceId?: string;
     ConnectionNotificationArn: string;
+    ServiceId?: string;
+}
+/**
+ * Attributes type definition for AWS::EC2::VPCEndpointConnectionNotification
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcendpointconnectionnotification.html | AWS::EC2::VPCEndpointConnectionNotification}
+ * @group AWS::EC2
+ */
+export interface EC2VPCEndpointConnectionNotificationAttribs {
+    VPCEndpointConnectionNotificationId?: string;
 }
 /**
  * Type definition for AWS::EC2::VPCEndpointService
@@ -70631,6 +70705,7 @@ export interface EFSFileSystemProps {
     AvailabilityZoneName?: string;
     LifecyclePolicies?: any[];
     ThroughputMode?: string;
+    ReplicationConfiguration?: EFSFileSystemReplicationConfiguration;
     BackupPolicy?: EFSFileSystemBackupPolicy;
 }
 /**
@@ -76878,6 +76953,7 @@ export interface LightsailCertificateAttribs {
 export interface LightsailContainerProps {
     PublicDomainNames?: any[];
     ServiceName: string;
+    PrivateRegistryAccess?: LightsailContainerPrivateRegistryAccess;
     ContainerServiceDeployment?: LightsailContainerContainerServiceDeployment;
     IsDisabled?: boolean;
     Scale: number;
@@ -76891,6 +76967,8 @@ export interface LightsailContainerProps {
  * @group AWS::Lightsail
  */
 export interface LightsailContainerAttribs {
+    PrincipalArn?: string;
+    "PrivateRegistryAccess.EcrImagePullerRole.PrincipalArn"?: string;
     ContainerArn?: string;
     Url?: string;
 }
@@ -77710,6 +77788,7 @@ export interface MacieCustomDataIdentifierProps {
     Keywords?: any[];
     Regex: string;
     IgnoreWords?: any[];
+    Tags?: any[];
     Name: string;
     MaximumMatchDistance?: number;
 }
@@ -87172,6 +87251,7 @@ export interface ResourceTypes {
     "AWS::Connect::RoutingProfile": ConnectRoutingProfileProps;
     "AWS::Connect::Rule": ConnectRuleProps;
     "AWS::Connect::SecurityKey": ConnectSecurityKeyProps;
+    "AWS::Connect::SecurityProfile": ConnectSecurityProfileProps;
     "AWS::Connect::TaskTemplate": ConnectTaskTemplateProps;
     "AWS::Connect::TrafficDistributionGroup": ConnectTrafficDistributionGroupProps;
     "AWS::Connect::User": ConnectUserProps;
@@ -88245,6 +88325,7 @@ export interface AttributeTypes {
     "AWS::Connect::RoutingProfile": ConnectRoutingProfileAttribs;
     "AWS::Connect::Rule": ConnectRuleAttribs;
     "AWS::Connect::SecurityKey": ConnectSecurityKeyAttribs;
+    "AWS::Connect::SecurityProfile": ConnectSecurityProfileAttribs;
     "AWS::Connect::TaskTemplate": ConnectTaskTemplateAttribs;
     "AWS::Connect::TrafficDistributionGroup": ConnectTrafficDistributionGroupAttribs;
     "AWS::Connect::User": ConnectUserAttribs;
@@ -88347,6 +88428,7 @@ export interface AttributeTypes {
     "AWS::EC2::TransitGatewayVpcAttachment": EC2TransitGatewayVpcAttachmentAttribs;
     "AWS::EC2::VPC": EC2VPCAttribs;
     "AWS::EC2::VPCEndpoint": EC2VPCEndpointAttribs;
+    "AWS::EC2::VPCEndpointConnectionNotification": EC2VPCEndpointConnectionNotificationAttribs;
     "AWS::EC2::VPCEndpointService": EC2VPCEndpointServiceAttribs;
     "AWS::EC2::VPCPeeringConnection": EC2VPCPeeringConnectionAttribs;
     "AWS::EC2::VPNConnection": EC2VPNConnectionAttribs;
@@ -89155,6 +89237,7 @@ export const ResourceType = {
     ConnectRoutingProfile: "AWS::Connect::RoutingProfile",
     ConnectRule: "AWS::Connect::Rule",
     ConnectSecurityKey: "AWS::Connect::SecurityKey",
+    ConnectSecurityProfile: "AWS::Connect::SecurityProfile",
     ConnectTaskTemplate: "AWS::Connect::TaskTemplate",
     ConnectTrafficDistributionGroup: "AWS::Connect::TrafficDistributionGroup",
     ConnectUser: "AWS::Connect::User",
@@ -90297,6 +90380,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::Connect::RoutingProfile": ["RoutingProfileArn"],
     "AWS::Connect::Rule": ["RuleArn"],
     "AWS::Connect::SecurityKey": ["AssociationId"],
+    "AWS::Connect::SecurityProfile": ["SecurityProfileArn"],
     "AWS::Connect::TaskTemplate": ["Arn"],
     "AWS::Connect::TrafficDistributionGroup": ["Status", "IsDefault", "TrafficDistributionGroupArn"],
     "AWS::Connect::User": ["UserArn"],
@@ -90434,7 +90518,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::EC2::VPCCidrBlock": [],
     "AWS::EC2::VPCDHCPOptionsAssociation": [],
     "AWS::EC2::VPCEndpoint": ["CreationTimestamp", "NetworkInterfaceIds", "Id", "DnsEntries"],
-    "AWS::EC2::VPCEndpointConnectionNotification": [],
+    "AWS::EC2::VPCEndpointConnectionNotification": ["VPCEndpointConnectionNotificationId"],
     "AWS::EC2::VPCEndpointService": ["ServiceId"],
     "AWS::EC2::VPCEndpointServicePermissions": [],
     "AWS::EC2::VPCGatewayAttachment": [],
@@ -90744,7 +90828,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::Lightsail::Alarm": ["AlarmArn", "State"],
     "AWS::Lightsail::Bucket": ["BucketArn", "AbleToUpdateBundle", "Url"],
     "AWS::Lightsail::Certificate": ["Status", "CertificateArn"],
-    "AWS::Lightsail::Container": ["ContainerArn", "Url"],
+    "AWS::Lightsail::Container": ["PrincipalArn", "PrivateRegistryAccess.EcrImagePullerRole.PrincipalArn", "ContainerArn", "Url"],
     "AWS::Lightsail::Database": ["DatabaseArn"],
     "AWS::Lightsail::Disk": ["Path", "AttachmentState", "Location.AvailabilityZone", "SupportCode", "State", "IsAttached", "ResourceType", "DiskArn", "AttachedTo", "Iops", "Location.RegionName"],
     "AWS::Lightsail::Distribution": ["Status", "DistributionArn", "AbleToUpdateBundle"],
