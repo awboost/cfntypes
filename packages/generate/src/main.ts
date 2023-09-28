@@ -40,6 +40,7 @@ export async function generate(
   const pkgPath = path.resolve(dirname(outputFileName), "../package.json");
   const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
 
+  pkg.types = "./lib/index.d.ts";
   if (incrementPackageVersion) {
     pkg.version = incrementVersion(
       pkg.version,

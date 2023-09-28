@@ -3,7 +3,9 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": "src/",
-    "outDir": "lib/"
+    "outDir": "lib/",
+    "module": "CommonJS",
+    "moduleResolution": "Classic"
   },
   "include": ["src/"],
   "exclude": ["node_modules/", "lib/"],
