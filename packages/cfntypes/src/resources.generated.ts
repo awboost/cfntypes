@@ -1,4 +1,4 @@
-export const ResourceSpecificationVersion = "141.0.0";
+export const ResourceSpecificationVersion = "142.0.0";
 /**
  * Type definition for AWS::ACMPCA::Certificate.ApiPassthrough
  *
@@ -1345,16 +1345,6 @@ export interface ApiGatewayV2StageRouteSettings {
     ThrottlingRateLimit?: number;
 }
 /**
- * Type definition for AWS::AppConfig::Application.Tags
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-application-tags.html | AWS::AppConfig::Application.Tags}
- * @group AWS::AppConfig
- */
-export interface AppConfigApplicationTags {
-    Value?: string;
-    Key?: string;
-}
-/**
  * Type definition for AWS::AppConfig::ConfigurationProfile.Tags
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-configurationprofile-tags.html | AWS::AppConfig::ConfigurationProfile.Tags}
@@ -1821,8 +1811,9 @@ export interface AppFlowConnectorProfileSalesforceConnectorProfileProperties {
  * @group AWS::AppFlow
  */
 export interface AppFlowConnectorProfileServiceNowConnectorProfileCredentials {
-    Username: string;
-    Password: string;
+    Username?: string;
+    OAuth2Credentials?: AppFlowConnectorProfileOAuth2Credentials;
+    Password?: string;
 }
 /**
  * Type definition for AWS::AppFlow::ConnectorProfile.ServiceNowConnectorProfileProperties
@@ -3955,6 +3946,7 @@ export interface AppRunnerServiceCodeConfigurationValues {
 export interface AppRunnerServiceCodeRepository {
     SourceCodeVersion: AppRunnerServiceSourceCodeVersion;
     CodeConfiguration?: AppRunnerServiceCodeConfiguration;
+    SourceDirectory?: string;
     RepositoryUrl: string;
 }
 /**
@@ -16855,12 +16847,12 @@ export interface ElasticLoadBalancingV2ListenerRuleTargetGroupTuple {
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-loadbalancer-loadbalancerattributes.html | AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-loadbalancer-loadbalancerattribute.html | AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute}
  * @group AWS::ElasticLoadBalancingV2
  */
 export interface ElasticLoadBalancingV2LoadBalancerLoadBalancerAttribute {
-    Key?: string;
     Value?: string;
+    Key?: string;
 }
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::LoadBalancer.SubnetMapping
@@ -16871,8 +16863,8 @@ export interface ElasticLoadBalancingV2LoadBalancerLoadBalancerAttribute {
 export interface ElasticLoadBalancingV2LoadBalancerSubnetMapping {
     AllocationId?: string;
     IPv6Address?: string;
-    PrivateIPv4Address?: string;
     SubnetId: string;
+    PrivateIPv4Address?: string;
 }
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::TargetGroup.Matcher
@@ -26133,6 +26125,16 @@ export interface KinesisFirehoseDeliveryStreamAmazonopensearchserviceRetryOption
     DurationInSeconds?: number;
 }
 /**
+ * Type definition for AWS::KinesisFirehose::DeliveryStream.AuthenticationConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-kinesisfirehose-deliverystream-authenticationconfiguration.html | AWS::KinesisFirehose::DeliveryStream.AuthenticationConfiguration}
+ * @group AWS::KinesisFirehose
+ */
+export interface KinesisFirehoseDeliveryStreamAuthenticationConfiguration {
+    Connectivity: string;
+    RoleARN: string;
+}
+/**
  * Type definition for AWS::KinesisFirehose::DeliveryStream.BufferingHints
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-kinesisfirehose-deliverystream-bufferinghints.html | AWS::KinesisFirehose::DeliveryStream.BufferingHints}
@@ -26371,6 +26373,17 @@ export interface KinesisFirehoseDeliveryStreamKMSEncryptionConfig {
 export interface KinesisFirehoseDeliveryStreamKinesisStreamSourceConfiguration {
     KinesisStreamARN: string;
     RoleARN: string;
+}
+/**
+ * Type definition for AWS::KinesisFirehose::DeliveryStream.MSKSourceConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-kinesisfirehose-deliverystream-msksourceconfiguration.html | AWS::KinesisFirehose::DeliveryStream.MSKSourceConfiguration}
+ * @group AWS::KinesisFirehose
+ */
+export interface KinesisFirehoseDeliveryStreamMSKSourceConfiguration {
+    AuthenticationConfiguration: KinesisFirehoseDeliveryStreamAuthenticationConfiguration;
+    MSKClusterARN: string;
+    TopicName: string;
 }
 /**
  * Type definition for AWS::KinesisFirehose::DeliveryStream.OpenXJsonSerDe
@@ -29288,6 +29301,17 @@ export interface MSKClusterVpcConnectivityScram {
  */
 export interface MSKClusterVpcConnectivityTls {
     Enabled: boolean;
+}
+/**
+ * Type definition for AWS::MSK::Configuration.LatestRevision
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-configuration-latestrevision.html | AWS::MSK::Configuration.LatestRevision}
+ * @group AWS::MSK
+ */
+export interface MSKConfigurationLatestRevision {
+    Description?: string;
+    Revision?: number;
+    CreationTime?: string;
 }
 /**
  * Type definition for AWS::MSK::ServerlessCluster.ClientAuthentication
@@ -42236,6 +42260,7 @@ export interface QuickSightDashboardDateTimeParameterDeclaration {
  */
 export interface QuickSightDashboardDateTimePickerControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
     DateTimeFormat?: string;
 }
 /**
@@ -42420,6 +42445,7 @@ export interface QuickSightDashboardDrillDownFilter {
 export interface QuickSightDashboardDropDownControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
     SelectAllOptions?: QuickSightDashboardListControlSelectAllOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.DynamicDefaultValue
@@ -42785,6 +42811,7 @@ export interface QuickSightDashboardFilterRelativeDateTimeControl {
  * @group AWS::QuickSight
  */
 export interface QuickSightDashboardFilterScopeConfiguration {
+    AllSheets?: object;
     SelectedSheets?: QuickSightDashboardSelectedSheetsFilterScopeConfiguration;
 }
 /**
@@ -42881,7 +42908,7 @@ export interface QuickSightDashboardForecastComputation {
     Seasonality?: string;
     CustomSeasonalityValue?: number;
     Value?: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     UpperBoundary?: number;
     ComputationId: string;
     Name?: string;
@@ -43355,7 +43382,7 @@ export interface QuickSightDashboardGridLayoutScreenCanvasSizeOptions {
  */
 export interface QuickSightDashboardGrowthRateComputation {
     Value?: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     PeriodSize?: number;
     ComputationId: string;
     Name?: string;
@@ -43852,6 +43879,7 @@ export interface QuickSightDashboardListControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
     SearchOptions?: QuickSightDashboardListControlSearchOptions;
     SelectAllOptions?: QuickSightDashboardListControlSelectAllOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.ListControlSearchOptions
@@ -43927,7 +43955,7 @@ export interface QuickSightDashboardMaximumLabelType {
 export interface QuickSightDashboardMaximumMinimumComputation {
     Type: string;
     Value?: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     ComputationId: string;
     Name?: string;
 }
@@ -43950,10 +43978,10 @@ export interface QuickSightDashboardMeasureField {
  * @group AWS::QuickSight
  */
 export interface QuickSightDashboardMetricComparisonComputation {
-    TargetValue: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    TargetValue?: QuickSightDashboardMeasureField;
+    Time?: QuickSightDashboardDimensionField;
     ComputationId: string;
-    FromValue: QuickSightDashboardMeasureField;
+    FromValue?: QuickSightDashboardMeasureField;
     Name?: string;
 }
 /**
@@ -44343,7 +44371,7 @@ export interface QuickSightDashboardPercentileAggregation {
  */
 export interface QuickSightDashboardPeriodOverPeriodComputation {
     Value?: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     ComputationId: string;
     Name?: string;
 }
@@ -44356,7 +44384,7 @@ export interface QuickSightDashboardPeriodOverPeriodComputation {
 export interface QuickSightDashboardPeriodToDateComputation {
     PeriodTimeGranularity?: string;
     Value?: QuickSightDashboardMeasureField;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     ComputationId: string;
     Name?: string;
 }
@@ -44577,14 +44605,17 @@ export interface QuickSightDashboardPivotTableFieldWells {
  */
 export interface QuickSightDashboardPivotTableOptions {
     RowFieldNamesStyle?: QuickSightDashboardTableCellStyle;
-    SingleMetricVisibility?: string;
-    ColumnHeaderStyle?: QuickSightDashboardTableCellStyle;
     RowHeaderStyle?: QuickSightDashboardTableCellStyle;
     CollapsedRowDimensionsVisibility?: string;
+    RowsLayout?: string;
     MetricPlacement?: string;
+    DefaultCellWidth?: string;
+    ColumnNamesVisibility?: string;
+    RowsLabelOptions?: QuickSightDashboardPivotTableRowsLabelOptions;
+    SingleMetricVisibility?: string;
+    ColumnHeaderStyle?: QuickSightDashboardTableCellStyle;
     ToggleButtonsVisibility?: string;
     CellStyle?: QuickSightDashboardTableCellStyle;
-    ColumnNamesVisibility?: string;
     RowAlternateColorOptions?: QuickSightDashboardRowAlternateColorOptions;
 }
 /**
@@ -44596,6 +44627,16 @@ export interface QuickSightDashboardPivotTableOptions {
 export interface QuickSightDashboardPivotTablePaginatedReportOptions {
     OverflowColumnHeaderVisibility?: string;
     VerticalOverflowVisibility?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.PivotTableRowsLabelOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-pivottablerowslabeloptions.html | AWS::QuickSight::Dashboard.PivotTableRowsLabelOptions}
+ * @group AWS::QuickSight
+ */
+export interface QuickSightDashboardPivotTableRowsLabelOptions {
+    CustomLabel?: string;
+    Visibility?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.PivotTableSortBy
@@ -44868,6 +44909,7 @@ export interface QuickSightDashboardReferenceLineValueLabelConfiguration {
  */
 export interface QuickSightDashboardRelativeDateTimeControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
     DateTimeFormat?: string;
 }
 /**
@@ -44917,6 +44959,7 @@ export interface QuickSightDashboardRollingDateConfiguration {
  */
 export interface QuickSightDashboardRowAlternateColorOptions {
     Status?: string;
+    UsePrimaryBackgroundColor?: string;
     RowAlternateColors?: any[];
 }
 /**
@@ -45188,6 +45231,16 @@ export interface QuickSightDashboardSheet {
     Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.SheetControlInfoIconLabelOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-sheetcontrolinfoiconlabeloptions.html | AWS::QuickSight::Dashboard.SheetControlInfoIconLabelOptions}
+ * @group AWS::QuickSight
+ */
+export interface QuickSightDashboardSheetControlInfoIconLabelOptions {
+    Visibility?: string;
+    InfoIconText?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.SheetControlLayout
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-sheetcontrollayout.html | AWS::QuickSight::Dashboard.SheetControlLayout}
@@ -45309,6 +45362,17 @@ export interface QuickSightDashboardSimpleClusterMarker {
  */
 export interface QuickSightDashboardSliderControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.SmallMultiplesAxisProperties
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-smallmultiplesaxisproperties.html | AWS::QuickSight::Dashboard.SmallMultiplesAxisProperties}
+ * @group AWS::QuickSight
+ */
+export interface QuickSightDashboardSmallMultiplesAxisProperties {
+    Placement?: string;
+    Scale?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.SmallMultiplesOptions
@@ -45320,6 +45384,8 @@ export interface QuickSightDashboardSmallMultiplesOptions {
     MaxVisibleRows?: number;
     PanelConfiguration?: QuickSightDashboardPanelConfiguration;
     MaxVisibleColumns?: number;
+    XAxis?: QuickSightDashboardSmallMultiplesAxisProperties;
+    YAxis?: QuickSightDashboardSmallMultiplesAxisProperties;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.Spacing
@@ -45400,6 +45466,7 @@ export interface QuickSightDashboardSubtotalOptions {
     TotalsVisibility?: string;
     FieldLevel?: string;
     MetricHeaderCellStyle?: QuickSightDashboardTableCellStyle;
+    StyleTargets?: any[];
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.TableAggregatedFieldWells
@@ -45648,6 +45715,15 @@ export interface QuickSightDashboardTableSortConfiguration {
     PaginationConfiguration?: QuickSightDashboardPaginationConfiguration;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.TableStyleTarget
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-tablestyletarget.html | AWS::QuickSight::Dashboard.TableStyleTarget}
+ * @group AWS::QuickSight
+ */
+export interface QuickSightDashboardTableStyleTarget {
+    CellType: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.TableUnaggregatedFieldWells
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-tableunaggregatedfieldwells.html | AWS::QuickSight::Dashboard.TableUnaggregatedFieldWells}
@@ -45679,6 +45755,7 @@ export interface QuickSightDashboardTableVisual {
 export interface QuickSightDashboardTextAreaControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
     PlaceholderOptions?: QuickSightDashboardTextControlPlaceholderOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.TextConditionalFormat
@@ -45709,6 +45786,7 @@ export interface QuickSightDashboardTextControlPlaceholderOptions {
 export interface QuickSightDashboardTextFieldControlDisplayOptions {
     TitleOptions?: QuickSightDashboardLabelOptions;
     PlaceholderOptions?: QuickSightDashboardTextControlPlaceholderOptions;
+    InfoIconLabelOptions?: QuickSightDashboardSheetControlInfoIconLabelOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.ThousandSeparatorOptions
@@ -45830,10 +45908,10 @@ export interface QuickSightDashboardTopBottomFilter {
  */
 export interface QuickSightDashboardTopBottomMoversComputation {
     Type: string;
-    Category: QuickSightDashboardDimensionField;
+    Category?: QuickSightDashboardDimensionField;
     Value?: QuickSightDashboardMeasureField;
     SortOrder?: string;
-    Time: QuickSightDashboardDimensionField;
+    Time?: QuickSightDashboardDimensionField;
     MoverSize?: number;
     ComputationId: string;
     Name?: string;
@@ -45846,7 +45924,7 @@ export interface QuickSightDashboardTopBottomMoversComputation {
  */
 export interface QuickSightDashboardTopBottomRankedComputation {
     Type: string;
-    Category: QuickSightDashboardDimensionField;
+    Category?: QuickSightDashboardDimensionField;
     ResultSize?: number;
     Value?: QuickSightDashboardMeasureField;
     ComputationId: string;
@@ -45859,7 +45937,7 @@ export interface QuickSightDashboardTopBottomRankedComputation {
  * @group AWS::QuickSight
  */
 export interface QuickSightDashboardTotalAggregationComputation {
-    Value: QuickSightDashboardMeasureField;
+    Value?: QuickSightDashboardMeasureField;
     ComputationId: string;
     Name?: string;
 }
@@ -45964,7 +46042,7 @@ export interface QuickSightDashboardUnaggregatedField {
  * @group AWS::QuickSight
  */
 export interface QuickSightDashboardUniqueValuesComputation {
-    Category: QuickSightDashboardDimensionField;
+    Category?: QuickSightDashboardDimensionField;
     ComputationId: string;
     Name?: string;
 }
@@ -61706,14 +61784,24 @@ export interface AlexaASKSkillSkillPackage {
     Overrides?: AlexaASKSkillOverrides;
 }
 /**
+ * Type definition for Dev::AppConfig::Application.Tags
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-application-tags.html | Dev::AppConfig::Application.Tags}
+ * @group Dev::AppConfig
+ */
+export interface DevAppConfigApplicationTags {
+    Value?: string;
+    Key?: string;
+}
+/**
  * Type definition for Tag
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html | Tag}
  * @group Tag
  */
 export interface Tag {
-    Key: string;
     Value: string;
+    Key: string;
 }
 /**
  * Type definition for AWS::ACMPCA::Certificate
@@ -62817,17 +62905,6 @@ export interface ApiGatewayV2VpcLinkProps {
  */
 export interface ApiGatewayV2VpcLinkAttribs {
     VpcLinkId?: string;
-}
-/**
- * Type definition for AWS::AppConfig::Application
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | AWS::AppConfig::Application}
- * @group AWS::AppConfig
- */
-export interface AppConfigApplicationProps {
-    Description?: string;
-    Tags?: any[];
-    Name: string;
 }
 /**
  * Type definition for AWS::AppConfig::ConfigurationProfile
@@ -66417,7 +66494,7 @@ export interface CognitoUserPoolUserProps {
     UserPoolId: string;
     Username?: string;
     MessageAction?: string;
-    ClientMetadata?: object;
+    ClientMetadata?: Record<string, any>;
     DesiredDeliveryMediums?: any[];
     ForceAliasCreation?: boolean;
     UserAttributes?: any[];
@@ -68758,8 +68835,6 @@ export interface EC2HostAttribs {
  * @group AWS::EC2
  */
 export interface EC2IPAMProps {
-    DefaultResourceDiscoveryAssociationId?: string;
-    DefaultResourceDiscoveryId?: string;
     Description?: string;
     Tags?: any[];
     OperatingRegions?: any[];
@@ -68771,6 +68846,8 @@ export interface EC2IPAMProps {
  * @group AWS::EC2
  */
 export interface EC2IPAMAttribs {
+    DefaultResourceDiscoveryAssociationId?: string;
+    DefaultResourceDiscoveryId?: string;
     IpamId?: string;
     ResourceDiscoveryAssociationCount?: number;
     ScopeCount?: number;
@@ -71498,14 +71575,14 @@ export interface ElasticLoadBalancingV2ListenerRuleAttribs {
  */
 export interface ElasticLoadBalancingV2LoadBalancerProps {
     IpAddressType?: string;
-    LoadBalancerAttributes?: any[];
-    Name?: string;
-    Scheme?: string;
     SecurityGroups?: any[];
-    SubnetMappings?: any[];
+    LoadBalancerAttributes?: any[];
     Subnets?: any[];
-    Tags?: any[];
     Type?: string;
+    Scheme?: string;
+    Tags?: any[];
+    Name?: string;
+    SubnetMappings?: any[];
 }
 /**
  * Attributes type definition for AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -71514,11 +71591,12 @@ export interface ElasticLoadBalancingV2LoadBalancerProps {
  * @group AWS::ElasticLoadBalancingV2
  */
 export interface ElasticLoadBalancingV2LoadBalancerAttribs {
+    SecurityGroups?: any[];
+    LoadBalancerName?: string;
     CanonicalHostedZoneID?: string;
+    LoadBalancerArn?: string;
     DNSName?: string;
     LoadBalancerFullName?: string;
-    LoadBalancerName?: string;
-    SecurityGroups?: any[];
 }
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::TargetGroup
@@ -73589,6 +73667,30 @@ export interface GuardDutyThreatIntelSetProps {
     Tags?: any[];
     Name?: string;
     Location: string;
+}
+/**
+ * Type definition for AWS::HealthImaging::Datastore
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-healthimaging-datastore.html | AWS::HealthImaging::Datastore}
+ * @group AWS::HealthImaging
+ */
+export interface HealthImagingDatastoreProps {
+    KmsKeyArn?: string;
+    DatastoreName?: string;
+    Tags?: Record<string, any>;
+}
+/**
+ * Attributes type definition for AWS::HealthImaging::Datastore
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-healthimaging-datastore.html | AWS::HealthImaging::Datastore}
+ * @group AWS::HealthImaging
+ */
+export interface HealthImagingDatastoreAttribs {
+    DatastoreArn?: string;
+    DatastoreId?: string;
+    DatastoreStatus?: string;
+    CreatedAt?: string;
+    UpdatedAt?: string;
 }
 /**
  * Type definition for AWS::HealthLake::FHIRDatastore
@@ -76070,6 +76172,7 @@ export interface KafkaConnectConnectorAttribs {
 export interface KendraDataSourceProps {
     CustomDocumentEnrichmentConfiguration?: KendraDataSourceCustomDocumentEnrichmentConfiguration;
     IndexId: string;
+    LanguageCode?: string;
     Type: string;
     Description?: string;
     Schedule?: string;
@@ -76301,6 +76404,7 @@ export interface KinesisFirehoseDeliveryStreamProps {
     DeliveryStreamType?: string;
     RedshiftDestinationConfiguration?: KinesisFirehoseDeliveryStreamRedshiftDestinationConfiguration;
     AmazonopensearchserviceDestinationConfiguration?: KinesisFirehoseDeliveryStreamAmazonopensearchserviceDestinationConfiguration;
+    MSKSourceConfiguration?: KinesisFirehoseDeliveryStreamMSKSourceConfiguration;
     SplunkDestinationConfiguration?: KinesisFirehoseDeliveryStreamSplunkDestinationConfiguration;
     ExtendedS3DestinationConfiguration?: KinesisFirehoseDeliveryStreamExtendedS3DestinationConfiguration;
     AmazonOpenSearchServerlessDestinationConfiguration?: KinesisFirehoseDeliveryStreamAmazonOpenSearchServerlessDestinationConfiguration;
@@ -77652,6 +77756,7 @@ export interface MSKClusterPolicyAttribs {
  */
 export interface MSKConfigurationProps {
     Description?: string;
+    LatestRevision?: MSKConfigurationLatestRevision;
     ServerProperties: string;
     KafkaVersionsList?: any[];
     Name: string;
@@ -77663,6 +77768,9 @@ export interface MSKConfigurationProps {
  * @group AWS::MSK
  */
 export interface MSKConfigurationAttribs {
+    "LatestRevision.Revision"?: number;
+    "LatestRevision.CreationTime"?: string;
+    "LatestRevision.Description"?: string;
     Arn?: string;
 }
 /**
@@ -83156,7 +83264,7 @@ export interface S3BucketAttribs {
 /**
  * Type definition for AWS::S3::BucketPolicy
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html | AWS::S3::BucketPolicy}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-bucketpolicy.html | AWS::S3::BucketPolicy}
  * @group AWS::S3
  */
 export interface S3BucketPolicyProps {
@@ -83762,7 +83870,7 @@ export interface SSMParameterProps {
     Tier?: string;
     Value: string;
     DataType?: string;
-    Tags?: object;
+    Tags?: Record<string, any>;
     Name?: string;
 }
 /**
@@ -84475,6 +84583,7 @@ export interface SageMakerModelPackageProps {
     ValidationSpecification?: SageMakerModelPackageValidationSpecification;
     SourceAlgorithmSpecification?: SageMakerModelPackageSourceAlgorithmSpecification;
     ModelPackageStatusDetails?: SageMakerModelPackageModelPackageStatusDetails;
+    SkipModelValidation?: string;
     ModelPackageDescription?: string;
     AdditionalInferenceSpecificationsToAdd?: any[];
     ModelPackageName?: string;
@@ -87010,6 +87119,17 @@ export interface AlexaASKSkillProps {
     VendorId: string;
     SkillPackage: AlexaASKSkillSkillPackage;
 }
+/**
+ * Type definition for Dev::AppConfig::Application
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | Dev::AppConfig::Application}
+ * @group Dev::AppConfig
+ */
+export interface DevAppConfigApplicationProps {
+    Description?: string;
+    Tags?: any[];
+    Name: string;
+}
 export interface ResourceTypes {
     "AWS::ACMPCA::Certificate": ACMPCACertificateProps;
     "AWS::ACMPCA::CertificateAuthority": ACMPCACertificateAuthorityProps;
@@ -87059,7 +87179,6 @@ export interface ResourceTypes {
     "AWS::ApiGatewayV2::RouteResponse": ApiGatewayV2RouteResponseProps;
     "AWS::ApiGatewayV2::Stage": ApiGatewayV2StageProps;
     "AWS::ApiGatewayV2::VpcLink": ApiGatewayV2VpcLinkProps;
-    "AWS::AppConfig::Application": AppConfigApplicationProps;
     "AWS::AppConfig::ConfigurationProfile": AppConfigConfigurationProfileProps;
     "AWS::AppConfig::Deployment": AppConfigDeploymentProps;
     "AWS::AppConfig::DeploymentStrategy": AppConfigDeploymentStrategyProps;
@@ -87549,6 +87668,7 @@ export interface ResourceTypes {
     "AWS::GuardDuty::Master": GuardDutyMasterProps;
     "AWS::GuardDuty::Member": GuardDutyMemberProps;
     "AWS::GuardDuty::ThreatIntelSet": GuardDutyThreatIntelSetProps;
+    "AWS::HealthImaging::Datastore": HealthImagingDatastoreProps;
     "AWS::HealthLake::FHIRDatastore": HealthLakeFHIRDatastoreProps;
     "AWS::IAM::AccessKey": IAMAccessKeyProps;
     "AWS::IAM::Group": IAMGroupProps;
@@ -88152,6 +88272,7 @@ export interface ResourceTypes {
     "AWS::XRay::ResourcePolicy": XRayResourcePolicyProps;
     "AWS::XRay::SamplingRule": XRaySamplingRuleProps;
     "Alexa::ASK::Skill": AlexaASKSkillProps;
+    "Dev::AppConfig::Application": DevAppConfigApplicationProps;
 }
 export interface AttributeTypes {
     "AWS::ACMPCA::Certificate": ACMPCACertificateAttribs;
@@ -88537,6 +88658,7 @@ export interface AttributeTypes {
     "AWS::GroundStation::DataflowEndpointGroup": GroundStationDataflowEndpointGroupAttribs;
     "AWS::GroundStation::MissionProfile": GroundStationMissionProfileAttribs;
     "AWS::GuardDuty::Detector": GuardDutyDetectorAttribs;
+    "AWS::HealthImaging::Datastore": HealthImagingDatastoreAttribs;
     "AWS::HealthLake::FHIRDatastore": HealthLakeFHIRDatastoreAttribs;
     "AWS::IAM::AccessKey": IAMAccessKeyAttribs;
     "AWS::IAM::Group": IAMGroupAttribs;
@@ -89045,7 +89167,6 @@ export const ResourceType = {
     ApiGatewayV2RouteResponse: "AWS::ApiGatewayV2::RouteResponse",
     ApiGatewayV2Stage: "AWS::ApiGatewayV2::Stage",
     ApiGatewayV2VpcLink: "AWS::ApiGatewayV2::VpcLink",
-    AppConfigApplication: "AWS::AppConfig::Application",
     AppConfigConfigurationProfile: "AWS::AppConfig::ConfigurationProfile",
     AppConfigDeployment: "AWS::AppConfig::Deployment",
     AppConfigDeploymentStrategy: "AWS::AppConfig::DeploymentStrategy",
@@ -89535,6 +89656,7 @@ export const ResourceType = {
     GuardDutyMaster: "AWS::GuardDuty::Master",
     GuardDutyMember: "AWS::GuardDuty::Member",
     GuardDutyThreatIntelSet: "AWS::GuardDuty::ThreatIntelSet",
+    HealthImagingDatastore: "AWS::HealthImaging::Datastore",
     HealthLakeFHIRDatastore: "AWS::HealthLake::FHIRDatastore",
     IAMAccessKey: "AWS::IAM::AccessKey",
     IAMGroup: "AWS::IAM::Group",
@@ -90137,7 +90259,8 @@ export const ResourceType = {
     XRayGroup: "AWS::XRay::Group",
     XRayResourcePolicy: "AWS::XRay::ResourcePolicy",
     XRaySamplingRule: "AWS::XRay::SamplingRule",
-    AlexaASKSkill: "Alexa::ASK::Skill"
+    AlexaASKSkill: "Alexa::ASK::Skill",
+    DevAppConfigApplication: "Dev::AppConfig::Application"
 } as const;
 export const AttributeNames: AttributeNameMap = {
     "AWS::ACMPCA::Certificate": ["Arn", "Certificate"],
@@ -90188,7 +90311,6 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::ApiGatewayV2::RouteResponse": ["RouteResponseId"],
     "AWS::ApiGatewayV2::Stage": [],
     "AWS::ApiGatewayV2::VpcLink": ["VpcLinkId"],
-    "AWS::AppConfig::Application": [],
     "AWS::AppConfig::ConfigurationProfile": [],
     "AWS::AppConfig::Deployment": [],
     "AWS::AppConfig::DeploymentStrategy": [],
@@ -90458,7 +90580,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::EC2::FlowLog": ["Id"],
     "AWS::EC2::GatewayRouteTableAssociation": ["AssociationId"],
     "AWS::EC2::Host": ["HostId"],
-    "AWS::EC2::IPAM": ["IpamId", "ResourceDiscoveryAssociationCount", "ScopeCount", "Arn", "PrivateDefaultScopeId", "PublicDefaultScopeId"],
+    "AWS::EC2::IPAM": ["DefaultResourceDiscoveryAssociationId", "DefaultResourceDiscoveryId", "IpamId", "ResourceDiscoveryAssociationCount", "ScopeCount", "Arn", "PrivateDefaultScopeId", "PublicDefaultScopeId"],
     "AWS::EC2::IPAMAllocation": ["IpamPoolAllocationId"],
     "AWS::EC2::IPAMPool": ["IpamPoolId", "IpamArn", "PoolDepth", "State", "IpamScopeArn", "IpamScopeType", "Arn", "StateMessage"],
     "AWS::EC2::IPAMPoolCidr": ["IpamPoolCidrId", "State"],
@@ -90580,7 +90702,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::ElasticLoadBalancingV2::Listener": ["ListenerArn"],
     "AWS::ElasticLoadBalancingV2::ListenerCertificate": [],
     "AWS::ElasticLoadBalancingV2::ListenerRule": ["IsDefault", "RuleArn"],
-    "AWS::ElasticLoadBalancingV2::LoadBalancer": ["CanonicalHostedZoneID", "DNSName", "LoadBalancerFullName", "LoadBalancerName", "SecurityGroups"],
+    "AWS::ElasticLoadBalancingV2::LoadBalancer": ["SecurityGroups", "LoadBalancerName", "CanonicalHostedZoneID", "LoadBalancerArn", "DNSName", "LoadBalancerFullName"],
     "AWS::ElasticLoadBalancingV2::TargetGroup": ["TargetGroupArn", "LoadBalancerArns", "TargetGroupFullName", "TargetGroupName"],
     "AWS::Elasticsearch::Domain": ["Arn", "DomainArn", "DomainEndpoint"],
     "AWS::EntityResolution::MatchingWorkflow": ["CreatedAt", "WorkflowArn", "UpdatedAt"],
@@ -90678,6 +90800,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::GuardDuty::Master": [],
     "AWS::GuardDuty::Member": [],
     "AWS::GuardDuty::ThreatIntelSet": [],
+    "AWS::HealthImaging::Datastore": ["DatastoreArn", "DatastoreId", "DatastoreStatus", "CreatedAt", "UpdatedAt"],
     "AWS::HealthLake::FHIRDatastore": ["DatastoreArn", "CreatedAt.Nanos", "DatastoreId", "CreatedAt", "DatastoreStatus", "DatastoreEndpoint", "CreatedAt.Seconds"],
     "AWS::IAM::AccessKey": ["SecretAccessKey"],
     "AWS::IAM::Group": ["Arn"],
@@ -90859,7 +90982,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::MSK::BatchScramSecret": [],
     "AWS::MSK::Cluster": ["Arn"],
     "AWS::MSK::ClusterPolicy": ["CurrentVersion"],
-    "AWS::MSK::Configuration": ["Arn"],
+    "AWS::MSK::Configuration": ["LatestRevision.Revision", "LatestRevision.CreationTime", "LatestRevision.Description", "Arn"],
     "AWS::MSK::ServerlessCluster": ["Arn"],
     "AWS::MSK::VpcConnection": ["Arn"],
     "AWS::MWAA::Environment": ["LoggingConfiguration.TaskLogs.CloudWatchLogGroupArn", "LoggingConfiguration.WebserverLogs.CloudWatchLogGroupArn", "LoggingConfiguration.DagProcessingLogs.CloudWatchLogGroupArn", "WebserverUrl", "LoggingConfiguration.SchedulerLogs.CloudWatchLogGroupArn", "Arn", "LoggingConfiguration.WorkerLogs.CloudWatchLogGroupArn"],
@@ -91280,6 +91403,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::XRay::Group": ["GroupARN"],
     "AWS::XRay::ResourcePolicy": [],
     "AWS::XRay::SamplingRule": ["RuleARN"],
-    "Alexa::ASK::Skill": []
+    "Alexa::ASK::Skill": [],
+    "Dev::AppConfig::Application": []
 };
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
