@@ -1,4 +1,4 @@
-export const ResourceSpecificationVersion = "142.0.0";
+export const ResourceSpecificationVersion = "142.1.0";
 /**
  * Type definition for AWS::ACMPCA::Certificate.ApiPassthrough
  *
@@ -1343,6 +1343,16 @@ export interface ApiGatewayV2StageRouteSettings {
     ThrottlingBurstLimit?: number;
     DetailedMetricsEnabled?: boolean;
     ThrottlingRateLimit?: number;
+}
+/**
+ * Type definition for AWS::AppConfig::Application.Tags
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-application-tags.html | AWS::AppConfig::Application.Tags}
+ * @group AWS::AppConfig
+ */
+export interface AppConfigApplicationTags {
+    Value?: string;
+    Key?: string;
 }
 /**
  * Type definition for AWS::AppConfig::ConfigurationProfile.Tags
@@ -17306,9 +17316,9 @@ export interface EventsEventBusPolicyCondition {
  * @group AWS::Events
  */
 export interface EventsRuleAwsVpcConfiguration {
-    AssignPublicIp?: string;
     SecurityGroups?: any[];
     Subnets: any[];
+    AssignPublicIp?: string;
 }
 /**
  * Type definition for AWS::Events::Rule.BatchArrayProperties
@@ -17327,9 +17337,9 @@ export interface EventsRuleBatchArrayProperties {
  */
 export interface EventsRuleBatchParameters {
     ArrayProperties?: EventsRuleBatchArrayProperties;
-    JobDefinition: string;
     JobName: string;
     RetryStrategy?: EventsRuleBatchRetryStrategy;
+    JobDefinition: string;
 }
 /**
  * Type definition for AWS::Events::Rule.BatchRetryStrategy
@@ -17347,8 +17357,8 @@ export interface EventsRuleBatchRetryStrategy {
  * @group AWS::Events
  */
 export interface EventsRuleCapacityProviderStrategyItem {
-    Base?: number;
     CapacityProvider: string;
+    Base?: number;
     Weight?: number;
 }
 /**
@@ -17367,19 +17377,19 @@ export interface EventsRuleDeadLetterConfig {
  * @group AWS::Events
  */
 export interface EventsRuleEcsParameters {
-    CapacityProviderStrategy?: any[];
+    PlatformVersion?: string;
+    Group?: string;
     EnableECSManagedTags?: boolean;
     EnableExecuteCommand?: boolean;
-    Group?: string;
-    LaunchType?: string;
-    NetworkConfiguration?: EventsRuleNetworkConfiguration;
     PlacementConstraints?: any[];
-    PlacementStrategies?: any[];
-    PlatformVersion?: string;
     PropagateTags?: string;
+    TaskCount?: number;
+    PlacementStrategies?: any[];
+    CapacityProviderStrategy?: any[];
+    LaunchType?: string;
     ReferenceId?: string;
     TagList?: any[];
-    TaskCount?: number;
+    NetworkConfiguration?: EventsRuleNetworkConfiguration;
     TaskDefinitionArn: string;
 }
 /**
@@ -17389,8 +17399,8 @@ export interface EventsRuleEcsParameters {
  * @group AWS::Events
  */
 export interface EventsRuleHttpParameters {
-    HeaderParameters?: Record<string, any>;
     PathParameterValues?: any[];
+    HeaderParameters?: Record<string, any>;
     QueryStringParameters?: Record<string, any>;
 }
 /**
@@ -17428,8 +17438,8 @@ export interface EventsRuleNetworkConfiguration {
  * @group AWS::Events
  */
 export interface EventsRulePlacementConstraint {
-    Expression?: string;
     Type?: string;
+    Expression?: string;
 }
 /**
  * Type definition for AWS::Events::Rule.PlacementStrategy
@@ -17448,11 +17458,12 @@ export interface EventsRulePlacementStrategy {
  * @group AWS::Events
  */
 export interface EventsRuleRedshiftDataParameters {
-    Database: string;
-    DbUser?: string;
-    SecretManagerArn?: string;
-    Sql?: string;
     StatementName?: string;
+    Sqls?: any[];
+    Database: string;
+    SecretManagerArn?: string;
+    DbUser?: string;
+    Sql: string;
     WithEvent?: boolean;
 }
 /**
@@ -17462,8 +17473,8 @@ export interface EventsRuleRedshiftDataParameters {
  * @group AWS::Events
  */
 export interface EventsRuleRetryPolicy {
-    MaximumEventAgeInSeconds?: number;
     MaximumRetryAttempts?: number;
+    MaximumEventAgeInSeconds?: number;
 }
 /**
  * Type definition for AWS::Events::Rule.RunCommandParameters
@@ -17481,8 +17492,8 @@ export interface EventsRuleRunCommandParameters {
  * @group AWS::Events
  */
 export interface EventsRuleRunCommandTarget {
-    Key: string;
     Values: any[];
+    Key: string;
 }
 /**
  * Type definition for AWS::Events::Rule.SageMakerPipelineParameter
@@ -17491,8 +17502,8 @@ export interface EventsRuleRunCommandTarget {
  * @group AWS::Events
  */
 export interface EventsRuleSageMakerPipelineParameter {
-    Name: string;
     Value: string;
+    Name: string;
 }
 /**
  * Type definition for AWS::Events::Rule.SageMakerPipelineParameters
@@ -17513,38 +17524,28 @@ export interface EventsRuleSqsParameters {
     MessageGroupId: string;
 }
 /**
- * Type definition for AWS::Events::Rule.Tag
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-tag.html | AWS::Events::Rule.Tag}
- * @group AWS::Events
- */
-export interface EventsRuleTag {
-    Key?: string;
-    Value?: string;
-}
-/**
  * Type definition for AWS::Events::Rule.Target
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-target.html | AWS::Events::Rule.Target}
  * @group AWS::Events
  */
 export interface EventsRuleTarget {
-    Arn: string;
-    BatchParameters?: EventsRuleBatchParameters;
-    DeadLetterConfig?: EventsRuleDeadLetterConfig;
-    EcsParameters?: EventsRuleEcsParameters;
-    HttpParameters?: EventsRuleHttpParameters;
-    Id: string;
-    Input?: string;
     InputPath?: string;
+    HttpParameters?: EventsRuleHttpParameters;
+    DeadLetterConfig?: EventsRuleDeadLetterConfig;
+    RunCommandParameters?: EventsRuleRunCommandParameters;
     InputTransformer?: EventsRuleInputTransformer;
     KinesisParameters?: EventsRuleKinesisParameters;
-    RedshiftDataParameters?: EventsRuleRedshiftDataParameters;
-    RetryPolicy?: EventsRuleRetryPolicy;
     RoleArn?: string;
-    RunCommandParameters?: EventsRuleRunCommandParameters;
-    SageMakerPipelineParameters?: EventsRuleSageMakerPipelineParameters;
+    RedshiftDataParameters?: EventsRuleRedshiftDataParameters;
+    Input?: string;
     SqsParameters?: EventsRuleSqsParameters;
+    EcsParameters?: EventsRuleEcsParameters;
+    BatchParameters?: EventsRuleBatchParameters;
+    Id: string;
+    Arn: string;
+    SageMakerPipelineParameters?: EventsRuleSageMakerPipelineParameters;
+    RetryPolicy?: EventsRuleRetryPolicy;
 }
 /**
  * Type definition for AWS::Evidently::Experiment.MetricGoalObject
@@ -61784,16 +61785,6 @@ export interface AlexaASKSkillSkillPackage {
     Overrides?: AlexaASKSkillOverrides;
 }
 /**
- * Type definition for Dev::AppConfig::Application.Tags
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-application-tags.html | Dev::AppConfig::Application.Tags}
- * @group Dev::AppConfig
- */
-export interface DevAppConfigApplicationTags {
-    Value?: string;
-    Key?: string;
-}
-/**
  * Type definition for Tag
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html | Tag}
@@ -62905,6 +62896,17 @@ export interface ApiGatewayV2VpcLinkProps {
  */
 export interface ApiGatewayV2VpcLinkAttribs {
     VpcLinkId?: string;
+}
+/**
+ * Type definition for AWS::AppConfig::Application
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | AWS::AppConfig::Application}
+ * @group AWS::AppConfig
+ */
+export interface AppConfigApplicationProps {
+    Description?: string;
+    Tags?: any[];
+    Name: string;
 }
 /**
  * Type definition for AWS::AppConfig::ConfigurationProfile
@@ -71946,14 +71948,14 @@ export interface EventsEventBusPolicyProps {
  * @group AWS::Events
  */
 export interface EventsRuleProps {
-    Description?: string;
     EventBusName?: string;
     EventPattern?: object;
-    Name?: string;
-    RoleArn?: string;
     ScheduleExpression?: string;
+    Description?: string;
     State?: string;
     Targets?: any[];
+    RoleArn?: string;
+    Name?: string;
 }
 /**
  * Attributes type definition for AWS::Events::Rule
@@ -87119,17 +87121,6 @@ export interface AlexaASKSkillProps {
     VendorId: string;
     SkillPackage: AlexaASKSkillSkillPackage;
 }
-/**
- * Type definition for Dev::AppConfig::Application
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | Dev::AppConfig::Application}
- * @group Dev::AppConfig
- */
-export interface DevAppConfigApplicationProps {
-    Description?: string;
-    Tags?: any[];
-    Name: string;
-}
 export interface ResourceTypes {
     "AWS::ACMPCA::Certificate": ACMPCACertificateProps;
     "AWS::ACMPCA::CertificateAuthority": ACMPCACertificateAuthorityProps;
@@ -87179,6 +87170,7 @@ export interface ResourceTypes {
     "AWS::ApiGatewayV2::RouteResponse": ApiGatewayV2RouteResponseProps;
     "AWS::ApiGatewayV2::Stage": ApiGatewayV2StageProps;
     "AWS::ApiGatewayV2::VpcLink": ApiGatewayV2VpcLinkProps;
+    "AWS::AppConfig::Application": AppConfigApplicationProps;
     "AWS::AppConfig::ConfigurationProfile": AppConfigConfigurationProfileProps;
     "AWS::AppConfig::Deployment": AppConfigDeploymentProps;
     "AWS::AppConfig::DeploymentStrategy": AppConfigDeploymentStrategyProps;
@@ -88272,7 +88264,6 @@ export interface ResourceTypes {
     "AWS::XRay::ResourcePolicy": XRayResourcePolicyProps;
     "AWS::XRay::SamplingRule": XRaySamplingRuleProps;
     "Alexa::ASK::Skill": AlexaASKSkillProps;
-    "Dev::AppConfig::Application": DevAppConfigApplicationProps;
 }
 export interface AttributeTypes {
     "AWS::ACMPCA::Certificate": ACMPCACertificateAttribs;
@@ -89167,6 +89158,7 @@ export const ResourceType = {
     ApiGatewayV2RouteResponse: "AWS::ApiGatewayV2::RouteResponse",
     ApiGatewayV2Stage: "AWS::ApiGatewayV2::Stage",
     ApiGatewayV2VpcLink: "AWS::ApiGatewayV2::VpcLink",
+    AppConfigApplication: "AWS::AppConfig::Application",
     AppConfigConfigurationProfile: "AWS::AppConfig::ConfigurationProfile",
     AppConfigDeployment: "AWS::AppConfig::Deployment",
     AppConfigDeploymentStrategy: "AWS::AppConfig::DeploymentStrategy",
@@ -90259,8 +90251,7 @@ export const ResourceType = {
     XRayGroup: "AWS::XRay::Group",
     XRayResourcePolicy: "AWS::XRay::ResourcePolicy",
     XRaySamplingRule: "AWS::XRay::SamplingRule",
-    AlexaASKSkill: "Alexa::ASK::Skill",
-    DevAppConfigApplication: "Dev::AppConfig::Application"
+    AlexaASKSkill: "Alexa::ASK::Skill"
 } as const;
 export const AttributeNames: AttributeNameMap = {
     "AWS::ACMPCA::Certificate": ["Arn", "Certificate"],
@@ -90311,6 +90302,7 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::ApiGatewayV2::RouteResponse": ["RouteResponseId"],
     "AWS::ApiGatewayV2::Stage": [],
     "AWS::ApiGatewayV2::VpcLink": ["VpcLinkId"],
+    "AWS::AppConfig::Application": [],
     "AWS::AppConfig::ConfigurationProfile": [],
     "AWS::AppConfig::Deployment": [],
     "AWS::AppConfig::DeploymentStrategy": [],
@@ -91403,7 +91395,6 @@ export const AttributeNames: AttributeNameMap = {
     "AWS::XRay::Group": ["GroupARN"],
     "AWS::XRay::ResourcePolicy": [],
     "AWS::XRay::SamplingRule": ["RuleARN"],
-    "Alexa::ASK::Skill": [],
-    "Dev::AppConfig::Application": []
+    "Alexa::ASK::Skill": []
 };
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
