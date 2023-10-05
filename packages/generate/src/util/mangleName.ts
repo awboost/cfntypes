@@ -2,21 +2,16 @@ import Debug from "debug";
 
 const debug = Debug("util:mangleName");
 
-export enum NameType {
-  Attributes = "Attributes",
-  Const = "Const",
-  Resource = "Resource",
-  Type = "Type",
-}
+export type NameType = "attributes" | "properties" | "resource" | "type";
 
 export function mangleName(name: string, kind: NameType): string {
   const converted = name.replace(/^AWS|::|\./g, "");
   debug("%s = %s", name, converted);
 
   switch (kind) {
-    case NameType.Attributes:
+    case "attributes":
       return converted + "Attribs";
-    case NameType.Resource:
+    case "properties":
       return converted + "Props";
     default:
       return converted;

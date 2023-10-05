@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2020"],
+    "lib": ["es2022"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noErrorTruncation": true,

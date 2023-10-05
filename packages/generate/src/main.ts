@@ -1,17 +1,18 @@
 import { getLatestSpec } from "@awboost/cfnspec";
 import createDebug from "debug";
 import { appendFile, mkdir, readFile, writeFile } from "fs/promises";
-import path, { dirname, resolve } from "path";
+import { join, resolve } from "path";
+import { format } from "prettier";
 import semver from "semver";
 import ts from "typescript";
 import { AstBuilder } from "./AstBuilder.js";
 
 const debug = createDebug(`cfntypes:generate`);
 
-await generate(process.argv[2], process.argv[3] !== "no-version");
+await main(process.argv[2], process.argv[3] !== "no-version");
 
-export async function generate(
-  outputFileName: string,
+export async function main(
+  outputDir: string,
   incrementPackageVersion: boolean,
 ): Promise<void> {
   const spec = await getLatestSpec();
@@ -27,25 +28,25 @@ export async function generate(
 
   // generate AST
   const builder = new AstBuilder(spec);
-  const sourceFile = builder.build();
+  const sourceFiles = builder.build();
 
-  const outputPath = resolve(outputFileName);
-  const outputDir = dirname(outputPath);
   await mkdir(outputDir, { recursive: true });
+  const printer = ts.createPrinter();
 
-  const output = ts.createPrinter().printFile(sourceFile);
-  await writeFile(outputPath, output, "utf8");
+  for (const [namespace, sourceFile] of Object.entries(sourceFiles)) {
+    const outputPath = join(outputDir, namespace.replace(/::/i, "-") + ".ts");
+    const output = await format(printer.printFile(sourceFile), {
+      filepath: outputPath,
+    });
+    await writeFile(outputPath, output, "utf8");
+  }
 
   // increment the package version according to the new Resource Spec version
-  const pkgPath = path.resolve(dirname(outputFileName), "../package.json");
+  const pkgPath = resolve(outputDir, "../../package.json");
   const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
 
   if (incrementPackageVersion) {
-    pkg.version = incrementVersion(
-      pkg.version,
-      pkg.awsResourceSpecificationVersion,
-      spec.ResourceSpecificationVersion,
-    );
+    pkg.version = incrementVersion(pkg.version);
   }
 
   console.log(`v${pkg.version}`);
@@ -62,11 +63,7 @@ export async function generate(
   await writeFile(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
-function incrementVersion(
-  pkgVersion: string,
-  currentAwsVersion: string | undefined,
-  newAwsVersion: string,
-): string {
+function incrementVersion(pkgVersion: string): string {
   const pre = semver.prerelease(pkgVersion);
   if (pre) {
     return semver.inc(pkgVersion, "prerelease") as string;
@@ -74,25 +71,9 @@ function incrementVersion(
 
   const maj = semver.major(pkgVersion);
 
-  const diff =
-    currentAwsVersion && semver.diff(currentAwsVersion, newAwsVersion);
-
-  switch (diff) {
-    case "major":
-      if (maj === 0) {
-        return semver.inc(pkgVersion, "minor") as string;
-      } else {
-        return semver.inc(pkgVersion, "major") as string;
-      }
-
-    case "minor":
-      if (maj === 0) {
-        return semver.inc(pkgVersion, "patch") as string;
-      } else {
-        return semver.inc(pkgVersion, "minor") as string;
-      }
-
-    default:
-      return semver.inc(pkgVersion, "patch") as string;
+  if (maj === 0) {
+    return semver.inc(pkgVersion, "patch") as string;
+  } else {
+    return semver.inc(pkgVersion, "minor") as string;
   }
 }

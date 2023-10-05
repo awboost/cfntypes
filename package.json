@@ -8,7 +8,7 @@
     "build": "npm run clean && npm run generate && npm run compile",
     "clean": "rimraf --glob '**/*.tsbuildinfo' 'packages/*/lib'",
     "compile": "node tsbuild.js",
-    "generate": "npm start -w packages/generate -- ../cfntypes/src/resources.generated.ts",
+    "generate": "npm start -w packages/generate -- ../cfntypes/src/resources.generated",
     "lint": "npm run --workspaces --if-present lint",
     "watch:compile": "node tsbuild.js -w"
   },
@@ -28,6 +28,6 @@
     "glob": "^10.3.4",
     "prettier": "^3.0.3",
     "semver": "^7.5.4",
-    "typescript": "^5.2.2"
+    "typescript": "~5.0"
   }
 }
