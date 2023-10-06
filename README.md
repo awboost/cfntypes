@@ -1,3 +1,7 @@
+# 🚧 Warning, unstable!
+
+Thanks for using my work! Please don't use the `v1.0.0-beta` versions right now, things are rapidly and wildly changing as I prototype other libraries in the suite. You can use `v0.*` versions but I don't intend to support this. Star the repo to keep up to date with new releases.
+
 # @awboost/cfntypes
 
 This is the monorepo for `@awboost/cfntypes`.
