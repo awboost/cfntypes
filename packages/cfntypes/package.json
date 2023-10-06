@@ -17,10 +17,6 @@
   "homepage": "https://github.com/awboost/cfntypes#readme",
   "license": "MIT",
   "exports": {
-    "./composition": {
-      "types": "./lib/composition.d.ts",
-      "default": "./lib/composition.js"
-    },
     "./intrinsics": {
       "types": "./lib/intrinsics.d.ts",
       "default": "./lib/intrinsics.js"
@@ -32,6 +28,10 @@
     "./template": {
       "types": "./lib/template.d.ts",
       "default": "./lib/template.js"
+    },
+    "./util": {
+      "types": "./lib/util.d.ts",
+      "default": "./lib/util.js"
     }
   },
   "files": [
