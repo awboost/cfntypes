@@ -19,6 +19,7 @@ export interface MediaTailorChannelDashPlaylistSettings {
  */
 export interface MediaTailorChannelHlsPlaylistSettings {
   ManifestWindowSeconds?: number;
+  AdMarkupType?: any[];
 }
 /**
  * Type definition for AWS::MediaTailor::Channel.LogConfigurationForChannel

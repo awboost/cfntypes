@@ -4,6 +4,6 @@
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html | Tag}
  */
 export interface Tag {
-  Value: string;
   Key: string;
+  Value: string;
 }

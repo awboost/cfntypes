@@ -291,11 +291,11 @@ export interface ElasticLoadBalancingV2ListenerRuleTargetGroupTuple {
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-loadbalancer-loadbalancerattribute.html | AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-loadbalancer-loadbalancerattributes.html | AWS::ElasticLoadBalancingV2::LoadBalancer.LoadBalancerAttribute}
  */
 export interface ElasticLoadBalancingV2LoadBalancerLoadBalancerAttribute {
-  Value?: string;
   Key?: string;
+  Value?: string;
 }
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::LoadBalancer.SubnetMapping
@@ -305,8 +305,8 @@ export interface ElasticLoadBalancingV2LoadBalancerLoadBalancerAttribute {
 export interface ElasticLoadBalancingV2LoadBalancerSubnetMapping {
   AllocationId?: string;
   IPv6Address?: string;
-  SubnetId: string;
   PrivateIPv4Address?: string;
+  SubnetId: string;
 }
 /**
  * Type definition for AWS::ElasticLoadBalancingV2::TargetGroup.Matcher
@@ -475,14 +475,14 @@ export class ElasticLoadBalancingV2ListenerRule extends ResourceBase<
  */
 export interface ElasticLoadBalancingV2LoadBalancerProps {
   IpAddressType?: string;
-  SecurityGroups?: any[];
   LoadBalancerAttributes?: any[];
-  Subnets?: any[];
-  Type?: string;
-  Scheme?: string;
-  Tags?: Tag[];
   Name?: string;
+  Scheme?: string;
+  SecurityGroups?: any[];
   SubnetMappings?: any[];
+  Subnets?: any[];
+  Tags?: Tag[];
+  Type?: string;
 }
 /**
  * Attributes type definition for AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -490,12 +490,11 @@ export interface ElasticLoadBalancingV2LoadBalancerProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-loadbalancer.html | AWS::ElasticLoadBalancingV2::LoadBalancer}
  */
 export interface ElasticLoadBalancingV2LoadBalancerAttribs {
-  SecurityGroups?: any[];
-  LoadBalancerName?: string;
   CanonicalHostedZoneID?: string;
-  LoadBalancerArn?: string;
   DNSName?: string;
   LoadBalancerFullName?: string;
+  LoadBalancerName?: string;
+  SecurityGroups?: any[];
 }
 /**
  * Resource class for AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -510,12 +509,11 @@ export class ElasticLoadBalancingV2LoadBalancer extends ResourceBase<
   public static readonly Type = "AWS::ElasticLoadBalancingV2::LoadBalancer";
   public static readonly AttributeNames: readonly (keyof ElasticLoadBalancingV2LoadBalancerAttribs)[] =
     [
-      "SecurityGroups",
-      "LoadBalancerName",
       "CanonicalHostedZoneID",
-      "LoadBalancerArn",
       "DNSName",
       "LoadBalancerFullName",
+      "LoadBalancerName",
+      "SecurityGroups",
     ];
   constructor(
     logicalId: string,

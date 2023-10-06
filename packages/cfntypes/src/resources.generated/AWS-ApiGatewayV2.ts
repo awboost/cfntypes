@@ -416,7 +416,7 @@ export interface ApiGatewayV2DomainNameProps {
   MutualTlsAuthentication?: ApiGatewayV2DomainNameMutualTlsAuthentication;
   DomainName: string;
   DomainNameConfigurations?: any[];
-  Tags?: object;
+  Tags?: Record<string, Tag>;
 }
 /**
  * Attributes type definition for AWS::ApiGatewayV2::DomainName

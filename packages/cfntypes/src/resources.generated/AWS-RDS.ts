@@ -446,6 +446,7 @@ export interface RDSDBInstanceProps {
   ManageMasterUserPassword?: boolean;
   SourceDbiResourceId?: string;
   DomainAuthSecretArn?: string;
+  AutomaticBackupReplicationRegion?: string;
   VPCSecurityGroups?: any[];
   AllowMajorVersionUpgrade?: boolean;
   DBName?: string;

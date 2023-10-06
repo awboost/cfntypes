@@ -67,9 +67,12 @@ export interface CloudFrontCloudFrontOriginAccessIdentityCloudFrontOriginAccessI
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-continuousdeploymentpolicy-continuousdeploymentpolicyconfig.html | AWS::CloudFront::ContinuousDeploymentPolicy.ContinuousDeploymentPolicyConfig}
  */
 export interface CloudFrontContinuousDeploymentPolicyContinuousDeploymentPolicyConfig {
+  Type?: string;
+  SingleHeaderPolicyConfig?: CloudFrontContinuousDeploymentPolicySingleHeaderPolicyConfig;
   Enabled: boolean;
   StagingDistributionDnsNames: any[];
   TrafficConfig?: CloudFrontContinuousDeploymentPolicyTrafficConfig;
+  SingleWeightPolicyConfig?: CloudFrontContinuousDeploymentPolicySingleWeightPolicyConfig;
 }
 /**
  * Type definition for AWS::CloudFront::ContinuousDeploymentPolicy.SessionStickinessConfig
@@ -90,11 +93,29 @@ export interface CloudFrontContinuousDeploymentPolicySingleHeaderConfig {
   Value: string;
 }
 /**
+ * Type definition for AWS::CloudFront::ContinuousDeploymentPolicy.SingleHeaderPolicyConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-continuousdeploymentpolicy-singleheaderpolicyconfig.html | AWS::CloudFront::ContinuousDeploymentPolicy.SingleHeaderPolicyConfig}
+ */
+export interface CloudFrontContinuousDeploymentPolicySingleHeaderPolicyConfig {
+  Header: string;
+  Value: string;
+}
+/**
  * Type definition for AWS::CloudFront::ContinuousDeploymentPolicy.SingleWeightConfig
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-continuousdeploymentpolicy-singleweightconfig.html | AWS::CloudFront::ContinuousDeploymentPolicy.SingleWeightConfig}
  */
 export interface CloudFrontContinuousDeploymentPolicySingleWeightConfig {
+  SessionStickinessConfig?: CloudFrontContinuousDeploymentPolicySessionStickinessConfig;
+  Weight: number;
+}
+/**
+ * Type definition for AWS::CloudFront::ContinuousDeploymentPolicy.SingleWeightPolicyConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-continuousdeploymentpolicy-singleweightpolicyconfig.html | AWS::CloudFront::ContinuousDeploymentPolicy.SingleWeightPolicyConfig}
+ */
+export interface CloudFrontContinuousDeploymentPolicySingleWeightPolicyConfig {
   SessionStickinessConfig?: CloudFrontContinuousDeploymentPolicySessionStickinessConfig;
   Weight: number;
 }

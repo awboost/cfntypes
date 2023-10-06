@@ -1249,16 +1249,17 @@ export class IoTFleetMetric extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html | AWS::IoT::JobTemplate}
  */
 export interface IoTJobTemplateProps {
-  JobArn?: string;
   TimeoutConfig?: IoTJobTemplateTimeoutConfig;
-  JobExecutionsRolloutConfig?: IoTJobTemplateJobExecutionsRolloutConfig;
   Description: string;
   JobExecutionsRetryConfig?: IoTJobTemplateJobExecutionsRetryConfig;
-  DocumentSource?: string;
   AbortConfig?: IoTJobTemplateAbortConfig;
-  MaintenanceWindows?: any[];
   JobTemplateId: string;
   Document?: string;
+  DestinationPackageVersions?: any[];
+  JobArn?: string;
+  JobExecutionsRolloutConfig?: IoTJobTemplateJobExecutionsRolloutConfig;
+  DocumentSource?: string;
+  MaintenanceWindows?: any[];
   PresignedUrlConfig?: IoTJobTemplatePresignedUrlConfig;
   Tags?: Tag[];
 }
