@@ -66,7 +66,7 @@ export interface Template {
    *
    * @see {@link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html | Mappings}
    */
-  Mappings?: TemplateMap<TemplateMap<TemplateMap<any>>>;
+  Mappings?: TemplateMap<MappingDefinition>;
 
   /**
    * You can use the optional `Metadata` section to include arbitrary JSON or
@@ -130,6 +130,20 @@ export type TemplateSection = {
 export interface TemplateMap<T> {
   [key: string]: T;
 }
+
+/**
+ * The optional `Mappings` section matches a key to a corresponding set of
+ * named values. For example, if you want to set values based on a region, you
+ * can create a mapping that uses the region name as a key and contains the
+ * values you want to specify for each specific region. You use the
+ * `Fn::FindInMap` intrinsic function to retrieve values in a map.
+ *
+ * @see {@link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html | Mappings}
+ */
+export type MappingDefinition<
+  TopLevelKey extends string = string,
+  SecondLevelKey extends string = string,
+> = Record<TopLevelKey, Record<SecondLevelKey, any>>;
 
 /**
  * The name of the resource output to be exported for a cross-stack reference.
