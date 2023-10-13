@@ -253,6 +253,7 @@ export interface LambdaFunctionTracingConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lambda-function-vpcconfig.html | AWS::Lambda::Function.VpcConfig}
  */
 export interface LambdaFunctionVpcConfig {
+  Ipv6AllowedForDualStack?: boolean;
   SecurityGroupIds?: any[];
   SubnetIds?: any[];
 }

@@ -2291,6 +2291,24 @@ export interface QuickSightAnalysisItemsLimitConfiguration {
   OtherCategories?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Analysis.KPIActualValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpiactualvalueconditionalformatting.html | AWS::QuickSight::Analysis.KPIActualValueConditionalFormatting}
+ */
+export interface QuickSightAnalysisKPIActualValueConditionalFormatting {
+  TextColor?: QuickSightAnalysisConditionalFormattingColor;
+  Icon?: QuickSightAnalysisConditionalFormattingIcon;
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.KPIComparisonValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpicomparisonvalueconditionalformatting.html | AWS::QuickSight::Analysis.KPIComparisonValueConditionalFormatting}
+ */
+export interface QuickSightAnalysisKPIComparisonValueConditionalFormatting {
+  TextColor?: QuickSightAnalysisConditionalFormattingColor;
+  Icon?: QuickSightAnalysisConditionalFormattingIcon;
+}
+/**
  * Type definition for AWS::QuickSight::Analysis.KPIConditionalFormatting
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpiconditionalformatting.html | AWS::QuickSight::Analysis.KPIConditionalFormatting}
@@ -2305,6 +2323,8 @@ export interface QuickSightAnalysisKPIConditionalFormatting {
  */
 export interface QuickSightAnalysisKPIConditionalFormattingOption {
   PrimaryValue?: QuickSightAnalysisKPIPrimaryValueConditionalFormatting;
+  ActualValue?: QuickSightAnalysisKPIActualValueConditionalFormatting;
+  ComparisonValue?: QuickSightAnalysisKPIComparisonValueConditionalFormatting;
   ProgressBar?: QuickSightAnalysisKPIProgressBarConditionalFormatting;
 }
 /**
@@ -2334,12 +2354,14 @@ export interface QuickSightAnalysisKPIFieldWells {
  */
 export interface QuickSightAnalysisKPIOptions {
   SecondaryValueFontConfiguration?: QuickSightAnalysisFontConfiguration;
+  VisualLayoutOptions?: QuickSightAnalysisKPIVisualLayoutOptions;
   TrendArrows?: QuickSightAnalysisTrendArrowOptions;
   SecondaryValue?: QuickSightAnalysisSecondaryValueOptions;
   Comparison?: QuickSightAnalysisComparisonConfiguration;
   PrimaryValueDisplayType?: string;
   ProgressBar?: QuickSightAnalysisProgressBarOptions;
   PrimaryValueFontConfiguration?: QuickSightAnalysisFontConfiguration;
+  Sparkline?: QuickSightAnalysisKPISparklineOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Analysis.KPIPrimaryValueConditionalFormatting
@@ -2367,6 +2389,17 @@ export interface QuickSightAnalysisKPISortConfiguration {
   TrendGroupSort?: any[];
 }
 /**
+ * Type definition for AWS::QuickSight::Analysis.KPISparklineOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpisparklineoptions.html | AWS::QuickSight::Analysis.KPISparklineOptions}
+ */
+export interface QuickSightAnalysisKPISparklineOptions {
+  Type: string;
+  Color?: string;
+  TooltipVisibility?: string;
+  Visibility?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Analysis.KPIVisual
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpivisual.html | AWS::QuickSight::Analysis.KPIVisual}
@@ -2379,6 +2412,22 @@ export interface QuickSightAnalysisKPIVisual {
   Actions?: any[];
   Title?: QuickSightAnalysisVisualTitleLabelOptions;
   ColumnHierarchies?: any[];
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.KPIVisualLayoutOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpivisuallayoutoptions.html | AWS::QuickSight::Analysis.KPIVisualLayoutOptions}
+ */
+export interface QuickSightAnalysisKPIVisualLayoutOptions {
+  StandardLayout?: QuickSightAnalysisKPIVisualStandardLayout;
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.KPIVisualStandardLayout
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-kpivisualstandardlayout.html | AWS::QuickSight::Analysis.KPIVisualStandardLayout}
+ */
+export interface QuickSightAnalysisKPIVisualStandardLayout {
+  Type: string;
 }
 /**
  * Type definition for AWS::QuickSight::Analysis.LabelOptions
@@ -4125,6 +4174,7 @@ export interface QuickSightAnalysisTableFieldOption {
  */
 export interface QuickSightAnalysisTableFieldOptions {
   Order?: any[];
+  PinnedFieldOptions?: QuickSightAnalysisTablePinnedFieldOptions;
   SelectedFieldOptions?: any[];
 }
 /**
@@ -4172,6 +4222,14 @@ export interface QuickSightAnalysisTableOptions {
 export interface QuickSightAnalysisTablePaginatedReportOptions {
   OverflowColumnHeaderVisibility?: string;
   VerticalOverflowVisibility?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.TablePinnedFieldOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-tablepinnedfieldoptions.html | AWS::QuickSight::Analysis.TablePinnedFieldOptions}
+ */
+export interface QuickSightAnalysisTablePinnedFieldOptions {
+  PinnedLeftFields?: any[];
 }
 /**
  * Type definition for AWS::QuickSight::Analysis.TableRowConditionalFormatting
@@ -7132,6 +7190,24 @@ export interface QuickSightDashboardItemsLimitConfiguration {
   OtherCategories?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.KPIActualValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpiactualvalueconditionalformatting.html | AWS::QuickSight::Dashboard.KPIActualValueConditionalFormatting}
+ */
+export interface QuickSightDashboardKPIActualValueConditionalFormatting {
+  TextColor?: QuickSightDashboardConditionalFormattingColor;
+  Icon?: QuickSightDashboardConditionalFormattingIcon;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.KPIComparisonValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpicomparisonvalueconditionalformatting.html | AWS::QuickSight::Dashboard.KPIComparisonValueConditionalFormatting}
+ */
+export interface QuickSightDashboardKPIComparisonValueConditionalFormatting {
+  TextColor?: QuickSightDashboardConditionalFormattingColor;
+  Icon?: QuickSightDashboardConditionalFormattingIcon;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.KPIConditionalFormatting
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpiconditionalformatting.html | AWS::QuickSight::Dashboard.KPIConditionalFormatting}
@@ -7146,6 +7222,8 @@ export interface QuickSightDashboardKPIConditionalFormatting {
  */
 export interface QuickSightDashboardKPIConditionalFormattingOption {
   PrimaryValue?: QuickSightDashboardKPIPrimaryValueConditionalFormatting;
+  ActualValue?: QuickSightDashboardKPIActualValueConditionalFormatting;
+  ComparisonValue?: QuickSightDashboardKPIComparisonValueConditionalFormatting;
   ProgressBar?: QuickSightDashboardKPIProgressBarConditionalFormatting;
 }
 /**
@@ -7175,12 +7253,14 @@ export interface QuickSightDashboardKPIFieldWells {
  */
 export interface QuickSightDashboardKPIOptions {
   SecondaryValueFontConfiguration?: QuickSightDashboardFontConfiguration;
+  VisualLayoutOptions?: QuickSightDashboardKPIVisualLayoutOptions;
   TrendArrows?: QuickSightDashboardTrendArrowOptions;
   SecondaryValue?: QuickSightDashboardSecondaryValueOptions;
   Comparison?: QuickSightDashboardComparisonConfiguration;
   PrimaryValueDisplayType?: string;
   ProgressBar?: QuickSightDashboardProgressBarOptions;
   PrimaryValueFontConfiguration?: QuickSightDashboardFontConfiguration;
+  Sparkline?: QuickSightDashboardKPISparklineOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.KPIPrimaryValueConditionalFormatting
@@ -7208,6 +7288,17 @@ export interface QuickSightDashboardKPISortConfiguration {
   TrendGroupSort?: any[];
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.KPISparklineOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpisparklineoptions.html | AWS::QuickSight::Dashboard.KPISparklineOptions}
+ */
+export interface QuickSightDashboardKPISparklineOptions {
+  Type: string;
+  Color?: string;
+  TooltipVisibility?: string;
+  Visibility?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.KPIVisual
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpivisual.html | AWS::QuickSight::Dashboard.KPIVisual}
@@ -7220,6 +7311,22 @@ export interface QuickSightDashboardKPIVisual {
   Actions?: any[];
   Title?: QuickSightDashboardVisualTitleLabelOptions;
   ColumnHierarchies?: any[];
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.KPIVisualLayoutOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpivisuallayoutoptions.html | AWS::QuickSight::Dashboard.KPIVisualLayoutOptions}
+ */
+export interface QuickSightDashboardKPIVisualLayoutOptions {
+  StandardLayout?: QuickSightDashboardKPIVisualStandardLayout;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.KPIVisualStandardLayout
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-kpivisualstandardlayout.html | AWS::QuickSight::Dashboard.KPIVisualStandardLayout}
+ */
+export interface QuickSightDashboardKPIVisualStandardLayout {
+  Type: string;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.LabelOptions
@@ -8982,6 +9089,7 @@ export interface QuickSightDashboardTableFieldOption {
  */
 export interface QuickSightDashboardTableFieldOptions {
   Order?: any[];
+  PinnedFieldOptions?: QuickSightDashboardTablePinnedFieldOptions;
   SelectedFieldOptions?: any[];
 }
 /**
@@ -9029,6 +9137,14 @@ export interface QuickSightDashboardTableOptions {
 export interface QuickSightDashboardTablePaginatedReportOptions {
   OverflowColumnHeaderVisibility?: string;
   VerticalOverflowVisibility?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.TablePinnedFieldOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-tablepinnedfieldoptions.html | AWS::QuickSight::Dashboard.TablePinnedFieldOptions}
+ */
+export interface QuickSightDashboardTablePinnedFieldOptions {
+  PinnedLeftFields?: any[];
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.TableRowConditionalFormatting
@@ -12613,6 +12729,24 @@ export interface QuickSightTemplateItemsLimitConfiguration {
   OtherCategories?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Template.KPIActualValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpiactualvalueconditionalformatting.html | AWS::QuickSight::Template.KPIActualValueConditionalFormatting}
+ */
+export interface QuickSightTemplateKPIActualValueConditionalFormatting {
+  TextColor?: QuickSightTemplateConditionalFormattingColor;
+  Icon?: QuickSightTemplateConditionalFormattingIcon;
+}
+/**
+ * Type definition for AWS::QuickSight::Template.KPIComparisonValueConditionalFormatting
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpicomparisonvalueconditionalformatting.html | AWS::QuickSight::Template.KPIComparisonValueConditionalFormatting}
+ */
+export interface QuickSightTemplateKPIComparisonValueConditionalFormatting {
+  TextColor?: QuickSightTemplateConditionalFormattingColor;
+  Icon?: QuickSightTemplateConditionalFormattingIcon;
+}
+/**
  * Type definition for AWS::QuickSight::Template.KPIConditionalFormatting
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpiconditionalformatting.html | AWS::QuickSight::Template.KPIConditionalFormatting}
@@ -12627,6 +12761,8 @@ export interface QuickSightTemplateKPIConditionalFormatting {
  */
 export interface QuickSightTemplateKPIConditionalFormattingOption {
   PrimaryValue?: QuickSightTemplateKPIPrimaryValueConditionalFormatting;
+  ActualValue?: QuickSightTemplateKPIActualValueConditionalFormatting;
+  ComparisonValue?: QuickSightTemplateKPIComparisonValueConditionalFormatting;
   ProgressBar?: QuickSightTemplateKPIProgressBarConditionalFormatting;
 }
 /**
@@ -12656,12 +12792,14 @@ export interface QuickSightTemplateKPIFieldWells {
  */
 export interface QuickSightTemplateKPIOptions {
   SecondaryValueFontConfiguration?: QuickSightTemplateFontConfiguration;
+  VisualLayoutOptions?: QuickSightTemplateKPIVisualLayoutOptions;
   TrendArrows?: QuickSightTemplateTrendArrowOptions;
   SecondaryValue?: QuickSightTemplateSecondaryValueOptions;
   Comparison?: QuickSightTemplateComparisonConfiguration;
   PrimaryValueDisplayType?: string;
   ProgressBar?: QuickSightTemplateProgressBarOptions;
   PrimaryValueFontConfiguration?: QuickSightTemplateFontConfiguration;
+  Sparkline?: QuickSightTemplateKPISparklineOptions;
 }
 /**
  * Type definition for AWS::QuickSight::Template.KPIPrimaryValueConditionalFormatting
@@ -12689,6 +12827,17 @@ export interface QuickSightTemplateKPISortConfiguration {
   TrendGroupSort?: any[];
 }
 /**
+ * Type definition for AWS::QuickSight::Template.KPISparklineOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpisparklineoptions.html | AWS::QuickSight::Template.KPISparklineOptions}
+ */
+export interface QuickSightTemplateKPISparklineOptions {
+  Type: string;
+  Color?: string;
+  TooltipVisibility?: string;
+  Visibility?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Template.KPIVisual
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpivisual.html | AWS::QuickSight::Template.KPIVisual}
@@ -12701,6 +12850,22 @@ export interface QuickSightTemplateKPIVisual {
   Actions?: any[];
   Title?: QuickSightTemplateVisualTitleLabelOptions;
   ColumnHierarchies?: any[];
+}
+/**
+ * Type definition for AWS::QuickSight::Template.KPIVisualLayoutOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpivisuallayoutoptions.html | AWS::QuickSight::Template.KPIVisualLayoutOptions}
+ */
+export interface QuickSightTemplateKPIVisualLayoutOptions {
+  StandardLayout?: QuickSightTemplateKPIVisualStandardLayout;
+}
+/**
+ * Type definition for AWS::QuickSight::Template.KPIVisualStandardLayout
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-kpivisualstandardlayout.html | AWS::QuickSight::Template.KPIVisualStandardLayout}
+ */
+export interface QuickSightTemplateKPIVisualStandardLayout {
+  Type: string;
 }
 /**
  * Type definition for AWS::QuickSight::Template.LabelOptions
@@ -14427,6 +14592,7 @@ export interface QuickSightTemplateTableFieldOption {
  */
 export interface QuickSightTemplateTableFieldOptions {
   Order?: any[];
+  PinnedFieldOptions?: QuickSightTemplateTablePinnedFieldOptions;
   SelectedFieldOptions?: any[];
 }
 /**
@@ -14474,6 +14640,14 @@ export interface QuickSightTemplateTableOptions {
 export interface QuickSightTemplateTablePaginatedReportOptions {
   OverflowColumnHeaderVisibility?: string;
   VerticalOverflowVisibility?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Template.TablePinnedFieldOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-tablepinnedfieldoptions.html | AWS::QuickSight::Template.TablePinnedFieldOptions}
+ */
+export interface QuickSightTemplateTablePinnedFieldOptions {
+  PinnedLeftFields?: any[];
 }
 /**
  * Type definition for AWS::QuickSight::Template.TableRowConditionalFormatting

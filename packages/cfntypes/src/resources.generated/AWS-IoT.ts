@@ -393,8 +393,8 @@ export interface IoTTopicRuleAction {
   IotEvents?: IoTTopicRuleIotEventsAction;
   Firehose?: IoTTopicRuleFirehoseAction;
   Republish?: IoTTopicRuleRepublishAction;
-  StepFunctions?: IoTTopicRuleStepFunctionsAction;
   Kafka?: IoTTopicRuleKafkaAction;
+  StepFunctions?: IoTTopicRuleStepFunctionsAction;
   DynamoDB?: IoTTopicRuleDynamoDBAction;
   Http?: IoTTopicRuleHttpAction;
   OpenSearch?: IoTTopicRuleOpenSearchAction;
@@ -1695,6 +1695,100 @@ export class IoTSecurityProfile extends ResourceBase<
     super(
       IoTSecurityProfile.Type,
       IoTSecurityProfile.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::IoT::SoftwarePackage
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackage.html | AWS::IoT::SoftwarePackage}
+ */
+export interface IoTSoftwarePackageProps {
+  Description?: string;
+  PackageName?: string;
+  Tags?: Tag[];
+}
+/**
+ * Attributes type definition for AWS::IoT::SoftwarePackage
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackage.html | AWS::IoT::SoftwarePackage}
+ */
+export interface IoTSoftwarePackageAttribs {
+  PackageArn?: string;
+}
+/**
+ * Resource class for AWS::IoT::SoftwarePackage
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackage.html | AWS::IoT::SoftwarePackage}
+ */
+export class IoTSoftwarePackage extends ResourceBase<
+  "AWS::IoT::SoftwarePackage",
+  IoTSoftwarePackageProps,
+  IoTSoftwarePackageAttribs
+> {
+  public static readonly Type = "AWS::IoT::SoftwarePackage";
+  public static readonly AttributeNames: readonly (keyof IoTSoftwarePackageAttribs)[] =
+    ["PackageArn"];
+  constructor(
+    logicalId: string,
+    properties: IoTSoftwarePackageProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      IoTSoftwarePackage.Type,
+      IoTSoftwarePackage.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::IoT::SoftwarePackageVersion
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackageversion.html | AWS::IoT::SoftwarePackageVersion}
+ */
+export interface IoTSoftwarePackageVersionProps {
+  Description?: string;
+  PackageName: string;
+  Attributes?: Record<string, any>;
+  VersionName?: string;
+  Tags?: Tag[];
+}
+/**
+ * Attributes type definition for AWS::IoT::SoftwarePackageVersion
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackageversion.html | AWS::IoT::SoftwarePackageVersion}
+ */
+export interface IoTSoftwarePackageVersionAttribs {
+  PackageVersionArn?: string;
+  Status?: string;
+  ErrorReason?: string;
+}
+/**
+ * Resource class for AWS::IoT::SoftwarePackageVersion
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-softwarepackageversion.html | AWS::IoT::SoftwarePackageVersion}
+ */
+export class IoTSoftwarePackageVersion extends ResourceBase<
+  "AWS::IoT::SoftwarePackageVersion",
+  IoTSoftwarePackageVersionProps,
+  IoTSoftwarePackageVersionAttribs
+> {
+  public static readonly Type = "AWS::IoT::SoftwarePackageVersion";
+  public static readonly AttributeNames: readonly (keyof IoTSoftwarePackageVersionAttribs)[] =
+    ["PackageVersionArn", "Status", "ErrorReason"];
+  constructor(
+    logicalId: string,
+    properties: IoTSoftwarePackageVersionProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      IoTSoftwarePackageVersion.Type,
+      IoTSoftwarePackageVersion.AttributeNames,
       logicalId,
       properties,
       options,

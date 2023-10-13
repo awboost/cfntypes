@@ -6,7 +6,7 @@ import { ResourceOptions } from "../template.js";
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-alias.html | AWS::S3ObjectLambda::AccessPoint.Alias}
  */
 export interface S3ObjectLambdaAccessPointAlias {
-  Status: string;
+  Status?: string;
   Value: string;
 }
 /**
@@ -36,14 +36,6 @@ export interface S3ObjectLambdaAccessPointObjectLambdaConfiguration {
   TransformationConfigurations: any[];
   AllowedFeatures?: any[];
   CloudWatchMetricsEnabled?: boolean;
-}
-/**
- * Type definition for AWS::S3ObjectLambda::AccessPoint.PolicyStatus
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-policystatus.html | AWS::S3ObjectLambda::AccessPoint.PolicyStatus}
- */
-export interface S3ObjectLambdaAccessPointPolicyStatus {
-  IsPublic?: boolean;
 }
 /**
  * Type definition for AWS::S3ObjectLambda::AccessPoint.PublicAccessBlockConfiguration
@@ -83,10 +75,8 @@ export interface S3ObjectLambdaAccessPointAttribs {
   CreationDate?: string;
   PublicAccessBlockConfiguration?: S3ObjectLambdaAccessPointPublicAccessBlockConfiguration;
   "PublicAccessBlockConfiguration.BlockPublicAcls"?: boolean;
-  "PolicyStatus.IsPublic"?: boolean;
   Alias?: S3ObjectLambdaAccessPointAlias;
   "Alias.Value"?: string;
-  PolicyStatus?: S3ObjectLambdaAccessPointPolicyStatus;
   "PublicAccessBlockConfiguration.IgnorePublicAcls"?: boolean;
   "PublicAccessBlockConfiguration.RestrictPublicBuckets"?: boolean;
   "PublicAccessBlockConfiguration.BlockPublicPolicy"?: boolean;
@@ -109,10 +99,8 @@ export class S3ObjectLambdaAccessPoint extends ResourceBase<
       "CreationDate",
       "PublicAccessBlockConfiguration",
       "PublicAccessBlockConfiguration.BlockPublicAcls",
-      "PolicyStatus.IsPublic",
       "Alias",
       "Alias.Value",
-      "PolicyStatus",
       "PublicAccessBlockConfiguration.IgnorePublicAcls",
       "PublicAccessBlockConfiguration.RestrictPublicBuckets",
       "PublicAccessBlockConfiguration.BlockPublicPolicy",

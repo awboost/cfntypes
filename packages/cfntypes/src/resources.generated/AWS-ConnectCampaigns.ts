@@ -2,6 +2,14 @@ import { ResourceBase } from "../util.js";
 import { ResourceOptions } from "../template.js";
 import { Tag } from "./core.js";
 /**
+ * Type definition for AWS::ConnectCampaigns::Campaign.AgentlessDialerConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-agentlessdialerconfig.html | AWS::ConnectCampaigns::Campaign.AgentlessDialerConfig}
+ */
+export interface ConnectCampaignsCampaignAgentlessDialerConfig {
+  DialingCapacity?: number;
+}
+/**
  * Type definition for AWS::ConnectCampaigns::Campaign.AnswerMachineDetectionConfig
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-answermachinedetectionconfig.html | AWS::ConnectCampaigns::Campaign.AnswerMachineDetectionConfig}
@@ -15,6 +23,7 @@ export interface ConnectCampaignsCampaignAnswerMachineDetectionConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-dialerconfig.html | AWS::ConnectCampaigns::Campaign.DialerConfig}
  */
 export interface ConnectCampaignsCampaignDialerConfig {
+  AgentlessDialerConfig?: ConnectCampaignsCampaignAgentlessDialerConfig;
   PredictiveDialerConfig?: ConnectCampaignsCampaignPredictiveDialerConfig;
   ProgressiveDialerConfig?: ConnectCampaignsCampaignProgressiveDialerConfig;
 }
@@ -25,7 +34,7 @@ export interface ConnectCampaignsCampaignDialerConfig {
  */
 export interface ConnectCampaignsCampaignOutboundCallConfig {
   ConnectContactFlowArn: string;
-  ConnectQueueArn: string;
+  ConnectQueueArn?: string;
   AnswerMachineDetectionConfig?: ConnectCampaignsCampaignAnswerMachineDetectionConfig;
   ConnectSourcePhoneNumber?: string;
 }
@@ -35,6 +44,7 @@ export interface ConnectCampaignsCampaignOutboundCallConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-predictivedialerconfig.html | AWS::ConnectCampaigns::Campaign.PredictiveDialerConfig}
  */
 export interface ConnectCampaignsCampaignPredictiveDialerConfig {
+  DialingCapacity?: number;
   BandwidthAllocation: number;
 }
 /**
@@ -43,6 +53,7 @@ export interface ConnectCampaignsCampaignPredictiveDialerConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-progressivedialerconfig.html | AWS::ConnectCampaigns::Campaign.ProgressiveDialerConfig}
  */
 export interface ConnectCampaignsCampaignProgressiveDialerConfig {
+  DialingCapacity?: number;
   BandwidthAllocation: number;
 }
 /**

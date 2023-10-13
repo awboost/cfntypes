@@ -120,6 +120,15 @@ export interface EventsEndpointSecondary {
   Route: string;
 }
 /**
+ * Type definition for AWS::Events::EventBus.TagEntry
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-eventbus-tagentry.html | AWS::Events::EventBus.TagEntry}
+ */
+export interface EventsEventBusTagEntry {
+  Value: string;
+  Key: string;
+}
+/**
  * Type definition for AWS::Events::EventBusPolicy.Condition
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-eventbuspolicy-condition.html | AWS::Events::EventBusPolicy.Condition}
@@ -554,7 +563,6 @@ export class EventsEndpoint extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-events-eventbus.html | AWS::Events::EventBus}
  */
 export interface EventsEventBusProps {
-  Policy?: object;
   EventSourceName?: string;
   Tags?: Tag[];
   Name: string;
@@ -565,6 +573,7 @@ export interface EventsEventBusProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-events-eventbus.html | AWS::Events::EventBus}
  */
 export interface EventsEventBusAttribs {
+  Policy?: string;
   Arn?: string;
   Name?: string;
 }
@@ -580,7 +589,7 @@ export class EventsEventBus extends ResourceBase<
 > {
   public static readonly Type = "AWS::Events::EventBus";
   public static readonly AttributeNames: readonly (keyof EventsEventBusAttribs)[] =
-    ["Arn", "Name"];
+    ["Policy", "Arn", "Name"];
   constructor(
     logicalId: string,
     properties: EventsEventBusProps,

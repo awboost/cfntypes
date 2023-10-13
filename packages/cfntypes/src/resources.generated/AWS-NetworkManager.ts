@@ -408,6 +408,7 @@ export interface NetworkManagerDeviceProps {
 export interface NetworkManagerDeviceAttribs {
   DeviceArn?: string;
   DeviceId?: string;
+  State?: string;
   CreatedAt?: string;
 }
 /**
@@ -422,7 +423,7 @@ export class NetworkManagerDevice extends ResourceBase<
 > {
   public static readonly Type = "AWS::NetworkManager::Device";
   public static readonly AttributeNames: readonly (keyof NetworkManagerDeviceAttribs)[] =
-    ["DeviceArn", "DeviceId", "CreatedAt"];
+    ["DeviceArn", "DeviceId", "State", "CreatedAt"];
   constructor(
     logicalId: string,
     properties: NetworkManagerDeviceProps,
@@ -444,6 +445,8 @@ export class NetworkManagerDevice extends ResourceBase<
  */
 export interface NetworkManagerGlobalNetworkProps {
   Description?: string;
+  State?: string;
+  CreatedAt?: string;
   Tags?: Tag[];
 }
 /**
@@ -587,6 +590,8 @@ export interface NetworkManagerSiteProps {
 export interface NetworkManagerSiteAttribs {
   SiteId?: string;
   SiteArn?: string;
+  State?: string;
+  CreatedAt?: string;
 }
 /**
  * Resource class for AWS::NetworkManager::Site
@@ -600,7 +605,7 @@ export class NetworkManagerSite extends ResourceBase<
 > {
   public static readonly Type = "AWS::NetworkManager::Site";
   public static readonly AttributeNames: readonly (keyof NetworkManagerSiteAttribs)[] =
-    ["SiteId", "SiteArn"];
+    ["SiteId", "SiteArn", "State", "CreatedAt"];
   constructor(
     logicalId: string,
     properties: NetworkManagerSiteProps,
