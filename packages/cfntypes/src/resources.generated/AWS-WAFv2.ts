@@ -608,6 +608,7 @@ export interface WAFv2WebACLAWSManagedRulesATPRuleSet {
  */
 export interface WAFv2WebACLAWSManagedRulesBotControlRuleSet {
   InspectionLevel: string;
+  EnableMachineLearning?: boolean;
 }
 /**
  * Type definition for AWS::WAFv2::WebACL.AllowAction

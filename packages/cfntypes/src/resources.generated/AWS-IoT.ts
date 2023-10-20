@@ -589,9 +589,19 @@ export interface IoTTopicRuleIotSiteWiseAction {
 export interface IoTTopicRuleKafkaAction {
   Partition?: string;
   ClientProperties: Record<string, any>;
+  Headers?: any[];
   Topic: string;
   DestinationArn: string;
   Key?: string;
+}
+/**
+ * Type definition for AWS::IoT::TopicRule.KafkaActionHeader
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-topicrule-kafkaactionheader.html | AWS::IoT::TopicRule.KafkaActionHeader}
+ */
+export interface IoTTopicRuleKafkaActionHeader {
+  Value: string;
+  Key: string;
 }
 /**
  * Type definition for AWS::IoT::TopicRule.KinesisAction
@@ -1389,6 +1399,7 @@ export class IoTMitigationAction extends ResourceBase<
 export interface IoTPolicyProps {
   PolicyName?: string;
   PolicyDocument: object;
+  Tags?: Tag[];
 }
 /**
  * Attributes type definition for AWS::IoT::Policy

@@ -2,6 +2,51 @@ import { ResourceBase } from "../util.js";
 import { ResourceOptions } from "../template.js";
 import { Tag } from "./core.js";
 /**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow.IdMappingTechniques
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-idmappingworkflow-idmappingtechniques.html | AWS::EntityResolution::IdMappingWorkflow.IdMappingTechniques}
+ */
+export interface EntityResolutionIdMappingWorkflowIdMappingTechniques {
+  ProviderProperties?: EntityResolutionIdMappingWorkflowProviderProperties;
+  IdMappingType?: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow.IdMappingWorkflowInputSource
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-idmappingworkflow-idmappingworkflowinputsource.html | AWS::EntityResolution::IdMappingWorkflow.IdMappingWorkflowInputSource}
+ */
+export interface EntityResolutionIdMappingWorkflowIdMappingWorkflowInputSource {
+  InputSourceARN: string;
+  SchemaArn: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow.IdMappingWorkflowOutputSource
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-idmappingworkflow-idmappingworkflowoutputsource.html | AWS::EntityResolution::IdMappingWorkflow.IdMappingWorkflowOutputSource}
+ */
+export interface EntityResolutionIdMappingWorkflowIdMappingWorkflowOutputSource {
+  KMSArn?: string;
+  OutputS3Path: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow.IntermediateSourceConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-idmappingworkflow-intermediatesourceconfiguration.html | AWS::EntityResolution::IdMappingWorkflow.IntermediateSourceConfiguration}
+ */
+export interface EntityResolutionIdMappingWorkflowIntermediateSourceConfiguration {
+  IntermediateS3Path: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow.ProviderProperties
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-idmappingworkflow-providerproperties.html | AWS::EntityResolution::IdMappingWorkflow.ProviderProperties}
+ */
+export interface EntityResolutionIdMappingWorkflowProviderProperties {
+  IntermediateSourceConfiguration?: EntityResolutionIdMappingWorkflowIntermediateSourceConfiguration;
+  ProviderServiceArn: string;
+  ProviderConfiguration?: Record<string, any>;
+}
+/**
  * Type definition for AWS::EntityResolution::MatchingWorkflow.InputSource
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-matchingworkflow-inputsource.html | AWS::EntityResolution::MatchingWorkflow.InputSource}
@@ -10,6 +55,14 @@ export interface EntityResolutionMatchingWorkflowInputSource {
   ApplyNormalization?: boolean;
   InputSourceARN: string;
   SchemaArn: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::MatchingWorkflow.IntermediateSourceConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-matchingworkflow-intermediatesourceconfiguration.html | AWS::EntityResolution::MatchingWorkflow.IntermediateSourceConfiguration}
+ */
+export interface EntityResolutionMatchingWorkflowIntermediateSourceConfiguration {
+  IntermediateS3Path: string;
 }
 /**
  * Type definition for AWS::EntityResolution::MatchingWorkflow.OutputAttribute
@@ -32,12 +85,23 @@ export interface EntityResolutionMatchingWorkflowOutputSource {
   ApplyNormalization?: boolean;
 }
 /**
+ * Type definition for AWS::EntityResolution::MatchingWorkflow.ProviderProperties
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-matchingworkflow-providerproperties.html | AWS::EntityResolution::MatchingWorkflow.ProviderProperties}
+ */
+export interface EntityResolutionMatchingWorkflowProviderProperties {
+  IntermediateSourceConfiguration?: EntityResolutionMatchingWorkflowIntermediateSourceConfiguration;
+  ProviderServiceArn: string;
+  ProviderConfiguration?: Record<string, any>;
+}
+/**
  * Type definition for AWS::EntityResolution::MatchingWorkflow.ResolutionTechniques
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-entityresolution-matchingworkflow-resolutiontechniques.html | AWS::EntityResolution::MatchingWorkflow.ResolutionTechniques}
  */
 export interface EntityResolutionMatchingWorkflowResolutionTechniques {
   RuleBasedProperties?: EntityResolutionMatchingWorkflowRuleBasedProperties;
+  ProviderProperties?: EntityResolutionMatchingWorkflowProviderProperties;
   ResolutionType?: string;
 }
 /**
@@ -66,8 +130,60 @@ export interface EntityResolutionMatchingWorkflowRuleBasedProperties {
 export interface EntityResolutionSchemaMappingSchemaInputAttribute {
   GroupName?: string;
   Type: string;
+  SubType?: string;
   MatchKey?: string;
   FieldName: string;
+}
+/**
+ * Type definition for AWS::EntityResolution::IdMappingWorkflow
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-entityresolution-idmappingworkflow.html | AWS::EntityResolution::IdMappingWorkflow}
+ */
+export interface EntityResolutionIdMappingWorkflowProps {
+  Description?: string;
+  InputSourceConfig: any[];
+  IdMappingTechniques: EntityResolutionIdMappingWorkflowIdMappingTechniques;
+  WorkflowName: string;
+  OutputSourceConfig: any[];
+  RoleArn: string;
+  Tags?: Tag[];
+}
+/**
+ * Attributes type definition for AWS::EntityResolution::IdMappingWorkflow
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-entityresolution-idmappingworkflow.html | AWS::EntityResolution::IdMappingWorkflow}
+ */
+export interface EntityResolutionIdMappingWorkflowAttribs {
+  CreatedAt?: string;
+  WorkflowArn?: string;
+  UpdatedAt?: string;
+}
+/**
+ * Resource class for AWS::EntityResolution::IdMappingWorkflow
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-entityresolution-idmappingworkflow.html | AWS::EntityResolution::IdMappingWorkflow}
+ */
+export class EntityResolutionIdMappingWorkflow extends ResourceBase<
+  "AWS::EntityResolution::IdMappingWorkflow",
+  EntityResolutionIdMappingWorkflowProps,
+  EntityResolutionIdMappingWorkflowAttribs
+> {
+  public static readonly Type = "AWS::EntityResolution::IdMappingWorkflow";
+  public static readonly AttributeNames: readonly (keyof EntityResolutionIdMappingWorkflowAttribs)[] =
+    ["CreatedAt", "WorkflowArn", "UpdatedAt"];
+  constructor(
+    logicalId: string,
+    properties: EntityResolutionIdMappingWorkflowProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      EntityResolutionIdMappingWorkflow.Type,
+      EntityResolutionIdMappingWorkflow.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
 }
 /**
  * Type definition for AWS::EntityResolution::MatchingWorkflow

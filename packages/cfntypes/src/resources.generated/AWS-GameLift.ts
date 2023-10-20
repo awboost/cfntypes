@@ -305,6 +305,7 @@ export interface GameLiftFleetProps {
   ResourceCreationLimitPolicy?: GameLiftFleetResourceCreationLimitPolicy;
   EC2InstanceType?: string;
   CertificateConfiguration?: GameLiftFleetCertificateConfiguration;
+  InstanceRoleCredentialsProvider?: string;
   DesiredEC2Instances?: number;
 }
 /**

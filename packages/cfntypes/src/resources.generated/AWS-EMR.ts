@@ -527,22 +527,22 @@ export interface EMRInstanceGroupConfigVolumeSpecification {
 /**
  * Type definition for AWS::EMR::Step.HadoopJarStepConfig
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticmapreduce-step-hadoopjarstepconfig.html | AWS::EMR::Step.HadoopJarStepConfig}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emr-step-hadoopjarstepconfig.html | AWS::EMR::Step.HadoopJarStepConfig}
  */
 export interface EMRStepHadoopJarStepConfig {
   Args?: any[];
-  Jar: string;
   MainClass?: string;
   StepProperties?: any[];
+  Jar: string;
 }
 /**
  * Type definition for AWS::EMR::Step.KeyValue
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticmapreduce-step-keyvalue.html | AWS::EMR::Step.KeyValue}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emr-step-keyvalue.html | AWS::EMR::Step.KeyValue}
  */
 export interface EMRStepKeyValue {
-  Key?: string;
   Value?: string;
+  Key?: string;
 }
 /**
  * Type definition for AWS::EMR::Cluster
@@ -735,10 +735,18 @@ export class EMRSecurityConfiguration extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-emr-step.html | AWS::EMR::Step}
  */
 export interface EMRStepProps {
+  JobFlowId: string;
   ActionOnFailure: string;
   HadoopJarStep: EMRStepHadoopJarStepConfig;
-  JobFlowId: string;
   Name: string;
+}
+/**
+ * Attributes type definition for AWS::EMR::Step
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-emr-step.html | AWS::EMR::Step}
+ */
+export interface EMRStepAttribs {
+  Id?: string;
 }
 /**
  * Resource class for AWS::EMR::Step
@@ -748,10 +756,12 @@ export interface EMRStepProps {
 export class EMRStep extends ResourceBase<
   "AWS::EMR::Step",
   EMRStepProps,
-  Record<string, never>
+  EMRStepAttribs
 > {
   public static readonly Type = "AWS::EMR::Step";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof EMRStepAttribs)[] = [
+    "Id",
+  ];
   constructor(
     logicalId: string,
     properties: EMRStepProps,

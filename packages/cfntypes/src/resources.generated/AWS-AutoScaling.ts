@@ -7,8 +7,8 @@ import { Tag } from "./core.js";
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-acceleratorcountrequest.html | AWS::AutoScaling::AutoScalingGroup.AcceleratorCountRequest}
  */
 export interface AutoScalingAutoScalingGroupAcceleratorCountRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.AcceleratorTotalMemoryMiBRequest
@@ -16,8 +16,8 @@ export interface AutoScalingAutoScalingGroupAcceleratorCountRequest {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-acceleratortotalmemorymibrequest.html | AWS::AutoScaling::AutoScalingGroup.AcceleratorTotalMemoryMiBRequest}
  */
 export interface AutoScalingAutoScalingGroupAcceleratorTotalMemoryMiBRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.BaselineEbsBandwidthMbpsRequest
@@ -25,56 +25,56 @@ export interface AutoScalingAutoScalingGroupAcceleratorTotalMemoryMiBRequest {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-baselineebsbandwidthmbpsrequest.html | AWS::AutoScaling::AutoScalingGroup.BaselineEbsBandwidthMbpsRequest}
  */
 export interface AutoScalingAutoScalingGroupBaselineEbsBandwidthMbpsRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.InstanceRequirements
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-as-mixedinstancespolicy-instancerequirements.html | AWS::AutoScaling::AutoScalingGroup.InstanceRequirements}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-instancerequirements.html | AWS::AutoScaling::AutoScalingGroup.InstanceRequirements}
  */
 export interface AutoScalingAutoScalingGroupInstanceRequirements {
-  AcceleratorCount?: AutoScalingAutoScalingGroupAcceleratorCountRequest;
+  LocalStorageTypes?: any[];
+  InstanceGenerations?: any[];
+  NetworkInterfaceCount?: AutoScalingAutoScalingGroupNetworkInterfaceCountRequest;
+  AcceleratorTypes?: any[];
+  MemoryGiBPerVCpu?: AutoScalingAutoScalingGroupMemoryGiBPerVCpuRequest;
   AcceleratorManufacturers?: any[];
+  ExcludedInstanceTypes?: any[];
+  VCpuCount?: AutoScalingAutoScalingGroupVCpuCountRequest;
+  AllowedInstanceTypes?: any[];
+  LocalStorage?: string;
+  CpuManufacturers?: any[];
+  AcceleratorCount?: AutoScalingAutoScalingGroupAcceleratorCountRequest;
+  NetworkBandwidthGbps?: AutoScalingAutoScalingGroupNetworkBandwidthGbpsRequest;
+  BareMetal?: string;
+  RequireHibernateSupport?: boolean;
+  BaselineEbsBandwidthMbps?: AutoScalingAutoScalingGroupBaselineEbsBandwidthMbpsRequest;
+  SpotMaxPricePercentageOverLowestPrice?: number;
   AcceleratorNames?: any[];
   AcceleratorTotalMemoryMiB?: AutoScalingAutoScalingGroupAcceleratorTotalMemoryMiBRequest;
-  AcceleratorTypes?: any[];
-  AllowedInstanceTypes?: any[];
-  BareMetal?: string;
-  BaselineEbsBandwidthMbps?: AutoScalingAutoScalingGroupBaselineEbsBandwidthMbpsRequest;
-  BurstablePerformance?: string;
-  CpuManufacturers?: any[];
-  ExcludedInstanceTypes?: any[];
-  InstanceGenerations?: any[];
-  LocalStorage?: string;
-  LocalStorageTypes?: any[];
-  MemoryGiBPerVCpu?: AutoScalingAutoScalingGroupMemoryGiBPerVCpuRequest;
-  MemoryMiB?: AutoScalingAutoScalingGroupMemoryMiBRequest;
-  NetworkBandwidthGbps?: AutoScalingAutoScalingGroupNetworkBandwidthGbpsRequest;
-  NetworkInterfaceCount?: AutoScalingAutoScalingGroupNetworkInterfaceCountRequest;
   OnDemandMaxPricePercentageOverLowestPrice?: number;
-  RequireHibernateSupport?: boolean;
-  SpotMaxPricePercentageOverLowestPrice?: number;
+  BurstablePerformance?: string;
+  MemoryMiB?: AutoScalingAutoScalingGroupMemoryMiBRequest;
   TotalLocalStorageGB?: AutoScalingAutoScalingGroupTotalLocalStorageGBRequest;
-  VCpuCount?: AutoScalingAutoScalingGroupVCpuCountRequest;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.InstancesDistribution
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-as-mixedinstancespolicy-instancesdistribution.html | AWS::AutoScaling::AutoScalingGroup.InstancesDistribution}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-instancesdistribution.html | AWS::AutoScaling::AutoScalingGroup.InstancesDistribution}
  */
 export interface AutoScalingAutoScalingGroupInstancesDistribution {
   OnDemandAllocationStrategy?: string;
   OnDemandBaseCapacity?: number;
   OnDemandPercentageAboveBaseCapacity?: number;
-  SpotAllocationStrategy?: string;
   SpotInstancePools?: number;
+  SpotAllocationStrategy?: string;
   SpotMaxPrice?: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.LaunchTemplate
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-as-mixedinstancespolicy-launchtemplate.html | AWS::AutoScaling::AutoScalingGroup.LaunchTemplate}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-launchtemplate.html | AWS::AutoScaling::AutoScalingGroup.LaunchTemplate}
  */
 export interface AutoScalingAutoScalingGroupLaunchTemplate {
   LaunchTemplateSpecification: AutoScalingAutoScalingGroupLaunchTemplateSpecification;
@@ -83,13 +83,13 @@ export interface AutoScalingAutoScalingGroupLaunchTemplate {
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.LaunchTemplateOverrides
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-as-mixedinstancespolicy-launchtemplateoverrides.html | AWS::AutoScaling::AutoScalingGroup.LaunchTemplateOverrides}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-launchtemplateoverrides.html | AWS::AutoScaling::AutoScalingGroup.LaunchTemplateOverrides}
  */
 export interface AutoScalingAutoScalingGroupLaunchTemplateOverrides {
-  InstanceRequirements?: AutoScalingAutoScalingGroupInstanceRequirements;
-  InstanceType?: string;
   LaunchTemplateSpecification?: AutoScalingAutoScalingGroupLaunchTemplateSpecification;
   WeightedCapacity?: string;
+  InstanceRequirements?: AutoScalingAutoScalingGroupInstanceRequirements;
+  InstanceType?: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.LaunchTemplateSpecification
@@ -97,9 +97,9 @@ export interface AutoScalingAutoScalingGroupLaunchTemplateOverrides {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-launchtemplatespecification.html | AWS::AutoScaling::AutoScalingGroup.LaunchTemplateSpecification}
  */
 export interface AutoScalingAutoScalingGroupLaunchTemplateSpecification {
-  LaunchTemplateId?: string;
   LaunchTemplateName?: string;
   Version: string;
+  LaunchTemplateId?: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.LifecycleHookSpecification
@@ -107,11 +107,11 @@ export interface AutoScalingAutoScalingGroupLaunchTemplateSpecification {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-lifecyclehookspecification.html | AWS::AutoScaling::AutoScalingGroup.LifecycleHookSpecification}
  */
 export interface AutoScalingAutoScalingGroupLifecycleHookSpecification {
-  DefaultResult?: string;
-  HeartbeatTimeout?: number;
   LifecycleHookName: string;
   LifecycleTransition: string;
+  HeartbeatTimeout?: number;
   NotificationMetadata?: string;
+  DefaultResult?: string;
   NotificationTargetARN?: string;
   RoleARN?: string;
 }
@@ -121,8 +121,8 @@ export interface AutoScalingAutoScalingGroupLifecycleHookSpecification {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-memorygibpervcpurequest.html | AWS::AutoScaling::AutoScalingGroup.MemoryGiBPerVCpuRequest}
  */
 export interface AutoScalingAutoScalingGroupMemoryGiBPerVCpuRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.MemoryMiBRequest
@@ -130,22 +130,22 @@ export interface AutoScalingAutoScalingGroupMemoryGiBPerVCpuRequest {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-memorymibrequest.html | AWS::AutoScaling::AutoScalingGroup.MemoryMiBRequest}
  */
 export interface AutoScalingAutoScalingGroupMemoryMiBRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.MetricsCollection
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-metricscollection.html | AWS::AutoScaling::AutoScalingGroup.MetricsCollection}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-metricscollection.html | AWS::AutoScaling::AutoScalingGroup.MetricsCollection}
  */
 export interface AutoScalingAutoScalingGroupMetricsCollection {
-  Granularity: string;
   Metrics?: any[];
+  Granularity: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.MixedInstancesPolicy
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-as-group-mixedinstancespolicy.html | AWS::AutoScaling::AutoScalingGroup.MixedInstancesPolicy}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-mixedinstancespolicy.html | AWS::AutoScaling::AutoScalingGroup.MixedInstancesPolicy}
  */
 export interface AutoScalingAutoScalingGroupMixedInstancesPolicy {
   InstancesDistribution?: AutoScalingAutoScalingGroupInstancesDistribution;
@@ -157,8 +157,8 @@ export interface AutoScalingAutoScalingGroupMixedInstancesPolicy {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-networkbandwidthgbpsrequest.html | AWS::AutoScaling::AutoScalingGroup.NetworkBandwidthGbpsRequest}
  */
 export interface AutoScalingAutoScalingGroupNetworkBandwidthGbpsRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.NetworkInterfaceCountRequest
@@ -166,27 +166,27 @@ export interface AutoScalingAutoScalingGroupNetworkBandwidthGbpsRequest {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-networkinterfacecountrequest.html | AWS::AutoScaling::AutoScalingGroup.NetworkInterfaceCountRequest}
  */
 export interface AutoScalingAutoScalingGroupNetworkInterfaceCountRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.NotificationConfiguration
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-notificationconfigurations.html | AWS::AutoScaling::AutoScalingGroup.NotificationConfiguration}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-notificationconfiguration.html | AWS::AutoScaling::AutoScalingGroup.NotificationConfiguration}
  */
 export interface AutoScalingAutoScalingGroupNotificationConfiguration {
+  TopicARN: any[];
   NotificationTypes?: any[];
-  TopicARN: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.TagProperty
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-tags.html | AWS::AutoScaling::AutoScalingGroup.TagProperty}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-tagproperty.html | AWS::AutoScaling::AutoScalingGroup.TagProperty}
  */
 export interface AutoScalingAutoScalingGroupTagProperty {
+  Value: string;
   Key: string;
   PropagateAtLaunch: boolean;
-  Value: string;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.TotalLocalStorageGBRequest
@@ -194,8 +194,8 @@ export interface AutoScalingAutoScalingGroupTagProperty {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-totallocalstoragegbrequest.html | AWS::AutoScaling::AutoScalingGroup.TotalLocalStorageGBRequest}
  */
 export interface AutoScalingAutoScalingGroupTotalLocalStorageGBRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup.VCpuCountRequest
@@ -203,8 +203,8 @@ export interface AutoScalingAutoScalingGroupTotalLocalStorageGBRequest {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-vcpucountrequest.html | AWS::AutoScaling::AutoScalingGroup.VCpuCountRequest}
  */
 export interface AutoScalingAutoScalingGroupVCpuCountRequest {
-  Max?: number;
   Min?: number;
+  Max?: number;
 }
 /**
  * Type definition for AWS::AutoScaling::LaunchConfiguration.BlockDevice
@@ -412,69 +412,50 @@ export interface AutoScalingWarmPoolInstanceReusePolicy {
 /**
  * Type definition for AWS::AutoScaling::AutoScalingGroup
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-group.html | AWS::AutoScaling::AutoScalingGroup}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-autoscaling-autoscalinggroup.html | AWS::AutoScaling::AutoScalingGroup}
  */
 export interface AutoScalingAutoScalingGroupProps {
-  AutoScalingGroupName?: string;
-  AvailabilityZones?: any[];
-  CapacityRebalance?: boolean;
-  Context?: string;
-  Cooldown?: string;
-  DefaultInstanceWarmup?: number;
-  DesiredCapacity?: string;
-  DesiredCapacityType?: string;
-  HealthCheckGracePeriod?: number;
-  HealthCheckType?: string;
-  InstanceId?: string;
-  LaunchConfigurationName?: string;
-  LaunchTemplate?: AutoScalingAutoScalingGroupLaunchTemplateSpecification;
   LifecycleHookSpecificationList?: any[];
   LoadBalancerNames?: any[];
-  MaxInstanceLifetime?: number;
-  MaxSize: string;
-  MetricsCollection?: any[];
-  MinSize: string;
-  MixedInstancesPolicy?: AutoScalingAutoScalingGroupMixedInstancesPolicy;
-  NewInstancesProtectedFromScaleIn?: boolean;
-  NotificationConfigurations?: any[];
-  PlacementGroup?: string;
-  ServiceLinkedRoleARN?: string;
-  Tags?: Tag[];
-  TargetGroupARNs?: any[];
-  TerminationPolicies?: any[];
-  VPCZoneIdentifier?: any[];
-}
-/**
- * Attributes type definition for AWS::AutoScaling::AutoScalingGroup
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-group.html | AWS::AutoScaling::AutoScalingGroup}
- */
-export interface AutoScalingAutoScalingGroupAttribs {
   LaunchConfigurationName?: string;
-  LaunchTemplateSpecification?: string;
-  MixedInstancesPolicy?: string;
+  ServiceLinkedRoleARN?: string;
+  TargetGroupARNs?: any[];
+  Cooldown?: string;
+  NotificationConfigurations?: any[];
+  DesiredCapacity?: string;
+  HealthCheckGracePeriod?: number;
+  DefaultInstanceWarmup?: number;
+  NewInstancesProtectedFromScaleIn?: boolean;
+  LaunchTemplate?: AutoScalingAutoScalingGroupLaunchTemplateSpecification;
+  MixedInstancesPolicy?: AutoScalingAutoScalingGroupMixedInstancesPolicy;
+  VPCZoneIdentifier?: any[];
+  Tags?: Tag[];
+  Context?: string;
+  CapacityRebalance?: boolean;
+  InstanceId?: string;
+  AvailabilityZones?: any[];
+  MetricsCollection?: any[];
+  MaxSize: string;
+  MinSize: string;
+  TerminationPolicies?: any[];
+  AutoScalingGroupName?: string;
+  DesiredCapacityType?: string;
   PlacementGroup?: string;
-  VPCZoneIdentifier?: string;
+  HealthCheckType?: string;
+  MaxInstanceLifetime?: number;
 }
 /**
  * Resource class for AWS::AutoScaling::AutoScalingGroup
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-group.html | AWS::AutoScaling::AutoScalingGroup}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-autoscaling-autoscalinggroup.html | AWS::AutoScaling::AutoScalingGroup}
  */
 export class AutoScalingAutoScalingGroup extends ResourceBase<
   "AWS::AutoScaling::AutoScalingGroup",
   AutoScalingAutoScalingGroupProps,
-  AutoScalingAutoScalingGroupAttribs
+  Record<string, never>
 > {
   public static readonly Type = "AWS::AutoScaling::AutoScalingGroup";
-  public static readonly AttributeNames: readonly (keyof AutoScalingAutoScalingGroupAttribs)[] =
-    [
-      "LaunchConfigurationName",
-      "LaunchTemplateSpecification",
-      "MixedInstancesPolicy",
-      "PlacementGroup",
-      "VPCZoneIdentifier",
-    ];
+  public static readonly AttributeNames = [];
   constructor(
     logicalId: string,
     properties: AutoScalingAutoScalingGroupProps,

@@ -289,6 +289,15 @@ export interface LambdaVersionProvisionedConcurrencyConfiguration {
   ProvisionedConcurrentExecutions: number;
 }
 /**
+ * Type definition for AWS::Lambda::Version.RuntimePolicy
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lambda-version-runtimepolicy.html | AWS::Lambda::Version.RuntimePolicy}
+ */
+export interface LambdaVersionRuntimePolicy {
+  UpdateRuntimeOn: string;
+  RuntimeVersionArn?: string;
+}
+/**
  * Type definition for AWS::Lambda::Alias
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-alias.html | AWS::Lambda::Alias}
@@ -482,29 +491,30 @@ export class LambdaEventSourceMapping extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-function.html | AWS::Lambda::Function}
  */
 export interface LambdaFunctionProps {
-  ImageConfig?: LambdaFunctionImageConfig;
-  MemorySize?: number;
+  Policy?: object;
   Description?: string;
   TracingConfig?: LambdaFunctionTracingConfig;
   VpcConfig?: LambdaFunctionVpcConfig;
-  DeadLetterConfig?: LambdaFunctionDeadLetterConfig;
-  Timeout?: number;
   RuntimeManagementConfig?: LambdaFunctionRuntimeManagementConfig;
-  Handler?: string;
   ReservedConcurrentExecutions?: number;
   SnapStart?: LambdaFunctionSnapStart;
-  Code: LambdaFunctionCode;
-  Role: string;
   FileSystemConfigs?: any[];
   FunctionName?: string;
   Runtime?: string;
   KmsKeyArn?: string;
   PackageType?: string;
   CodeSigningConfigArn?: string;
-  Environment?: LambdaFunctionEnvironment;
-  EphemeralStorage?: LambdaFunctionEphemeralStorage;
   Layers?: any[];
   Tags?: Tag[];
+  ImageConfig?: LambdaFunctionImageConfig;
+  MemorySize?: number;
+  DeadLetterConfig?: LambdaFunctionDeadLetterConfig;
+  Timeout?: number;
+  Handler?: string;
+  Code: LambdaFunctionCode;
+  Role: string;
+  Environment?: LambdaFunctionEnvironment;
+  EphemeralStorage?: LambdaFunctionEphemeralStorage;
   Architectures?: any[];
 }
 /**
@@ -750,10 +760,11 @@ export class LambdaUrl extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-version.html | AWS::Lambda::Version}
  */
 export interface LambdaVersionProps {
-  CodeSha256?: string;
-  Description?: string;
   FunctionName: string;
   ProvisionedConcurrencyConfig?: LambdaVersionProvisionedConcurrencyConfiguration;
+  Description?: string;
+  RuntimePolicy?: LambdaVersionRuntimePolicy;
+  CodeSha256?: string;
 }
 /**
  * Attributes type definition for AWS::Lambda::Version
@@ -761,6 +772,7 @@ export interface LambdaVersionProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-version.html | AWS::Lambda::Version}
  */
 export interface LambdaVersionAttribs {
+  FunctionArn?: string;
   Version?: string;
 }
 /**
@@ -775,7 +787,7 @@ export class LambdaVersion extends ResourceBase<
 > {
   public static readonly Type = "AWS::Lambda::Version";
   public static readonly AttributeNames: readonly (keyof LambdaVersionAttribs)[] =
-    ["Version"];
+    ["FunctionArn", "Version"];
   constructor(
     logicalId: string,
     properties: LambdaVersionProps,

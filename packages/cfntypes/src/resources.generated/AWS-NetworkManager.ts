@@ -506,6 +506,8 @@ export interface NetworkManagerLinkProps {
  */
 export interface NetworkManagerLinkAttribs {
   LinkArn?: string;
+  State?: string;
+  CreatedAt?: string;
   LinkId?: string;
 }
 /**
@@ -520,7 +522,7 @@ export class NetworkManagerLink extends ResourceBase<
 > {
   public static readonly Type = "AWS::NetworkManager::Link";
   public static readonly AttributeNames: readonly (keyof NetworkManagerLinkAttribs)[] =
-    ["LinkArn", "LinkId"];
+    ["LinkArn", "State", "CreatedAt", "LinkId"];
   constructor(
     logicalId: string,
     properties: NetworkManagerLinkProps,

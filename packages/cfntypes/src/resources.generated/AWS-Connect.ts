@@ -1043,6 +1043,7 @@ export interface ConnectRoutingProfileProps {
   Description: string;
   MediaConcurrencies: any[];
   InstanceArn: string;
+  AgentAvailabilityTimer?: string;
   QueueConfigs?: any[];
   DefaultOutboundQueueArn: string;
   Tags?: Tag[];
@@ -1385,6 +1386,7 @@ export class ConnectUser extends ResourceBase<
 export interface ConnectUserHierarchyGroupProps {
   InstanceArn: string;
   ParentGroupArn?: string;
+  Tags?: Tag[];
   Name: string;
 }
 /**

@@ -117,6 +117,7 @@ export class AppConfigApplication extends ResourceBase<
 export interface AppConfigConfigurationProfileProps {
   LocationUri: string;
   Type?: string;
+  KmsKeyIdentifier?: string;
   Description?: string;
   Validators?: any[];
   RetrievalRoleArn?: string;

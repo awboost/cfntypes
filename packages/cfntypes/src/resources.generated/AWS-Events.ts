@@ -120,15 +120,6 @@ export interface EventsEndpointSecondary {
   Route: string;
 }
 /**
- * Type definition for AWS::Events::EventBus.TagEntry
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-eventbus-tagentry.html | AWS::Events::EventBus.TagEntry}
- */
-export interface EventsEventBusTagEntry {
-  Value: string;
-  Key: string;
-}
-/**
  * Type definition for AWS::Events::EventBusPolicy.Condition
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-eventbuspolicy-condition.html | AWS::Events::EventBusPolicy.Condition}
@@ -144,9 +135,9 @@ export interface EventsEventBusPolicyCondition {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-awsvpcconfiguration.html | AWS::Events::Rule.AwsVpcConfiguration}
  */
 export interface EventsRuleAwsVpcConfiguration {
-  AssignPublicIp?: string;
   SecurityGroups?: any[];
   Subnets: any[];
+  AssignPublicIp?: string;
 }
 /**
  * Type definition for AWS::Events::Rule.BatchArrayProperties
@@ -163,9 +154,9 @@ export interface EventsRuleBatchArrayProperties {
  */
 export interface EventsRuleBatchParameters {
   ArrayProperties?: EventsRuleBatchArrayProperties;
-  JobDefinition: string;
   JobName: string;
   RetryStrategy?: EventsRuleBatchRetryStrategy;
+  JobDefinition: string;
 }
 /**
  * Type definition for AWS::Events::Rule.BatchRetryStrategy
@@ -181,8 +172,8 @@ export interface EventsRuleBatchRetryStrategy {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-capacityproviderstrategyitem.html | AWS::Events::Rule.CapacityProviderStrategyItem}
  */
 export interface EventsRuleCapacityProviderStrategyItem {
-  Base?: number;
   CapacityProvider: string;
+  Base?: number;
   Weight?: number;
 }
 /**
@@ -199,19 +190,19 @@ export interface EventsRuleDeadLetterConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-ecsparameters.html | AWS::Events::Rule.EcsParameters}
  */
 export interface EventsRuleEcsParameters {
-  CapacityProviderStrategy?: any[];
+  PlatformVersion?: string;
+  Group?: string;
   EnableECSManagedTags?: boolean;
   EnableExecuteCommand?: boolean;
-  Group?: string;
-  LaunchType?: string;
-  NetworkConfiguration?: EventsRuleNetworkConfiguration;
   PlacementConstraints?: any[];
-  PlacementStrategies?: any[];
-  PlatformVersion?: string;
   PropagateTags?: string;
+  TaskCount?: number;
+  PlacementStrategies?: any[];
+  CapacityProviderStrategy?: any[];
+  LaunchType?: string;
   ReferenceId?: string;
   TagList?: any[];
-  TaskCount?: number;
+  NetworkConfiguration?: EventsRuleNetworkConfiguration;
   TaskDefinitionArn: string;
 }
 /**
@@ -220,8 +211,8 @@ export interface EventsRuleEcsParameters {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-httpparameters.html | AWS::Events::Rule.HttpParameters}
  */
 export interface EventsRuleHttpParameters {
-  HeaderParameters?: Record<string, any>;
   PathParameterValues?: any[];
+  HeaderParameters?: Record<string, any>;
   QueryStringParameters?: Record<string, any>;
 }
 /**
@@ -255,8 +246,8 @@ export interface EventsRuleNetworkConfiguration {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-placementconstraint.html | AWS::Events::Rule.PlacementConstraint}
  */
 export interface EventsRulePlacementConstraint {
-  Expression?: string;
   Type?: string;
+  Expression?: string;
 }
 /**
  * Type definition for AWS::Events::Rule.PlacementStrategy
@@ -273,11 +264,12 @@ export interface EventsRulePlacementStrategy {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-redshiftdataparameters.html | AWS::Events::Rule.RedshiftDataParameters}
  */
 export interface EventsRuleRedshiftDataParameters {
-  Database: string;
-  DbUser?: string;
-  SecretManagerArn?: string;
-  Sql?: string;
   StatementName?: string;
+  Sqls?: any[];
+  Database: string;
+  SecretManagerArn?: string;
+  DbUser?: string;
+  Sql?: string;
   WithEvent?: boolean;
 }
 /**
@@ -286,8 +278,8 @@ export interface EventsRuleRedshiftDataParameters {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-retrypolicy.html | AWS::Events::Rule.RetryPolicy}
  */
 export interface EventsRuleRetryPolicy {
-  MaximumEventAgeInSeconds?: number;
   MaximumRetryAttempts?: number;
+  MaximumEventAgeInSeconds?: number;
 }
 /**
  * Type definition for AWS::Events::Rule.RunCommandParameters
@@ -303,8 +295,8 @@ export interface EventsRuleRunCommandParameters {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-runcommandtarget.html | AWS::Events::Rule.RunCommandTarget}
  */
 export interface EventsRuleRunCommandTarget {
-  Key: string;
   Values: any[];
+  Key: string;
 }
 /**
  * Type definition for AWS::Events::Rule.SageMakerPipelineParameter
@@ -312,8 +304,8 @@ export interface EventsRuleRunCommandTarget {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-sagemakerpipelineparameter.html | AWS::Events::Rule.SageMakerPipelineParameter}
  */
 export interface EventsRuleSageMakerPipelineParameter {
-  Name: string;
   Value: string;
+  Name: string;
 }
 /**
  * Type definition for AWS::Events::Rule.SageMakerPipelineParameters
@@ -332,36 +324,27 @@ export interface EventsRuleSqsParameters {
   MessageGroupId: string;
 }
 /**
- * Type definition for AWS::Events::Rule.Tag
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-tag.html | AWS::Events::Rule.Tag}
- */
-export interface EventsRuleTag {
-  Key?: string;
-  Value?: string;
-}
-/**
  * Type definition for AWS::Events::Rule.Target
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-events-rule-target.html | AWS::Events::Rule.Target}
  */
 export interface EventsRuleTarget {
-  Arn: string;
-  BatchParameters?: EventsRuleBatchParameters;
-  DeadLetterConfig?: EventsRuleDeadLetterConfig;
-  EcsParameters?: EventsRuleEcsParameters;
-  HttpParameters?: EventsRuleHttpParameters;
-  Id: string;
-  Input?: string;
   InputPath?: string;
+  HttpParameters?: EventsRuleHttpParameters;
+  DeadLetterConfig?: EventsRuleDeadLetterConfig;
+  RunCommandParameters?: EventsRuleRunCommandParameters;
   InputTransformer?: EventsRuleInputTransformer;
   KinesisParameters?: EventsRuleKinesisParameters;
-  RedshiftDataParameters?: EventsRuleRedshiftDataParameters;
-  RetryPolicy?: EventsRuleRetryPolicy;
   RoleArn?: string;
-  RunCommandParameters?: EventsRuleRunCommandParameters;
-  SageMakerPipelineParameters?: EventsRuleSageMakerPipelineParameters;
+  RedshiftDataParameters?: EventsRuleRedshiftDataParameters;
+  Input?: string;
   SqsParameters?: EventsRuleSqsParameters;
+  EcsParameters?: EventsRuleEcsParameters;
+  BatchParameters?: EventsRuleBatchParameters;
+  Id: string;
+  Arn: string;
+  SageMakerPipelineParameters?: EventsRuleSageMakerPipelineParameters;
+  RetryPolicy?: EventsRuleRetryPolicy;
 }
 /**
  * Type definition for AWS::Events::ApiDestination
@@ -563,6 +546,7 @@ export class EventsEndpoint extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-events-eventbus.html | AWS::Events::EventBus}
  */
 export interface EventsEventBusProps {
+  Policy?: object;
   EventSourceName?: string;
   Tags?: Tag[];
   Name: string;
@@ -573,7 +557,6 @@ export interface EventsEventBusProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-events-eventbus.html | AWS::Events::EventBus}
  */
 export interface EventsEventBusAttribs {
-  Policy?: string;
   Arn?: string;
   Name?: string;
 }
@@ -589,7 +572,7 @@ export class EventsEventBus extends ResourceBase<
 > {
   public static readonly Type = "AWS::Events::EventBus";
   public static readonly AttributeNames: readonly (keyof EventsEventBusAttribs)[] =
-    ["Policy", "Arn", "Name"];
+    ["Arn", "Name"];
   constructor(
     logicalId: string,
     properties: EventsEventBusProps,
@@ -649,14 +632,14 @@ export class EventsEventBusPolicy extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-events-rule.html | AWS::Events::Rule}
  */
 export interface EventsRuleProps {
-  Description?: string;
   EventBusName?: string;
   EventPattern?: object;
-  Name?: string;
-  RoleArn?: string;
   ScheduleExpression?: string;
+  Description?: string;
   State?: string;
   Targets?: any[];
+  RoleArn?: string;
+  Name?: string;
 }
 /**
  * Attributes type definition for AWS::Events::Rule

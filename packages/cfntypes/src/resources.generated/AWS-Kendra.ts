@@ -161,7 +161,6 @@ export interface KendraDataSourceDataSourceConfiguration {
   ConfluenceConfiguration?: KendraDataSourceConfluenceConfiguration;
   WorkDocsConfiguration?: KendraDataSourceWorkDocsConfiguration;
   OneDriveConfiguration?: KendraDataSourceOneDriveConfiguration;
-  TemplateConfiguration?: KendraDataSourceTemplateConfiguration;
   ServiceNowConfiguration?: KendraDataSourceServiceNowConfiguration;
 }
 /**
@@ -468,14 +467,6 @@ export interface KendraDataSourceSharePointConfiguration {
  */
 export interface KendraDataSourceSqlConfiguration {
   QueryIdentifiersEnclosingOption?: string;
-}
-/**
- * Type definition for AWS::Kendra::DataSource.TemplateConfiguration
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-kendra-datasource-templateconfiguration.html | AWS::Kendra::DataSource.TemplateConfiguration}
- */
-export interface KendraDataSourceTemplateConfiguration {
-  Template: string;
 }
 /**
  * Type definition for AWS::Kendra::DataSource.WebCrawlerAuthenticationConfiguration

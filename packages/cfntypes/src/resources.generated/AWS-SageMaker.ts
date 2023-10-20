@@ -60,6 +60,7 @@ export interface SageMakerDataQualityJobDefinitionBatchTransformInput {
   DataCapturedDestinationS3Uri: string;
   S3InputMode?: string;
   LocalPath: string;
+  ExcludeFeaturesAttribute?: string;
 }
 /**
  * Type definition for AWS::SageMaker::DataQualityJobDefinition.ClusterConfig
@@ -140,6 +141,7 @@ export interface SageMakerDataQualityJobDefinitionEndpointInput {
   EndpointName: string;
   S3InputMode?: string;
   LocalPath: string;
+  ExcludeFeaturesAttribute?: string;
 }
 /**
  * Type definition for AWS::SageMaker::DataQualityJobDefinition.Json
@@ -1882,6 +1884,7 @@ export interface SageMakerMonitoringScheduleBatchTransformInput {
   DataCapturedDestinationS3Uri: string;
   S3InputMode?: string;
   LocalPath: string;
+  ExcludeFeaturesAttribute?: string;
 }
 /**
  * Type definition for AWS::SageMaker::MonitoringSchedule.ClusterConfig
@@ -1930,6 +1933,7 @@ export interface SageMakerMonitoringScheduleEndpointInput {
   EndpointName: string;
   S3InputMode?: string;
   LocalPath: string;
+  ExcludeFeaturesAttribute?: string;
 }
 /**
  * Type definition for AWS::SageMaker::MonitoringSchedule.Json
@@ -2054,6 +2058,8 @@ export interface SageMakerMonitoringScheduleS3Output {
  */
 export interface SageMakerMonitoringScheduleScheduleConfig {
   ScheduleExpression: string;
+  DataAnalysisStartTime?: string;
+  DataAnalysisEndTime?: string;
 }
 /**
  * Type definition for AWS::SageMaker::MonitoringSchedule.StatisticsResource

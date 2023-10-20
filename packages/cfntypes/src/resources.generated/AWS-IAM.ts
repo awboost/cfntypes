@@ -4,20 +4,20 @@ import { Tag } from "./core.js";
 /**
  * Type definition for AWS::IAM::Group.Policy
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html | AWS::IAM::Group.Policy}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group-policy.html | AWS::IAM::Group.Policy}
  */
 export interface IAMGroupPolicy {
-  PolicyDocument: object;
   PolicyName: string;
+  PolicyDocument: object;
 }
 /**
  * Type definition for AWS::IAM::Role.Policy
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html | AWS::IAM::Role.Policy}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-role-policy.html | AWS::IAM::Role.Policy}
  */
 export interface IAMRolePolicy {
-  PolicyDocument: object;
   PolicyName: string;
+  PolicyDocument: object;
 }
 /**
  * Type definition for AWS::IAM::User.LoginProfile
@@ -85,18 +85,18 @@ export class IAMAccessKey extends ResourceBase<
 /**
  * Type definition for AWS::IAM::Group
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group.html | AWS::IAM::Group}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-group.html | AWS::IAM::Group}
  */
 export interface IAMGroupProps {
   GroupName?: string;
-  ManagedPolicyArns?: any[];
   Path?: string;
+  ManagedPolicyArns?: any[];
   Policies?: any[];
 }
 /**
  * Attributes type definition for AWS::IAM::Group
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group.html | AWS::IAM::Group}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-group.html | AWS::IAM::Group}
  */
 export interface IAMGroupAttribs {
   Arn?: string;
@@ -104,7 +104,7 @@ export interface IAMGroupAttribs {
 /**
  * Resource class for AWS::IAM::Group
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group.html | AWS::IAM::Group}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-group.html | AWS::IAM::Group}
  */
 export class IAMGroup extends ResourceBase<
   "AWS::IAM::Group",
@@ -375,15 +375,15 @@ export class IAMPolicy extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html | AWS::IAM::Role}
  */
 export interface IAMRoleProps {
-  AssumeRolePolicyDocument: object;
-  Description?: string;
+  Path?: string;
   ManagedPolicyArns?: any[];
   MaxSessionDuration?: number;
-  Path?: string;
-  PermissionsBoundary?: string;
-  Policies?: any[];
   RoleName?: string;
+  Description?: string;
+  Policies?: any[];
+  AssumeRolePolicyDocument: object;
   Tags?: Tag[];
+  PermissionsBoundary?: string;
 }
 /**
  * Attributes type definition for AWS::IAM::Role

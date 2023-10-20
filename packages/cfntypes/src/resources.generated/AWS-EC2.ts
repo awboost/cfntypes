@@ -1789,6 +1789,24 @@ export interface EC2VerifiedAccessEndpointNetworkInterfaceOptions {
   Protocol?: string;
 }
 /**
+ * Type definition for AWS::EC2::VerifiedAccessEndpoint.SseSpecification
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-verifiedaccessendpoint-ssespecification.html | AWS::EC2::VerifiedAccessEndpoint.SseSpecification}
+ */
+export interface EC2VerifiedAccessEndpointSseSpecification {
+  CustomerManagedKeyEnabled?: boolean;
+  KmsKeyArn?: string;
+}
+/**
+ * Type definition for AWS::EC2::VerifiedAccessGroup.SseSpecification
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-verifiedaccessgroup-ssespecification.html | AWS::EC2::VerifiedAccessGroup.SseSpecification}
+ */
+export interface EC2VerifiedAccessGroupSseSpecification {
+  CustomerManagedKeyEnabled?: boolean;
+  KmsKeyArn?: string;
+}
+/**
  * Type definition for AWS::EC2::VerifiedAccessInstance.CloudWatchLogs
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-verifiedaccessinstance-cloudwatchlogs.html | AWS::EC2::VerifiedAccessInstance.CloudWatchLogs}
@@ -1862,6 +1880,15 @@ export interface EC2VerifiedAccessTrustProviderOidcOptions {
   UserInfoEndpoint?: string;
   ClientId?: string;
   AuthorizationEndpoint?: string;
+}
+/**
+ * Type definition for AWS::EC2::VerifiedAccessTrustProvider.SseSpecification
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-verifiedaccesstrustprovider-ssespecification.html | AWS::EC2::VerifiedAccessTrustProvider.SseSpecification}
+ */
+export interface EC2VerifiedAccessTrustProviderSseSpecification {
+  CustomerManagedKeyEnabled?: boolean;
+  KmsKeyArn?: string;
 }
 /**
  * Type definition for AWS::EC2::CapacityReservation
@@ -6038,6 +6065,7 @@ export interface EC2VerifiedAccessEndpointProps {
   EndpointDomainPrefix: string;
   EndpointType: string;
   PolicyDocument?: string;
+  SseSpecification?: EC2VerifiedAccessEndpointSseSpecification;
   Tags?: Tag[];
   NetworkInterfaceOptions?: EC2VerifiedAccessEndpointNetworkInterfaceOptions;
 }
@@ -6098,6 +6126,7 @@ export class EC2VerifiedAccessEndpoint extends ResourceBase<
 export interface EC2VerifiedAccessGroupProps {
   Description?: string;
   PolicyDocument?: string;
+  SseSpecification?: EC2VerifiedAccessGroupSseSpecification;
   VerifiedAccessInstanceId: string;
   Tags?: Tag[];
   PolicyEnabled?: boolean;
@@ -6155,6 +6184,7 @@ export class EC2VerifiedAccessGroup extends ResourceBase<
 export interface EC2VerifiedAccessInstanceProps {
   VerifiedAccessTrustProviders?: any[];
   Description?: string;
+  FipsEnabled?: boolean;
   LoggingConfigurations?: EC2VerifiedAccessInstanceVerifiedAccessLogs;
   VerifiedAccessTrustProviderIds?: any[];
   Tags?: Tag[];
@@ -6208,6 +6238,7 @@ export interface EC2VerifiedAccessTrustProviderProps {
   Description?: string;
   OidcOptions?: EC2VerifiedAccessTrustProviderOidcOptions;
   TrustProviderType: string;
+  SseSpecification?: EC2VerifiedAccessTrustProviderSseSpecification;
   UserTrustProviderType?: string;
   Tags?: Tag[];
 }

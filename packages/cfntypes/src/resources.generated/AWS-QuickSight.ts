@@ -1522,6 +1522,7 @@ export interface QuickSightAnalysisFilterGroup {
  */
 export interface QuickSightAnalysisFilterListConfiguration {
   CategoryValues?: any[];
+  NullOption?: string;
   MatchOperator: string;
   SelectAllOptions?: string;
 }
@@ -4567,6 +4568,14 @@ export interface QuickSightAnalysisUniqueValuesComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Analysis.ValidationStrategy
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-validationstrategy.html | AWS::QuickSight::Analysis.ValidationStrategy}
+ */
+export interface QuickSightAnalysisValidationStrategy {
+  Mode: string;
+}
+/**
  * Type definition for AWS::QuickSight::Analysis.VisibleRangeOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-visiblerangeoptions.html | AWS::QuickSight::Analysis.VisibleRangeOptions}
@@ -6421,6 +6430,7 @@ export interface QuickSightDashboardFilterGroup {
  */
 export interface QuickSightDashboardFilterListConfiguration {
   CategoryValues?: any[];
+  NullOption?: string;
   MatchOperator: string;
   SelectAllOptions?: string;
 }
@@ -9482,6 +9492,14 @@ export interface QuickSightDashboardUniqueValuesComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.ValidationStrategy
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-validationstrategy.html | AWS::QuickSight::Dashboard.ValidationStrategy}
+ */
+export interface QuickSightDashboardValidationStrategy {
+  Mode: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.VisibleRangeOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-visiblerangeoptions.html | AWS::QuickSight::Dashboard.VisibleRangeOptions}
@@ -11969,6 +11987,7 @@ export interface QuickSightTemplateFilterGroup {
  */
 export interface QuickSightTemplateFilterListConfiguration {
   CategoryValues?: any[];
+  NullOption?: string;
   MatchOperator: string;
   SelectAllOptions?: string;
 }
@@ -15051,6 +15070,14 @@ export interface QuickSightTemplateUniqueValuesComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Template.ValidationStrategy
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-validationstrategy.html | AWS::QuickSight::Template.ValidationStrategy}
+ */
+export interface QuickSightTemplateValidationStrategy {
+  Mode: string;
+}
+/**
  * Type definition for AWS::QuickSight::Template.VisibleRangeOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-visiblerangeoptions.html | AWS::QuickSight::Template.VisibleRangeOptions}
@@ -15587,6 +15614,7 @@ export interface QuickSightTopicTopicCalculatedField {
   ColumnDataRole?: string;
   Aggregation?: string;
   Expression: string;
+  NonAdditive?: boolean;
   CalculatedFieldName: string;
   NeverAggregateInFilter?: boolean;
   TimeGranularity?: string;
@@ -15629,6 +15657,7 @@ export interface QuickSightTopicTopicColumn {
   ColumnDataRole?: string;
   Aggregation?: string;
   ColumnName: string;
+  NonAdditive?: boolean;
   ColumnSynonyms?: any[];
   NeverAggregateInFilter?: boolean;
   TimeGranularity?: string;
@@ -15748,6 +15777,7 @@ export interface QuickSightAnalysisProps {
   Definition?: QuickSightAnalysisAnalysisDefinition;
   AwsAccountId: string;
   Permissions?: any[];
+  ValidationStrategy?: QuickSightAnalysisValidationStrategy;
   Tags?: Tag[];
   Name: string;
 }
@@ -15812,6 +15842,7 @@ export interface QuickSightDashboardProps {
   Definition?: QuickSightDashboardDashboardVersionDefinition;
   AwsAccountId: string;
   Permissions?: any[];
+  ValidationStrategy?: QuickSightDashboardValidationStrategy;
   DashboardId: string;
   Tags?: Tag[];
   Name: string;
@@ -16060,9 +16091,10 @@ export class QuickSightRefreshSchedule extends ResourceBase<
 export interface QuickSightTemplateProps {
   VersionDescription?: string;
   SourceEntity?: QuickSightTemplateTemplateSourceEntity;
-  AwsAccountId: string;
   Definition?: QuickSightTemplateTemplateVersionDefinition;
+  AwsAccountId: string;
   Permissions?: any[];
+  ValidationStrategy?: QuickSightTemplateValidationStrategy;
   Tags?: Tag[];
   TemplateId: string;
   Name?: string;

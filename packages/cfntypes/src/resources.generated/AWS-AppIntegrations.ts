@@ -34,7 +34,7 @@ export interface AppIntegrationsEventIntegrationEventFilter {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html | AWS::AppIntegrations::DataIntegration}
  */
 export interface AppIntegrationsDataIntegrationProps {
-  ScheduleConfig: AppIntegrationsDataIntegrationScheduleConfig;
+  ScheduleConfig?: AppIntegrationsDataIntegrationScheduleConfig;
   FileConfiguration?: AppIntegrationsDataIntegrationFileConfiguration;
   Description?: string;
   SourceURI: string;

@@ -60,6 +60,24 @@ export interface CognitoIdentityPoolRoleAttachmentRulesConfigurationType {
   Rules: any[];
 }
 /**
+ * Type definition for AWS::Cognito::LogDeliveryConfiguration.CloudWatchLogsConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-logdeliveryconfiguration-cloudwatchlogsconfiguration.html | AWS::Cognito::LogDeliveryConfiguration.CloudWatchLogsConfiguration}
+ */
+export interface CognitoLogDeliveryConfigurationCloudWatchLogsConfiguration {
+  LogGroupArn?: string;
+}
+/**
+ * Type definition for AWS::Cognito::LogDeliveryConfiguration.LogConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-logdeliveryconfiguration-logconfiguration.html | AWS::Cognito::LogDeliveryConfiguration.LogConfiguration}
+ */
+export interface CognitoLogDeliveryConfigurationLogConfiguration {
+  EventSource?: string;
+  CloudWatchLogsConfiguration?: CognitoLogDeliveryConfigurationCloudWatchLogsConfiguration;
+  LogLevel?: string;
+}
+/**
  * Type definition for AWS::Cognito::UserPool.AccountRecoverySetting
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpool-accountrecoverysetting.html | AWS::Cognito::UserPool.AccountRecoverySetting}
@@ -500,6 +518,50 @@ export class CognitoIdentityPoolRoleAttachment extends ResourceBase<
     super(
       CognitoIdentityPoolRoleAttachment.Type,
       CognitoIdentityPoolRoleAttachment.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::Cognito::LogDeliveryConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-logdeliveryconfiguration.html | AWS::Cognito::LogDeliveryConfiguration}
+ */
+export interface CognitoLogDeliveryConfigurationProps {
+  UserPoolId: string;
+  LogConfigurations?: any[];
+}
+/**
+ * Attributes type definition for AWS::Cognito::LogDeliveryConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-logdeliveryconfiguration.html | AWS::Cognito::LogDeliveryConfiguration}
+ */
+export interface CognitoLogDeliveryConfigurationAttribs {
+  Id?: string;
+}
+/**
+ * Resource class for AWS::Cognito::LogDeliveryConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-logdeliveryconfiguration.html | AWS::Cognito::LogDeliveryConfiguration}
+ */
+export class CognitoLogDeliveryConfiguration extends ResourceBase<
+  "AWS::Cognito::LogDeliveryConfiguration",
+  CognitoLogDeliveryConfigurationProps,
+  CognitoLogDeliveryConfigurationAttribs
+> {
+  public static readonly Type = "AWS::Cognito::LogDeliveryConfiguration";
+  public static readonly AttributeNames: readonly (keyof CognitoLogDeliveryConfigurationAttribs)[] =
+    ["Id"];
+  constructor(
+    logicalId: string,
+    properties: CognitoLogDeliveryConfigurationProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      CognitoLogDeliveryConfiguration.Type,
+      CognitoLogDeliveryConfiguration.AttributeNames,
       logicalId,
       properties,
       options,
