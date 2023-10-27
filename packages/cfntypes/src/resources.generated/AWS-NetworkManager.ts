@@ -223,6 +223,7 @@ export class NetworkManagerConnectAttachment extends ResourceBase<
 export interface NetworkManagerConnectPeerProps {
   ConnectAttachmentId: string;
   PeerAddress: string;
+  SubnetArn?: string;
   CoreNetworkAddress?: string;
   BgpOptions?: NetworkManagerConnectPeerBgpOptions;
   InsideCidrBlocks?: any[];

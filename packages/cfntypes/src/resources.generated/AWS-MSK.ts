@@ -284,6 +284,67 @@ export interface MSKConfigurationLatestRevision {
   CreationTime?: string;
 }
 /**
+ * Type definition for AWS::MSK::Replicator.AmazonMskCluster
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-amazonmskcluster.html | AWS::MSK::Replicator.AmazonMskCluster}
+ */
+export interface MSKReplicatorAmazonMskCluster {
+  MskClusterArn: string;
+}
+/**
+ * Type definition for AWS::MSK::Replicator.ConsumerGroupReplication
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-consumergroupreplication.html | AWS::MSK::Replicator.ConsumerGroupReplication}
+ */
+export interface MSKReplicatorConsumerGroupReplication {
+  ConsumerGroupsToReplicate: any[];
+  ConsumerGroupsToExclude?: any[];
+  SynchroniseConsumerGroupOffsets?: boolean;
+  DetectAndCopyNewConsumerGroups?: boolean;
+}
+/**
+ * Type definition for AWS::MSK::Replicator.KafkaCluster
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-kafkacluster.html | AWS::MSK::Replicator.KafkaCluster}
+ */
+export interface MSKReplicatorKafkaCluster {
+  VpcConfig: MSKReplicatorKafkaClusterClientVpcConfig;
+  AmazonMskCluster: MSKReplicatorAmazonMskCluster;
+}
+/**
+ * Type definition for AWS::MSK::Replicator.KafkaClusterClientVpcConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-kafkaclusterclientvpcconfig.html | AWS::MSK::Replicator.KafkaClusterClientVpcConfig}
+ */
+export interface MSKReplicatorKafkaClusterClientVpcConfig {
+  SecurityGroupIds?: any[];
+  SubnetIds: any[];
+}
+/**
+ * Type definition for AWS::MSK::Replicator.ReplicationInfo
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-replicationinfo.html | AWS::MSK::Replicator.ReplicationInfo}
+ */
+export interface MSKReplicatorReplicationInfo {
+  TargetCompressionType: string;
+  TopicReplication: MSKReplicatorTopicReplication;
+  ConsumerGroupReplication: MSKReplicatorConsumerGroupReplication;
+  SourceKafkaClusterArn: string;
+  TargetKafkaClusterArn: string;
+}
+/**
+ * Type definition for AWS::MSK::Replicator.TopicReplication
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-replicator-topicreplication.html | AWS::MSK::Replicator.TopicReplication}
+ */
+export interface MSKReplicatorTopicReplication {
+  TopicsToReplicate: any[];
+  TopicsToExclude?: any[];
+  CopyTopicConfigurations?: boolean;
+  DetectAndCopyNewTopics?: boolean;
+  CopyAccessControlListsForTopics?: boolean;
+}
+/**
  * Type definition for AWS::MSK::ServerlessCluster.ClientAuthentication
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-msk-serverlesscluster-clientauthentication.html | AWS::MSK::ServerlessCluster.ClientAuthentication}
@@ -499,6 +560,55 @@ export class MSKConfiguration extends ResourceBase<
     super(
       MSKConfiguration.Type,
       MSKConfiguration.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::MSK::Replicator
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-msk-replicator.html | AWS::MSK::Replicator}
+ */
+export interface MSKReplicatorProps {
+  Description?: string;
+  CurrentVersion?: string;
+  ServiceExecutionRoleArn: string;
+  ReplicatorName: string;
+  ReplicationInfoList: any[];
+  KafkaClusters: any[];
+  Tags?: Tag[];
+}
+/**
+ * Attributes type definition for AWS::MSK::Replicator
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-msk-replicator.html | AWS::MSK::Replicator}
+ */
+export interface MSKReplicatorAttribs {
+  ReplicatorArn?: string;
+}
+/**
+ * Resource class for AWS::MSK::Replicator
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-msk-replicator.html | AWS::MSK::Replicator}
+ */
+export class MSKReplicator extends ResourceBase<
+  "AWS::MSK::Replicator",
+  MSKReplicatorProps,
+  MSKReplicatorAttribs
+> {
+  public static readonly Type = "AWS::MSK::Replicator";
+  public static readonly AttributeNames: readonly (keyof MSKReplicatorAttribs)[] =
+    ["ReplicatorArn"];
+  constructor(
+    logicalId: string,
+    properties: MSKReplicatorProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      MSKReplicator.Type,
+      MSKReplicator.AttributeNames,
       logicalId,
       properties,
       options,

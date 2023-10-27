@@ -984,13 +984,22 @@ export interface QuickSightAnalysisDataPathSort {
   Direction: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Analysis.DataPathType
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-datapathtype.html | AWS::QuickSight::Analysis.DataPathType}
+ */
+export interface QuickSightAnalysisDataPathType {
+  PivotTableDataPathType?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Analysis.DataPathValue
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-datapathvalue.html | AWS::QuickSight::Analysis.DataPathValue}
  */
 export interface QuickSightAnalysisDataPathValue {
-  FieldId: string;
-  FieldValue: string;
+  DataPathType?: QuickSightAnalysisDataPathType;
+  FieldId?: string;
+  FieldValue?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Analysis.DataSetIdentifierDeclaration
@@ -3341,6 +3350,7 @@ export interface QuickSightAnalysisPivotTableVisual {
  */
 export interface QuickSightAnalysisPivotTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ValueCellStyle?: QuickSightAnalysisTableCellStyle;
   ScrollStatus?: string;
   Placement?: string;
@@ -3481,6 +3491,7 @@ export interface QuickSightAnalysisReferenceLineCustomLabelConfiguration {
 export interface QuickSightAnalysisReferenceLineDataConfiguration {
   DynamicConfiguration?: QuickSightAnalysisReferenceLineDynamicDataConfiguration;
   AxisBinding?: string;
+  SeriesType?: string;
   StaticConfiguration?: QuickSightAnalysisReferenceLineStaticDataConfiguration;
 }
 /**
@@ -4359,6 +4370,7 @@ export interface QuickSightAnalysisTimeBasedForecastProperties {
  */
 export interface QuickSightAnalysisTimeEqualityFilter {
   Column: QuickSightAnalysisColumnIdentifier;
+  RollingDate?: QuickSightAnalysisRollingDateConfiguration;
   Value?: string;
   TimeGranularity?: string;
   ParameterName?: string;
@@ -4472,12 +4484,30 @@ export interface QuickSightAnalysisTotalAggregationComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Analysis.TotalAggregationFunction
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-totalaggregationfunction.html | AWS::QuickSight::Analysis.TotalAggregationFunction}
+ */
+export interface QuickSightAnalysisTotalAggregationFunction {
+  SimpleTotalAggregationFunction?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.TotalAggregationOption
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-totalaggregationoption.html | AWS::QuickSight::Analysis.TotalAggregationOption}
+ */
+export interface QuickSightAnalysisTotalAggregationOption {
+  TotalAggregationFunction: QuickSightAnalysisTotalAggregationFunction;
+  FieldId: string;
+}
+/**
  * Type definition for AWS::QuickSight::Analysis.TotalOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-totaloptions.html | AWS::QuickSight::Analysis.TotalOptions}
  */
 export interface QuickSightAnalysisTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ScrollStatus?: string;
   Placement?: string;
   TotalCellStyle?: QuickSightAnalysisTableCellStyle;
@@ -5844,13 +5874,22 @@ export interface QuickSightDashboardDataPathSort {
   Direction: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.DataPathType
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-datapathtype.html | AWS::QuickSight::Dashboard.DataPathType}
+ */
+export interface QuickSightDashboardDataPathType {
+  PivotTableDataPathType?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.DataPathValue
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-datapathvalue.html | AWS::QuickSight::Dashboard.DataPathValue}
  */
 export interface QuickSightDashboardDataPathValue {
-  FieldId: string;
-  FieldValue: string;
+  DataPathType?: QuickSightDashboardDataPathType;
+  FieldId?: string;
+  FieldValue?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.DataPointDrillUpDownOption
@@ -8249,6 +8288,7 @@ export interface QuickSightDashboardPivotTableVisual {
  */
 export interface QuickSightDashboardPivotTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ValueCellStyle?: QuickSightDashboardTableCellStyle;
   ScrollStatus?: string;
   Placement?: string;
@@ -8389,6 +8429,7 @@ export interface QuickSightDashboardReferenceLineCustomLabelConfiguration {
 export interface QuickSightDashboardReferenceLineDataConfiguration {
   DynamicConfiguration?: QuickSightDashboardReferenceLineDynamicDataConfiguration;
   AxisBinding?: string;
+  SeriesType?: string;
   StaticConfiguration?: QuickSightDashboardReferenceLineStaticDataConfiguration;
 }
 /**
@@ -9283,6 +9324,7 @@ export interface QuickSightDashboardTimeBasedForecastProperties {
  */
 export interface QuickSightDashboardTimeEqualityFilter {
   Column: QuickSightDashboardColumnIdentifier;
+  RollingDate?: QuickSightDashboardRollingDateConfiguration;
   Value?: string;
   TimeGranularity?: string;
   ParameterName?: string;
@@ -9396,12 +9438,30 @@ export interface QuickSightDashboardTotalAggregationComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.TotalAggregationFunction
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-totalaggregationfunction.html | AWS::QuickSight::Dashboard.TotalAggregationFunction}
+ */
+export interface QuickSightDashboardTotalAggregationFunction {
+  SimpleTotalAggregationFunction?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.TotalAggregationOption
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-totalaggregationoption.html | AWS::QuickSight::Dashboard.TotalAggregationOption}
+ */
+export interface QuickSightDashboardTotalAggregationOption {
+  TotalAggregationFunction: QuickSightDashboardTotalAggregationFunction;
+  FieldId: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.TotalOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-totaloptions.html | AWS::QuickSight::Dashboard.TotalOptions}
  */
 export interface QuickSightDashboardTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ScrollStatus?: string;
   Placement?: string;
   TotalCellStyle?: QuickSightDashboardTableCellStyle;
@@ -11458,13 +11518,22 @@ export interface QuickSightTemplateDataPathSort {
   Direction: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Template.DataPathType
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-datapathtype.html | AWS::QuickSight::Template.DataPathType}
+ */
+export interface QuickSightTemplateDataPathType {
+  PivotTableDataPathType?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Template.DataPathValue
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-datapathvalue.html | AWS::QuickSight::Template.DataPathValue}
  */
 export interface QuickSightTemplateDataPathValue {
-  FieldId: string;
-  FieldValue: string;
+  DataPathType?: QuickSightTemplateDataPathType;
+  FieldId?: string;
+  FieldValue?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Template.DataSetConfiguration
@@ -13786,6 +13855,7 @@ export interface QuickSightTemplatePivotTableVisual {
  */
 export interface QuickSightTemplatePivotTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ValueCellStyle?: QuickSightTemplateTableCellStyle;
   ScrollStatus?: string;
   Placement?: string;
@@ -13926,6 +13996,7 @@ export interface QuickSightTemplateReferenceLineCustomLabelConfiguration {
 export interface QuickSightTemplateReferenceLineDataConfiguration {
   DynamicConfiguration?: QuickSightTemplateReferenceLineDynamicDataConfiguration;
   AxisBinding?: string;
+  SeriesType?: string;
   StaticConfiguration?: QuickSightTemplateReferenceLineStaticDataConfiguration;
 }
 /**
@@ -14861,6 +14932,7 @@ export interface QuickSightTemplateTimeBasedForecastProperties {
  */
 export interface QuickSightTemplateTimeEqualityFilter {
   Column: QuickSightTemplateColumnIdentifier;
+  RollingDate?: QuickSightTemplateRollingDateConfiguration;
   Value?: string;
   TimeGranularity?: string;
   ParameterName?: string;
@@ -14974,12 +15046,30 @@ export interface QuickSightTemplateTotalAggregationComputation {
   Name?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Template.TotalAggregationFunction
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-totalaggregationfunction.html | AWS::QuickSight::Template.TotalAggregationFunction}
+ */
+export interface QuickSightTemplateTotalAggregationFunction {
+  SimpleTotalAggregationFunction?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Template.TotalAggregationOption
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-totalaggregationoption.html | AWS::QuickSight::Template.TotalAggregationOption}
+ */
+export interface QuickSightTemplateTotalAggregationOption {
+  TotalAggregationFunction: QuickSightTemplateTotalAggregationFunction;
+  FieldId: string;
+}
+/**
  * Type definition for AWS::QuickSight::Template.TotalOptions
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-totaloptions.html | AWS::QuickSight::Template.TotalOptions}
  */
 export interface QuickSightTemplateTotalOptions {
   CustomLabel?: string;
+  TotalAggregationOptions?: any[];
   ScrollStatus?: string;
   Placement?: string;
   TotalCellStyle?: QuickSightTemplateTableCellStyle;

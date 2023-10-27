@@ -574,7 +574,7 @@ export class CognitoLogDeliveryConfiguration extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html | AWS::Cognito::UserPool}
  */
 export interface CognitoUserPoolProps {
-  UserPoolTags?: object;
+  UserPoolTags?: Record<string, any>;
   Policies?: CognitoUserPoolPolicies;
   VerificationMessageTemplate?: CognitoUserPoolVerificationMessageTemplate;
   MfaConfiguration?: string;
@@ -606,6 +606,7 @@ export interface CognitoUserPoolProps {
  */
 export interface CognitoUserPoolAttribs {
   ProviderName?: string;
+  UserPoolId?: string;
   ProviderURL?: string;
   Arn?: string;
 }
@@ -621,7 +622,7 @@ export class CognitoUserPool extends ResourceBase<
 > {
   public static readonly Type = "AWS::Cognito::UserPool";
   public static readonly AttributeNames: readonly (keyof CognitoUserPoolAttribs)[] =
-    ["ProviderName", "ProviderURL", "Arn"];
+    ["ProviderName", "UserPoolId", "ProviderURL", "Arn"];
   constructor(
     logicalId: string,
     properties: CognitoUserPoolProps,
@@ -672,6 +673,7 @@ export interface CognitoUserPoolClientProps {
  */
 export interface CognitoUserPoolClientAttribs {
   ClientSecret?: string;
+  ClientId?: string;
   Name?: string;
 }
 /**
@@ -686,7 +688,7 @@ export class CognitoUserPoolClient extends ResourceBase<
 > {
   public static readonly Type = "AWS::Cognito::UserPoolClient";
   public static readonly AttributeNames: readonly (keyof CognitoUserPoolClientAttribs)[] =
-    ["ClientSecret", "Name"];
+    ["ClientSecret", "ClientId", "Name"];
   constructor(
     logicalId: string,
     properties: CognitoUserPoolClientProps,

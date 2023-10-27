@@ -659,11 +659,19 @@ export class ApiGatewayDomainName extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-gatewayresponse.html | AWS::ApiGateway::GatewayResponse}
  */
 export interface ApiGatewayGatewayResponseProps {
-  ResponseParameters?: Record<string, any>;
   ResponseTemplates?: Record<string, any>;
-  ResponseType: string;
+  ResponseParameters?: Record<string, any>;
   RestApiId: string;
   StatusCode?: string;
+  ResponseType: string;
+}
+/**
+ * Attributes type definition for AWS::ApiGateway::GatewayResponse
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-gatewayresponse.html | AWS::ApiGateway::GatewayResponse}
+ */
+export interface ApiGatewayGatewayResponseAttribs {
+  Id?: string;
 }
 /**
  * Resource class for AWS::ApiGateway::GatewayResponse
@@ -673,10 +681,11 @@ export interface ApiGatewayGatewayResponseProps {
 export class ApiGatewayGatewayResponse extends ResourceBase<
   "AWS::ApiGateway::GatewayResponse",
   ApiGatewayGatewayResponseProps,
-  Record<string, never>
+  ApiGatewayGatewayResponseAttribs
 > {
   public static readonly Type = "AWS::ApiGateway::GatewayResponse";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof ApiGatewayGatewayResponseAttribs)[] =
+    ["Id"];
   constructor(
     logicalId: string,
     properties: ApiGatewayGatewayResponseProps,

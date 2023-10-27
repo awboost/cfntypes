@@ -967,8 +967,8 @@ export interface EC2LaunchTemplateVCpuCount {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-networkaclentry-icmp.html | AWS::EC2::NetworkAclEntry.Icmp}
  */
 export interface EC2NetworkAclEntryIcmp {
-  Code?: number;
   Type?: number;
+  Code?: number;
 }
 /**
  * Type definition for AWS::EC2::NetworkAclEntry.PortRange
@@ -3662,31 +3662,40 @@ export class EC2NetworkAcl extends ResourceBase<
 /**
  * Type definition for AWS::EC2::NetworkAclEntry
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-network-acl-entry.html | AWS::EC2::NetworkAclEntry}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-networkaclentry.html | AWS::EC2::NetworkAclEntry}
  */
 export interface EC2NetworkAclEntryProps {
+  PortRange?: EC2NetworkAclEntryPortRange;
+  NetworkAclId: string;
+  RuleAction: string;
   CidrBlock?: string;
   Egress?: boolean;
-  Icmp?: EC2NetworkAclEntryIcmp;
-  Ipv6CidrBlock?: string;
-  NetworkAclId: string;
-  PortRange?: EC2NetworkAclEntryPortRange;
-  Protocol: number;
-  RuleAction: string;
   RuleNumber: number;
+  Ipv6CidrBlock?: string;
+  Protocol: number;
+  Icmp?: EC2NetworkAclEntryIcmp;
+}
+/**
+ * Attributes type definition for AWS::EC2::NetworkAclEntry
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-networkaclentry.html | AWS::EC2::NetworkAclEntry}
+ */
+export interface EC2NetworkAclEntryAttribs {
+  Id?: string;
 }
 /**
  * Resource class for AWS::EC2::NetworkAclEntry
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-network-acl-entry.html | AWS::EC2::NetworkAclEntry}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-networkaclentry.html | AWS::EC2::NetworkAclEntry}
  */
 export class EC2NetworkAclEntry extends ResourceBase<
   "AWS::EC2::NetworkAclEntry",
   EC2NetworkAclEntryProps,
-  Record<string, never>
+  EC2NetworkAclEntryAttribs
 > {
   public static readonly Type = "AWS::EC2::NetworkAclEntry";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof EC2NetworkAclEntryAttribs)[] =
+    ["Id"];
   constructor(
     logicalId: string,
     properties: EC2NetworkAclEntryProps,

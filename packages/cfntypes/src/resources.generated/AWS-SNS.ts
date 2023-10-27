@@ -68,6 +68,7 @@ export interface SNSTopicProps {
   Subscription?: any[];
   Tags?: Tag[];
   DataProtectionPolicy?: object;
+  ArchivePolicy?: object;
   TopicName?: string;
 }
 /**

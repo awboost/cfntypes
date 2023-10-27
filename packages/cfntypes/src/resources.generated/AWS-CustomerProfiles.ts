@@ -47,6 +47,116 @@ export interface CustomerProfilesCalculatedAttributeDefinitionThreshold {
   Value: string;
 }
 /**
+ * Type definition for AWS::CustomerProfiles::Domain.AttributeTypesSelector
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-attributetypesselector.html | AWS::CustomerProfiles::Domain.AttributeTypesSelector}
+ */
+export interface CustomerProfilesDomainAttributeTypesSelector {
+  Address?: any[];
+  AttributeMatchingModel: string;
+  PhoneNumber?: any[];
+  EmailAddress?: any[];
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.AutoMerging
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-automerging.html | AWS::CustomerProfiles::Domain.AutoMerging}
+ */
+export interface CustomerProfilesDomainAutoMerging {
+  Consolidation?: CustomerProfilesDomainConsolidation;
+  Enabled: boolean;
+  ConflictResolution?: CustomerProfilesDomainConflictResolution;
+  MinAllowedConfidenceScoreForMerging?: number;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.ConflictResolution
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-conflictresolution.html | AWS::CustomerProfiles::Domain.ConflictResolution}
+ */
+export interface CustomerProfilesDomainConflictResolution {
+  ConflictResolvingModel: string;
+  SourceName?: string;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.Consolidation
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-consolidation.html | AWS::CustomerProfiles::Domain.Consolidation}
+ */
+export interface CustomerProfilesDomainConsolidation {
+  MatchingAttributesList: object;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.DomainStats
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-domainstats.html | AWS::CustomerProfiles::Domain.DomainStats}
+ */
+export interface CustomerProfilesDomainDomainStats {
+  MeteringProfileCount?: number;
+  ProfileCount?: number;
+  ObjectCount?: number;
+  TotalSize?: number;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.ExportingConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-exportingconfig.html | AWS::CustomerProfiles::Domain.ExportingConfig}
+ */
+export interface CustomerProfilesDomainExportingConfig {
+  S3Exporting?: CustomerProfilesDomainS3ExportingConfig;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.JobSchedule
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-jobschedule.html | AWS::CustomerProfiles::Domain.JobSchedule}
+ */
+export interface CustomerProfilesDomainJobSchedule {
+  DayOfTheWeek: string;
+  Time: string;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.Matching
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-matching.html | AWS::CustomerProfiles::Domain.Matching}
+ */
+export interface CustomerProfilesDomainMatching {
+  AutoMerging?: CustomerProfilesDomainAutoMerging;
+  JobSchedule?: CustomerProfilesDomainJobSchedule;
+  Enabled: boolean;
+  ExportingConfig?: CustomerProfilesDomainExportingConfig;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.MatchingRule
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-matchingrule.html | AWS::CustomerProfiles::Domain.MatchingRule}
+ */
+export interface CustomerProfilesDomainMatchingRule {
+  Rule: any[];
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.RuleBasedMatching
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-rulebasedmatching.html | AWS::CustomerProfiles::Domain.RuleBasedMatching}
+ */
+export interface CustomerProfilesDomainRuleBasedMatching {
+  Status?: string;
+  MaxAllowedRuleLevelForMerging?: number;
+  Enabled: boolean;
+  MatchingRules?: any[];
+  AttributeTypesSelector?: CustomerProfilesDomainAttributeTypesSelector;
+  ConflictResolution?: CustomerProfilesDomainConflictResolution;
+  ExportingConfig?: CustomerProfilesDomainExportingConfig;
+  MaxAllowedRuleLevelForMatching?: number;
+}
+/**
+ * Type definition for AWS::CustomerProfiles::Domain.S3ExportingConfig
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-domain-s3exportingconfig.html | AWS::CustomerProfiles::Domain.S3ExportingConfig}
+ */
+export interface CustomerProfilesDomainS3ExportingConfig {
+  S3BucketName: string;
+  S3KeyName?: string;
+}
+/**
  * Type definition for AWS::CustomerProfiles::EventStream.DestinationDetails
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-customerprofiles-eventstream-destinationdetails.html | AWS::CustomerProfiles::EventStream.DestinationDetails}
@@ -310,10 +420,12 @@ export class CustomerProfilesCalculatedAttributeDefinition extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-customerprofiles-domain.html | AWS::CustomerProfiles::Domain}
  */
 export interface CustomerProfilesDomainProps {
+  Matching?: CustomerProfilesDomainMatching;
   DefaultExpirationDays?: number;
   DomainName: string;
   DeadLetterQueueUrl?: string;
   DefaultEncryptionKey?: string;
+  RuleBasedMatching?: CustomerProfilesDomainRuleBasedMatching;
   Tags?: Tag[];
 }
 /**
@@ -322,8 +434,14 @@ export interface CustomerProfilesDomainProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-customerprofiles-domain.html | AWS::CustomerProfiles::Domain}
  */
 export interface CustomerProfilesDomainAttribs {
+  "Stats.ProfileCount"?: number;
+  "Stats.ObjectCount"?: number;
   LastUpdatedAt?: string;
   CreatedAt?: string;
+  Stats?: CustomerProfilesDomainDomainStats;
+  "Stats.MeteringProfileCount"?: number;
+  "Stats.TotalSize"?: number;
+  "RuleBasedMatching.Status"?: string;
 }
 /**
  * Resource class for AWS::CustomerProfiles::Domain
@@ -337,7 +455,16 @@ export class CustomerProfilesDomain extends ResourceBase<
 > {
   public static readonly Type = "AWS::CustomerProfiles::Domain";
   public static readonly AttributeNames: readonly (keyof CustomerProfilesDomainAttribs)[] =
-    ["LastUpdatedAt", "CreatedAt"];
+    [
+      "Stats.ProfileCount",
+      "Stats.ObjectCount",
+      "LastUpdatedAt",
+      "CreatedAt",
+      "Stats",
+      "Stats.MeteringProfileCount",
+      "Stats.TotalSize",
+      "RuleBasedMatching.Status",
+    ];
   constructor(
     logicalId: string,
     properties: CustomerProfilesDomainProps,

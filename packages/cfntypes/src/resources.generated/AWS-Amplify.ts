@@ -50,6 +50,14 @@ export interface AmplifyAppEnvironmentVariable {
   Name: string;
 }
 /**
+ * Type definition for AWS::Amplify::Branch.Backend
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplify-branch-backend.html | AWS::Amplify::Branch.Backend}
+ */
+export interface AmplifyBranchBackend {
+  StackArn?: string;
+}
+/**
  * Type definition for AWS::Amplify::Branch.BasicAuthConfig
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplify-branch-basicauthconfig.html | AWS::Amplify::Branch.BasicAuthConfig}
@@ -145,6 +153,7 @@ export class AmplifyApp extends ResourceBase<
 export interface AmplifyBranchProps {
   Description?: string;
   EnablePerformanceMode?: boolean;
+  Backend?: AmplifyBranchBackend;
   EnvironmentVariables?: any[];
   AppId: string;
   PullRequestEnvironmentName?: string;

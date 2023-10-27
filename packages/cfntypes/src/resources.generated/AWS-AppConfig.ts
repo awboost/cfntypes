@@ -7,8 +7,8 @@ import { Tag } from "./core.js";
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appconfig-application-tags.html | AWS::AppConfig::Application.Tags}
  */
 export interface AppConfigApplicationTags {
-  Value?: string;
-  Key?: string;
+  Value: string;
+  Key: string;
 }
 /**
  * Type definition for AWS::AppConfig::ConfigurationProfile.Tags
@@ -84,6 +84,14 @@ export interface AppConfigApplicationProps {
   Name: string;
 }
 /**
+ * Attributes type definition for AWS::AppConfig::Application
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | AWS::AppConfig::Application}
+ */
+export interface AppConfigApplicationAttribs {
+  ApplicationId?: string;
+}
+/**
  * Resource class for AWS::AppConfig::Application
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-application.html | AWS::AppConfig::Application}
@@ -91,10 +99,11 @@ export interface AppConfigApplicationProps {
 export class AppConfigApplication extends ResourceBase<
   "AWS::AppConfig::Application",
   AppConfigApplicationProps,
-  Record<string, never>
+  AppConfigApplicationAttribs
 > {
   public static readonly Type = "AWS::AppConfig::Application";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof AppConfigApplicationAttribs)[] =
+    ["ApplicationId"];
   constructor(
     logicalId: string,
     properties: AppConfigApplicationProps,
