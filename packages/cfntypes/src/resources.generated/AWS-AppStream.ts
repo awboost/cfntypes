@@ -181,6 +181,7 @@ export interface AppStreamStackStreamingExperienceSettings {
  */
 export interface AppStreamStackUserSetting {
   Action: string;
+  MaximumLength?: number;
   Permission: string;
 }
 /**

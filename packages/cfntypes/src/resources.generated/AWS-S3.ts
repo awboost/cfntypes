@@ -599,6 +599,7 @@ export interface S3MultiRegionAccessPointPolicyPolicyStatus {
  */
 export interface S3StorageLensAccountLevel {
   AdvancedDataProtectionMetrics?: S3StorageLensAdvancedDataProtectionMetrics;
+  StorageLensGroupLevel?: S3StorageLensStorageLensGroupLevel;
   ActivityMetrics?: S3StorageLensActivityMetrics;
   BucketLevel: S3StorageLensBucketLevel;
   AdvancedCostOptimizationMetrics?: S3StorageLensAdvancedCostOptimizationMetrics;
@@ -753,6 +754,23 @@ export interface S3StorageLensStorageLensConfiguration {
   Id: string;
   StorageLensArn?: string;
   DataExport?: S3StorageLensDataExport;
+}
+/**
+ * Type definition for AWS::S3::StorageLens.StorageLensGroupLevel
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgrouplevel.html | AWS::S3::StorageLens.StorageLensGroupLevel}
+ */
+export interface S3StorageLensStorageLensGroupLevel {
+  StorageLensGroupSelectionCriteria?: S3StorageLensStorageLensGroupSelectionCriteria;
+}
+/**
+ * Type definition for AWS::S3::StorageLens.StorageLensGroupSelectionCriteria
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgroupselectioncriteria.html | AWS::S3::StorageLens.StorageLensGroupSelectionCriteria}
+ */
+export interface S3StorageLensStorageLensGroupSelectionCriteria {
+  Exclude?: any[];
+  Include?: any[];
 }
 /**
  * Type definition for AWS::S3::AccessPoint

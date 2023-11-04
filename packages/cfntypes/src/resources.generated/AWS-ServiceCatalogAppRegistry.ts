@@ -112,7 +112,6 @@ export interface ServiceCatalogAppRegistryAttributeGroupAssociationProps {
 export interface ServiceCatalogAppRegistryAttributeGroupAssociationAttribs {
   ApplicationArn?: string;
   AttributeGroupArn?: string;
-  Id?: string;
 }
 /**
  * Resource class for AWS::ServiceCatalogAppRegistry::AttributeGroupAssociation
@@ -127,7 +126,7 @@ export class ServiceCatalogAppRegistryAttributeGroupAssociation extends Resource
   public static readonly Type =
     "AWS::ServiceCatalogAppRegistry::AttributeGroupAssociation";
   public static readonly AttributeNames: readonly (keyof ServiceCatalogAppRegistryAttributeGroupAssociationAttribs)[] =
-    ["ApplicationArn", "AttributeGroupArn", "Id"];
+    ["ApplicationArn", "AttributeGroupArn"];
   constructor(
     logicalId: string,
     properties: ServiceCatalogAppRegistryAttributeGroupAssociationProps,
@@ -160,7 +159,6 @@ export interface ServiceCatalogAppRegistryResourceAssociationProps {
 export interface ServiceCatalogAppRegistryResourceAssociationAttribs {
   ResourceArn?: string;
   ApplicationArn?: string;
-  Id?: string;
 }
 /**
  * Resource class for AWS::ServiceCatalogAppRegistry::ResourceAssociation
@@ -175,7 +173,7 @@ export class ServiceCatalogAppRegistryResourceAssociation extends ResourceBase<
   public static readonly Type =
     "AWS::ServiceCatalogAppRegistry::ResourceAssociation";
   public static readonly AttributeNames: readonly (keyof ServiceCatalogAppRegistryResourceAssociationAttribs)[] =
-    ["ResourceArn", "ApplicationArn", "Id"];
+    ["ResourceArn", "ApplicationArn"];
   constructor(
     logicalId: string,
     properties: ServiceCatalogAppRegistryResourceAssociationProps,

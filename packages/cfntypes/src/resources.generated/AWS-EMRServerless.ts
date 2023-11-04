@@ -19,6 +19,16 @@ export interface EMRServerlessApplicationAutoStopConfiguration {
   IdleTimeoutMinutes?: number;
 }
 /**
+ * Type definition for AWS::EMRServerless::Application.ConfigurationObject
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-configurationobject.html | AWS::EMRServerless::Application.ConfigurationObject}
+ */
+export interface EMRServerlessApplicationConfigurationObject {
+  Classification: string;
+  Properties?: Record<string, any>;
+  Configurations?: any[];
+}
+/**
  * Type definition for AWS::EMRServerless::Application.ImageConfigurationInput
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-imageconfigurationinput.html | AWS::EMRServerless::Application.ImageConfigurationInput}
@@ -45,6 +55,15 @@ export interface EMRServerlessApplicationInitialCapacityConfigKeyValuePair {
   Key: string;
 }
 /**
+ * Type definition for AWS::EMRServerless::Application.ManagedPersistenceMonitoringConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-managedpersistencemonitoringconfiguration.html | AWS::EMRServerless::Application.ManagedPersistenceMonitoringConfiguration}
+ */
+export interface EMRServerlessApplicationManagedPersistenceMonitoringConfiguration {
+  EncryptionKeyArn?: string;
+  Enabled?: boolean;
+}
+/**
  * Type definition for AWS::EMRServerless::Application.MaximumAllowedResources
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-maximumallowedresources.html | AWS::EMRServerless::Application.MaximumAllowedResources}
@@ -55,6 +74,15 @@ export interface EMRServerlessApplicationMaximumAllowedResources {
   Disk?: string;
 }
 /**
+ * Type definition for AWS::EMRServerless::Application.MonitoringConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-monitoringconfiguration.html | AWS::EMRServerless::Application.MonitoringConfiguration}
+ */
+export interface EMRServerlessApplicationMonitoringConfiguration {
+  S3MonitoringConfiguration?: EMRServerlessApplicationS3MonitoringConfiguration;
+  ManagedPersistenceMonitoringConfiguration?: EMRServerlessApplicationManagedPersistenceMonitoringConfiguration;
+}
+/**
  * Type definition for AWS::EMRServerless::Application.NetworkConfiguration
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-networkconfiguration.html | AWS::EMRServerless::Application.NetworkConfiguration}
@@ -62,6 +90,15 @@ export interface EMRServerlessApplicationMaximumAllowedResources {
 export interface EMRServerlessApplicationNetworkConfiguration {
   SubnetIds?: any[];
   SecurityGroupIds?: any[];
+}
+/**
+ * Type definition for AWS::EMRServerless::Application.S3MonitoringConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-emrserverless-application-s3monitoringconfiguration.html | AWS::EMRServerless::Application.S3MonitoringConfiguration}
+ */
+export interface EMRServerlessApplicationS3MonitoringConfiguration {
+  LogUri?: string;
+  EncryptionKeyArn?: string;
 }
 /**
  * Type definition for AWS::EMRServerless::Application.WorkerConfiguration
@@ -88,17 +125,19 @@ export interface EMRServerlessApplicationWorkerTypeSpecificationInput {
  */
 export interface EMRServerlessApplicationProps {
   AutoStartConfiguration?: EMRServerlessApplicationAutoStartConfiguration;
-  Type: string;
   Architecture?: string;
   WorkerTypeSpecifications?: Record<string, any>;
-  InitialCapacity?: any[];
-  ImageConfiguration?: EMRServerlessApplicationImageConfigurationInput;
+  MonitoringConfiguration?: EMRServerlessApplicationMonitoringConfiguration;
   MaximumCapacity?: EMRServerlessApplicationMaximumAllowedResources;
   AutoStopConfiguration?: EMRServerlessApplicationAutoStopConfiguration;
+  RuntimeConfiguration?: any[];
+  Name?: string;
+  Type: string;
+  InitialCapacity?: any[];
+  ImageConfiguration?: EMRServerlessApplicationImageConfigurationInput;
   NetworkConfiguration?: EMRServerlessApplicationNetworkConfiguration;
   ReleaseLabel: string;
   Tags?: Tag[];
-  Name?: string;
 }
 /**
  * Attributes type definition for AWS::EMRServerless::Application

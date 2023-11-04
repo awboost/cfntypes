@@ -2693,6 +2693,7 @@ export class EC2Host extends ResourceBase<
  */
 export interface EC2IPAMProps {
   Description?: string;
+  Tier?: string;
   Tags?: Tag[];
   OperatingRegions?: any[];
 }
@@ -4513,15 +4514,17 @@ export class EC2SpotFleet extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-subnet.html | AWS::EC2::Subnet}
  */
 export interface EC2SubnetProps {
-  AssignIpv6AddressOnCreation?: boolean;
   MapPublicIpOnLaunch?: boolean;
   EnableDns64?: boolean;
-  VpcId: string;
   AvailabilityZoneId?: string;
   OutpostArn?: string;
-  PrivateDnsNameOptionsOnLaunch?: EC2SubnetPrivateDnsNameOptionsOnLaunch;
   AvailabilityZone?: string;
   CidrBlock?: string;
+  Ipv6NetmaskLength?: number;
+  AssignIpv6AddressOnCreation?: boolean;
+  VpcId: string;
+  Ipv4NetmaskLength?: number;
+  PrivateDnsNameOptionsOnLaunch?: EC2SubnetPrivateDnsNameOptionsOnLaunch;
   Ipv6Native?: boolean;
   Ipv6CidrBlock?: string;
   Tags?: Tag[];
@@ -5812,7 +5815,7 @@ export class EC2VPCEndpointServicePermissions extends ResourceBase<
 /**
  * Type definition for AWS::EC2::VPCGatewayAttachment
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpc-gateway-attachment.html | AWS::EC2::VPCGatewayAttachment}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcgatewayattachment.html | AWS::EC2::VPCGatewayAttachment}
  */
 export interface EC2VPCGatewayAttachmentProps {
   InternetGatewayId?: string;
@@ -5820,17 +5823,26 @@ export interface EC2VPCGatewayAttachmentProps {
   VpnGatewayId?: string;
 }
 /**
+ * Attributes type definition for AWS::EC2::VPCGatewayAttachment
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcgatewayattachment.html | AWS::EC2::VPCGatewayAttachment}
+ */
+export interface EC2VPCGatewayAttachmentAttribs {
+  AttachmentType?: string;
+}
+/**
  * Resource class for AWS::EC2::VPCGatewayAttachment
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpc-gateway-attachment.html | AWS::EC2::VPCGatewayAttachment}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcgatewayattachment.html | AWS::EC2::VPCGatewayAttachment}
  */
 export class EC2VPCGatewayAttachment extends ResourceBase<
   "AWS::EC2::VPCGatewayAttachment",
   EC2VPCGatewayAttachmentProps,
-  Record<string, never>
+  EC2VPCGatewayAttachmentAttribs
 > {
   public static readonly Type = "AWS::EC2::VPCGatewayAttachment";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof EC2VPCGatewayAttachmentAttribs)[] =
+    ["AttachmentType"];
   constructor(
     logicalId: string,
     properties: EC2VPCGatewayAttachmentProps,

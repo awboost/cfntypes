@@ -254,6 +254,7 @@ export interface EntityResolutionSchemaMappingProps {
  */
 export interface EntityResolutionSchemaMappingAttribs {
   CreatedAt?: string;
+  HasWorkflows?: boolean;
   UpdatedAt?: string;
   SchemaArn?: string;
 }
@@ -269,7 +270,7 @@ export class EntityResolutionSchemaMapping extends ResourceBase<
 > {
   public static readonly Type = "AWS::EntityResolution::SchemaMapping";
   public static readonly AttributeNames: readonly (keyof EntityResolutionSchemaMappingAttribs)[] =
-    ["CreatedAt", "UpdatedAt", "SchemaArn"];
+    ["CreatedAt", "HasWorkflows", "UpdatedAt", "SchemaArn"];
   constructor(
     logicalId: string,
     properties: EntityResolutionSchemaMappingProps,

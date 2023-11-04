@@ -33,6 +33,7 @@ export interface DLMLifecyclePolicyArchiveRule {
  */
 export interface DLMLifecyclePolicyCreateRule {
   IntervalUnit?: string;
+  Scripts?: any[];
   Times?: any[];
   CronExpression?: string;
   Interval?: number;
@@ -191,6 +192,19 @@ export interface DLMLifecyclePolicySchedule {
   CrossRegionCopyRules?: any[];
   Name?: string;
   CopyTags?: boolean;
+}
+/**
+ * Type definition for AWS::DLM::LifecyclePolicy.Script
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dlm-lifecyclepolicy-script.html | AWS::DLM::LifecyclePolicy.Script}
+ */
+export interface DLMLifecyclePolicyScript {
+  ExecutionHandlerService?: string;
+  ExecutionTimeout?: number;
+  Stages?: any[];
+  ExecutionHandler?: string;
+  MaximumRetryCount?: number;
+  ExecuteOperationOnScriptFailure?: boolean;
 }
 /**
  * Type definition for AWS::DLM::LifecyclePolicy.ShareRule

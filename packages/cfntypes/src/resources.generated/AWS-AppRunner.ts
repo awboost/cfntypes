@@ -135,6 +135,7 @@ export interface AppRunnerServiceKeyValuePair {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apprunner-service-networkconfiguration.html | AWS::AppRunner::Service.NetworkConfiguration}
  */
 export interface AppRunnerServiceNetworkConfiguration {
+  IpAddressType?: string;
   EgressConfiguration?: AppRunnerServiceEgressConfiguration;
   IngressConfiguration?: AppRunnerServiceIngressConfiguration;
 }

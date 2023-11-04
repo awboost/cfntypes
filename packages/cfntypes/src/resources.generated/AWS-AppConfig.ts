@@ -135,6 +135,15 @@ export interface AppConfigConfigurationProfileProps {
   Name: string;
 }
 /**
+ * Attributes type definition for AWS::AppConfig::ConfigurationProfile
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-configurationprofile.html | AWS::AppConfig::ConfigurationProfile}
+ */
+export interface AppConfigConfigurationProfileAttribs {
+  ConfigurationProfileId?: string;
+  KmsKeyArn?: string;
+}
+/**
  * Resource class for AWS::AppConfig::ConfigurationProfile
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appconfig-configurationprofile.html | AWS::AppConfig::ConfigurationProfile}
@@ -142,10 +151,11 @@ export interface AppConfigConfigurationProfileProps {
 export class AppConfigConfigurationProfile extends ResourceBase<
   "AWS::AppConfig::ConfigurationProfile",
   AppConfigConfigurationProfileProps,
-  Record<string, never>
+  AppConfigConfigurationProfileAttribs
 > {
   public static readonly Type = "AWS::AppConfig::ConfigurationProfile";
-  public static readonly AttributeNames = [];
+  public static readonly AttributeNames: readonly (keyof AppConfigConfigurationProfileAttribs)[] =
+    ["ConfigurationProfileId", "KmsKeyArn"];
   constructor(
     logicalId: string,
     properties: AppConfigConfigurationProfileProps,

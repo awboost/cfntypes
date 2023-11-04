@@ -51,13 +51,13 @@ export interface CodeBuildProjectCloudWatchLogsConfig {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html | AWS::CodeBuild::Project.Environment}
  */
 export interface CodeBuildProjectEnvironment {
-  Type: string;
+  Type?: string;
   EnvironmentVariables?: any[];
   PrivilegedMode?: boolean;
   ImagePullCredentialsType?: string;
   Image: string;
   RegistryCredential?: CodeBuildProjectRegistryCredential;
-  ComputeType: string;
+  ComputeType?: string;
   Certificate?: string;
 }
 /**
@@ -126,6 +126,14 @@ export interface CodeBuildProjectProjectFileSystemLocation {
   Identifier: string;
   MountOptions?: string;
   Location: string;
+}
+/**
+ * Type definition for AWS::CodeBuild::Project.ProjectFleet
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-projectfleet.html | AWS::CodeBuild::Project.ProjectFleet}
+ */
+export interface CodeBuildProjectProjectFleet {
+  FleetArn?: string;
 }
 /**
  * Type definition for AWS::CodeBuild::Project.ProjectSourceVersion

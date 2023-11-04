@@ -25,17 +25,17 @@ export interface IAMRolePolicy {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-user-loginprofile.html | AWS::IAM::User.LoginProfile}
  */
 export interface IAMUserLoginProfile {
-  Password: string;
   PasswordResetRequired?: boolean;
+  Password: string;
 }
 /**
  * Type definition for AWS::IAM::User.Policy
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html | AWS::IAM::User.Policy}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-user-policy.html | AWS::IAM::User.Policy}
  */
 export interface IAMUserPolicy {
-  PolicyDocument: object;
   PolicyName: string;
+  PolicyDocument: object;
 }
 /**
  * Type definition for AWS::IAM::AccessKey
@@ -594,22 +594,22 @@ export class IAMServiceLinkedRole extends ResourceBase<
 /**
  * Type definition for AWS::IAM::User
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-user.html | AWS::IAM::User}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-user.html | AWS::IAM::User}
  */
 export interface IAMUserProps {
+  Path?: string;
+  ManagedPolicyArns?: any[];
+  Policies?: any[];
+  UserName?: string;
   Groups?: any[];
   LoginProfile?: IAMUserLoginProfile;
-  ManagedPolicyArns?: any[];
-  Path?: string;
-  PermissionsBoundary?: string;
-  Policies?: any[];
   Tags?: Tag[];
-  UserName?: string;
+  PermissionsBoundary?: string;
 }
 /**
  * Attributes type definition for AWS::IAM::User
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-user.html | AWS::IAM::User}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-user.html | AWS::IAM::User}
  */
 export interface IAMUserAttribs {
   Arn?: string;
@@ -617,7 +617,7 @@ export interface IAMUserAttribs {
 /**
  * Resource class for AWS::IAM::User
  *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-user.html | AWS::IAM::User}
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-user.html | AWS::IAM::User}
  */
 export class IAMUser extends ResourceBase<
   "AWS::IAM::User",
