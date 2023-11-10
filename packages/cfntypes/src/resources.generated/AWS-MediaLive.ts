@@ -1,5 +1,6 @@
 import { ResourceBase } from "../util.js";
 import { ResourceOptions } from "../template.js";
+import { Tag } from "./core.js";
 /**
  * Type definition for AWS::MediaLive::Channel.AacSettings
  *
@@ -1837,6 +1838,110 @@ export interface MediaLiveInputSecurityGroupInputWhitelistRuleCidr {
   Cidr?: string;
 }
 /**
+ * Type definition for AWS::MediaLive::Multiplex.MultiplexMediaConnectOutputDestinationSettings
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplex-multiplexmediaconnectoutputdestinationsettings.html | AWS::MediaLive::Multiplex.MultiplexMediaConnectOutputDestinationSettings}
+ */
+export interface MediaLiveMultiplexMultiplexMediaConnectOutputDestinationSettings {
+  EntitlementArn?: string;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplex.MultiplexOutputDestination
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplex-multiplexoutputdestination.html | AWS::MediaLive::Multiplex.MultiplexOutputDestination}
+ */
+export interface MediaLiveMultiplexMultiplexOutputDestination {
+  MultiplexMediaConnectOutputDestinationSettings?: MediaLiveMultiplexMultiplexMediaConnectOutputDestinationSettings;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplex.MultiplexSettings
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplex-multiplexsettings.html | AWS::MediaLive::Multiplex.MultiplexSettings}
+ */
+export interface MediaLiveMultiplexMultiplexSettings {
+  TransportStreamBitrate: number;
+  MaximumVideoBufferDelayMilliseconds?: number;
+  TransportStreamId: number;
+  TransportStreamReservedBitrate?: number;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplex.Tags
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplex-tags.html | AWS::MediaLive::Multiplex.Tags}
+ */
+export interface MediaLiveMultiplexTags {
+  Value?: string;
+  Key?: string;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexProgramPacketIdentifiersMap
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexprogrampacketidentifiersmap.html | AWS::MediaLive::Multiplexprogram.MultiplexProgramPacketIdentifiersMap}
+ */
+export interface MediaLiveMultiplexprogramMultiplexProgramPacketIdentifiersMap {
+  EtvPlatformPid?: number;
+  DvbTeletextPid?: number;
+  KlvDataPids?: any[];
+  PcrPid?: number;
+  VideoPid?: number;
+  PmtPid?: number;
+  Scte27Pids?: any[];
+  DvbSubPids?: any[];
+  Scte35Pid?: number;
+  EtvSignalPid?: number;
+  PrivateMetadataPid?: number;
+  TimedMetadataPid?: number;
+  AudioPids?: any[];
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexProgramPipelineDetail
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexprogrampipelinedetail.html | AWS::MediaLive::Multiplexprogram.MultiplexProgramPipelineDetail}
+ */
+export interface MediaLiveMultiplexprogramMultiplexProgramPipelineDetail {
+  ActiveChannelPipeline?: string;
+  PipelineId?: string;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexProgramServiceDescriptor
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexprogramservicedescriptor.html | AWS::MediaLive::Multiplexprogram.MultiplexProgramServiceDescriptor}
+ */
+export interface MediaLiveMultiplexprogramMultiplexProgramServiceDescriptor {
+  ProviderName: string;
+  ServiceName: string;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexProgramSettings
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexprogramsettings.html | AWS::MediaLive::Multiplexprogram.MultiplexProgramSettings}
+ */
+export interface MediaLiveMultiplexprogramMultiplexProgramSettings {
+  PreferredChannelPipeline?: string;
+  ServiceDescriptor?: MediaLiveMultiplexprogramMultiplexProgramServiceDescriptor;
+  VideoSettings?: MediaLiveMultiplexprogramMultiplexVideoSettings;
+  ProgramNumber: number;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexStatmuxVideoSettings
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexstatmuxvideosettings.html | AWS::MediaLive::Multiplexprogram.MultiplexStatmuxVideoSettings}
+ */
+export interface MediaLiveMultiplexprogramMultiplexStatmuxVideoSettings {
+  Priority?: number;
+  MaximumBitrate?: number;
+  MinimumBitrate?: number;
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram.MultiplexVideoSettings
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-medialive-multiplexprogram-multiplexvideosettings.html | AWS::MediaLive::Multiplexprogram.MultiplexVideoSettings}
+ */
+export interface MediaLiveMultiplexprogramMultiplexVideoSettings {
+  StatmuxSettings?: MediaLiveMultiplexprogramMultiplexStatmuxVideoSettings;
+  ConstantBitrate?: number;
+}
+/**
  * Type definition for AWS::MediaLive::Channel
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-channel.html | AWS::MediaLive::Channel}
@@ -1983,6 +2088,97 @@ export class MediaLiveInputSecurityGroup extends ResourceBase<
     super(
       MediaLiveInputSecurityGroup.Type,
       MediaLiveInputSecurityGroup.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplex
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-multiplex.html | AWS::MediaLive::Multiplex}
+ */
+export interface MediaLiveMultiplexProps {
+  MultiplexSettings: MediaLiveMultiplexMultiplexSettings;
+  AvailabilityZones: any[];
+  Destinations?: any[];
+  Tags?: Tag[];
+  Name: string;
+}
+/**
+ * Attributes type definition for AWS::MediaLive::Multiplex
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-multiplex.html | AWS::MediaLive::Multiplex}
+ */
+export interface MediaLiveMultiplexAttribs {
+  State?: string;
+  ProgramCount?: number;
+  PipelinesRunningCount?: number;
+  Id?: string;
+  Arn?: string;
+}
+/**
+ * Resource class for AWS::MediaLive::Multiplex
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-multiplex.html | AWS::MediaLive::Multiplex}
+ */
+export class MediaLiveMultiplex extends ResourceBase<
+  "AWS::MediaLive::Multiplex",
+  MediaLiveMultiplexProps,
+  MediaLiveMultiplexAttribs
+> {
+  public static readonly Type = "AWS::MediaLive::Multiplex";
+  public static readonly AttributeNames: readonly (keyof MediaLiveMultiplexAttribs)[] =
+    ["State", "ProgramCount", "PipelinesRunningCount", "Id", "Arn"];
+  constructor(
+    logicalId: string,
+    properties: MediaLiveMultiplexProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      MediaLiveMultiplex.Type,
+      MediaLiveMultiplex.AttributeNames,
+      logicalId,
+      properties,
+      options,
+    );
+  }
+}
+/**
+ * Type definition for AWS::MediaLive::Multiplexprogram
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-multiplexprogram.html | AWS::MediaLive::Multiplexprogram}
+ */
+export interface MediaLiveMultiplexprogramProps {
+  MultiplexId?: string;
+  PreferredChannelPipeline?: string;
+  PacketIdentifiersMap?: MediaLiveMultiplexprogramMultiplexProgramPacketIdentifiersMap;
+  ChannelId?: string;
+  PipelineDetails?: any[];
+  MultiplexProgramSettings?: MediaLiveMultiplexprogramMultiplexProgramSettings;
+  ProgramName?: string;
+}
+/**
+ * Resource class for AWS::MediaLive::Multiplexprogram
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-medialive-multiplexprogram.html | AWS::MediaLive::Multiplexprogram}
+ */
+export class MediaLiveMultiplexprogram extends ResourceBase<
+  "AWS::MediaLive::Multiplexprogram",
+  MediaLiveMultiplexprogramProps,
+  Record<string, never>
+> {
+  public static readonly Type = "AWS::MediaLive::Multiplexprogram";
+  public static readonly AttributeNames = [];
+  constructor(
+    logicalId: string,
+    properties: MediaLiveMultiplexprogramProps,
+    options?: ResourceOptions,
+  ) {
+    super(
+      MediaLiveMultiplexprogram.Type,
+      MediaLiveMultiplexprogram.AttributeNames,
       logicalId,
       properties,
       options,

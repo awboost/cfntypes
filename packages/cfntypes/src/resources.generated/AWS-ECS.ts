@@ -790,14 +790,14 @@ export interface ECSServiceProps {
   PlatformVersion?: string;
   HealthCheckGracePeriodSeconds?: number;
   EnableECSManagedTags?: boolean;
+  PropagateTags?: string;
   EnableExecuteCommand?: boolean;
   PlacementConstraints?: any[];
-  PropagateTags?: string;
   Cluster?: string;
   LoadBalancers?: any[];
   ServiceConnectConfiguration?: ECSServiceServiceConnectConfiguration;
-  DesiredCount?: number;
   PlacementStrategies?: any[];
+  DesiredCount?: number;
   DeploymentController?: ECSServiceDeploymentController;
   ServiceRegistries?: any[];
   CapacityProviderStrategy?: any[];
@@ -807,8 +807,8 @@ export interface ECSServiceProps {
   TaskDefinition?: string;
   ServiceName?: string;
   NetworkConfiguration?: ECSServiceNetworkConfiguration;
-  DeploymentConfiguration?: ECSServiceDeploymentConfiguration;
   Tags?: Tag[];
+  DeploymentConfiguration?: ECSServiceDeploymentConfiguration;
 }
 /**
  * Attributes type definition for AWS::ECS::Service

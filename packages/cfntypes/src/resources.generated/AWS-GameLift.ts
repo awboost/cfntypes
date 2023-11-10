@@ -88,6 +88,25 @@ export interface GameLiftFleetRuntimeConfiguration {
   GameSessionActivationTimeoutSeconds?: number;
 }
 /**
+ * Type definition for AWS::GameLift::Fleet.ScalingPolicy
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-gamelift-fleet-scalingpolicy.html | AWS::GameLift::Fleet.ScalingPolicy}
+ */
+export interface GameLiftFleetScalingPolicy {
+  Status?: string;
+  MetricName: string;
+  PolicyType?: string;
+  ComparisonOperator?: string;
+  TargetConfiguration?: GameLiftFleetTargetConfiguration;
+  UpdateStatus?: string;
+  ScalingAdjustment?: number;
+  EvaluationPeriods?: number;
+  Location?: string;
+  Name: string;
+  ScalingAdjustmentType?: string;
+  Threshold?: number;
+}
+/**
  * Type definition for AWS::GameLift::Fleet.ServerProcess
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-gamelift-fleet-serverprocess.html | AWS::GameLift::Fleet.ServerProcess}
@@ -96,6 +115,14 @@ export interface GameLiftFleetServerProcess {
   ConcurrentExecutions: number;
   Parameters?: string;
   LaunchPath: string;
+}
+/**
+ * Type definition for AWS::GameLift::Fleet.TargetConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-gamelift-fleet-targetconfiguration.html | AWS::GameLift::Fleet.TargetConfiguration}
+ */
+export interface GameLiftFleetTargetConfiguration {
+  TargetValue: number;
 }
 /**
  * Type definition for AWS::GameLift::GameServerGroup.AutoScalingPolicy
@@ -285,8 +312,10 @@ export class GameLiftBuild extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-gamelift-fleet.html | AWS::GameLift::Fleet}
  */
 export interface GameLiftFleetProps {
+  ScalingPolicies?: any[];
   Description?: string;
   PeerVpcId?: string;
+  ApplyCapacity?: string;
   FleetType?: string;
   EC2InboundPermissions?: any[];
   Locations?: any[];

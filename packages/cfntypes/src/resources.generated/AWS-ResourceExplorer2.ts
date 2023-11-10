@@ -2,20 +2,20 @@ import { ResourceBase } from "../util.js";
 import { ResourceOptions } from "../template.js";
 import { Tag } from "./core.js";
 /**
- * Type definition for AWS::ResourceExplorer2::View.Filters
- *
- * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resourceexplorer2-view-filters.html | AWS::ResourceExplorer2::View.Filters}
- */
-export interface ResourceExplorer2ViewFilters {
-  FilterString: string;
-}
-/**
  * Type definition for AWS::ResourceExplorer2::View.IncludedProperty
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resourceexplorer2-view-includedproperty.html | AWS::ResourceExplorer2::View.IncludedProperty}
  */
 export interface ResourceExplorer2ViewIncludedProperty {
   Name: string;
+}
+/**
+ * Type definition for AWS::ResourceExplorer2::View.SearchFilter
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resourceexplorer2-view-searchfilter.html | AWS::ResourceExplorer2::View.SearchFilter}
+ */
+export interface ResourceExplorer2ViewSearchFilter {
+  FilterString: string;
 }
 /**
  * Type definition for AWS::ResourceExplorer2::DefaultViewAssociation
@@ -112,7 +112,7 @@ export class ResourceExplorer2Index extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-resourceexplorer2-view.html | AWS::ResourceExplorer2::View}
  */
 export interface ResourceExplorer2ViewProps {
-  Filters?: ResourceExplorer2ViewFilters;
+  Filters?: ResourceExplorer2ViewSearchFilter;
   IncludedProperties?: any[];
   Tags?: Record<string, Tag>;
   ViewName: string;

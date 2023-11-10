@@ -102,54 +102,55 @@ export interface RedshiftScheduledActionScheduledActionType {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-redshift-cluster.html | AWS::Redshift::Cluster}
  */
 export interface RedshiftClusterProps {
-  HsmClientCertificateIdentifier?: string;
   RevisionTarget?: string;
-  ElasticIp?: string;
   AutomatedSnapshotRetentionPeriod?: number;
-  AvailabilityZoneRelocationStatus?: string;
-  AquaConfigurationStatus?: string;
   Encrypted?: boolean;
-  SnapshotIdentifier?: string;
-  AvailabilityZoneRelocation?: boolean;
   Port?: number;
   NumberOfNodes?: number;
-  SnapshotCopyGrantName?: string;
   DestinationRegion?: string;
-  EnhancedVpcRouting?: boolean;
-  ClusterParameterGroupName?: string;
-  DeferMaintenanceEndTime?: string;
   AllowVersionUpgrade?: boolean;
   Endpoint?: RedshiftClusterEndpoint;
-  RotateEncryptionKey?: boolean;
-  VpcSecurityGroupIds?: any[];
   MaintenanceTrackName?: string;
   OwnerAccount?: string;
+  MultiAZ?: boolean;
   Tags?: Tag[];
   SnapshotClusterIdentifier?: string;
   IamRoles?: any[];
   KmsKeyId?: string;
   SnapshotCopyManual?: boolean;
-  ClusterVersion?: string;
-  HsmConfigurationIdentifier?: string;
   AvailabilityZone?: string;
-  PreferredMaintenanceWindow?: string;
-  DeferMaintenanceStartTime?: string;
   ClusterSecurityGroups?: any[];
-  ClusterType: string;
-  Classic?: boolean;
   ClusterIdentifier?: string;
   MasterUserPassword: string;
   ClusterSubnetGroupName?: string;
   LoggingProperties?: RedshiftClusterLoggingProperties;
   DeferMaintenance?: boolean;
-  DeferMaintenanceDuration?: number;
   NodeType: string;
   MasterUsername: string;
-  DBName: string;
   PubliclyAccessible?: boolean;
   ManualSnapshotRetentionPeriod?: number;
-  SnapshotCopyRetentionPeriod?: number;
   ResourceAction?: string;
+  HsmClientCertificateIdentifier?: string;
+  ElasticIp?: string;
+  AvailabilityZoneRelocationStatus?: string;
+  AquaConfigurationStatus?: string;
+  SnapshotIdentifier?: string;
+  AvailabilityZoneRelocation?: boolean;
+  SnapshotCopyGrantName?: string;
+  EnhancedVpcRouting?: boolean;
+  ClusterParameterGroupName?: string;
+  DeferMaintenanceEndTime?: string;
+  RotateEncryptionKey?: boolean;
+  VpcSecurityGroupIds?: any[];
+  ClusterVersion?: string;
+  HsmConfigurationIdentifier?: string;
+  PreferredMaintenanceWindow?: string;
+  DeferMaintenanceStartTime?: string;
+  ClusterType: string;
+  Classic?: boolean;
+  DeferMaintenanceDuration?: number;
+  DBName: string;
+  SnapshotCopyRetentionPeriod?: number;
 }
 /**
  * Attributes type definition for AWS::Redshift::Cluster

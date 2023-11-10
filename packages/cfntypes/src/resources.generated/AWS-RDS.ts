@@ -266,6 +266,7 @@ export interface RDSDBClusterProps {
   Domain?: string;
   BacktrackWindow?: number;
   DBInstanceParameterGroupName?: string;
+  EnableGlobalWriteForwarding?: boolean;
   MonitoringRoleArn?: string;
   AssociatedRoles?: any[];
   EnableHttpEndpoint?: boolean;
@@ -433,6 +434,7 @@ export interface RDSDBInstanceProps {
   RestoreTime?: string;
   CertificateRotationRestart?: boolean;
   NetworkType?: string;
+  DedicatedLogVolume?: boolean;
   CopyTagsToSnapshot?: boolean;
   DomainIAMRoleName?: string;
   ReplicaMode?: string;

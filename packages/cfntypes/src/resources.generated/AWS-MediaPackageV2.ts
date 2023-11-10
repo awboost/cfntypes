@@ -40,6 +40,17 @@ export interface MediaPackageV2OriginEndpointEncryptionMethod {
   TsEncryptionMethod?: string;
 }
 /**
+ * Type definition for AWS::MediaPackageV2::OriginEndpoint.FilterConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-mediapackagev2-originendpoint-filterconfiguration.html | AWS::MediaPackageV2::OriginEndpoint.FilterConfiguration}
+ */
+export interface MediaPackageV2OriginEndpointFilterConfiguration {
+  Start?: string;
+  End?: string;
+  TimeDelaySeconds?: number;
+  ManifestFilter?: string;
+}
+/**
  * Type definition for AWS::MediaPackageV2::OriginEndpoint.HlsManifestConfiguration
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-mediapackagev2-originendpoint-hlsmanifestconfiguration.html | AWS::MediaPackageV2::OriginEndpoint.HlsManifestConfiguration}
@@ -50,6 +61,7 @@ export interface MediaPackageV2OriginEndpointHlsManifestConfiguration {
   ProgramDateTimeIntervalSeconds?: number;
   ChildManifestName?: string;
   ScteHls?: MediaPackageV2OriginEndpointScteHls;
+  FilterConfiguration?: MediaPackageV2OriginEndpointFilterConfiguration;
   Url?: string;
 }
 /**
@@ -63,6 +75,7 @@ export interface MediaPackageV2OriginEndpointLowLatencyHlsManifestConfiguration 
   ProgramDateTimeIntervalSeconds?: number;
   ChildManifestName?: string;
   ScteHls?: MediaPackageV2OriginEndpointScteHls;
+  FilterConfiguration?: MediaPackageV2OriginEndpointFilterConfiguration;
   Url?: string;
 }
 /**

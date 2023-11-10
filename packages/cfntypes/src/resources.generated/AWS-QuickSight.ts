@@ -36,6 +36,7 @@ export interface QuickSightAnalysisAnalysisDefaults {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-analysisdefinition.html | AWS::QuickSight::Analysis.AnalysisDefinition}
  */
 export interface QuickSightAnalysisAnalysisDefinition {
+  Options?: QuickSightAnalysisAssetOptions;
   FilterGroups?: any[];
   CalculatedFields?: any[];
   DataSetIdentifierDeclarations: any[];
@@ -114,6 +115,15 @@ export interface QuickSightAnalysisArcConfiguration {
  */
 export interface QuickSightAnalysisArcOptions {
   ArcThickness?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Analysis.AssetOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-analysis-assetoptions.html | AWS::QuickSight::Analysis.AssetOptions}
+ */
+export interface QuickSightAnalysisAssetOptions {
+  Timezone?: string;
+  WeekStart?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Analysis.AttributeAggregationFunction
@@ -4922,6 +4932,15 @@ export interface QuickSightDashboardArcOptions {
   ArcThickness?: string;
 }
 /**
+ * Type definition for AWS::QuickSight::Dashboard.AssetOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-assetoptions.html | AWS::QuickSight::Dashboard.AssetOptions}
+ */
+export interface QuickSightDashboardAssetOptions {
+  Timezone?: string;
+  WeekStart?: string;
+}
+/**
  * Type definition for AWS::QuickSight::Dashboard.AttributeAggregationFunction
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-attributeaggregationfunction.html | AWS::QuickSight::Dashboard.AttributeAggregationFunction}
@@ -5754,6 +5773,7 @@ export interface QuickSightDashboardDashboardSourceTemplate {
 export interface QuickSightDashboardDashboardVersion {
   Status?: string;
   Errors?: any[];
+  Options?: QuickSightDashboardAssetOptions;
   CreatedTime?: string;
   Description?: string;
   DataSetArns?: any[];
@@ -5769,6 +5789,7 @@ export interface QuickSightDashboardDashboardVersion {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-dashboardversiondefinition.html | AWS::QuickSight::Dashboard.DashboardVersionDefinition}
  */
 export interface QuickSightDashboardDashboardVersionDefinition {
+  Options?: QuickSightDashboardAssetOptions;
   FilterGroups?: any[];
   CalculatedFields?: any[];
   DataSetIdentifierDeclarations: any[];
@@ -7536,6 +7557,14 @@ export interface QuickSightDashboardLineChartVisual {
 export interface QuickSightDashboardLineSeriesAxisDisplayOptions {
   MissingDataConfigurations?: any[];
   AxisOptions?: QuickSightDashboardAxisDisplayOptions;
+}
+/**
+ * Type definition for AWS::QuickSight::Dashboard.LinkSharingConfiguration
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-dashboard-linksharingconfiguration.html | AWS::QuickSight::Dashboard.LinkSharingConfiguration}
+ */
+export interface QuickSightDashboardLinkSharingConfiguration {
+  Permissions?: any[];
 }
 /**
  * Type definition for AWS::QuickSight::Dashboard.ListControlDisplayOptions
@@ -10345,6 +10374,7 @@ export interface QuickSightDataSourceDataSourceParameters {
   MariaDbParameters?: QuickSightDataSourceMariaDbParameters;
   OracleParameters?: QuickSightDataSourceOracleParameters;
   PrestoParameters?: QuickSightDataSourcePrestoParameters;
+  StarburstParameters?: QuickSightDataSourceStarburstParameters;
   RedshiftParameters?: QuickSightDataSourceRedshiftParameters;
   MySqlParameters?: QuickSightDataSourceMySqlParameters;
   SqlServerParameters?: QuickSightDataSourceSqlServerParameters;
@@ -10354,6 +10384,7 @@ export interface QuickSightDataSourceDataSourceParameters {
   PostgreSqlParameters?: QuickSightDataSourcePostgreSqlParameters;
   AuroraParameters?: QuickSightDataSourceAuroraParameters;
   S3Parameters?: QuickSightDataSourceS3Parameters;
+  TrinoParameters?: QuickSightDataSourceTrinoParameters;
   DatabricksParameters?: QuickSightDataSourceDatabricksParameters;
 }
 /**
@@ -10501,6 +10532,17 @@ export interface QuickSightDataSourceSslProperties {
   DisableSsl?: boolean;
 }
 /**
+ * Type definition for AWS::QuickSight::DataSource.StarburstParameters
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-datasource-starburstparameters.html | AWS::QuickSight::DataSource.StarburstParameters}
+ */
+export interface QuickSightDataSourceStarburstParameters {
+  Port: number;
+  ProductType?: string;
+  Host: string;
+  Catalog: string;
+}
+/**
  * Type definition for AWS::QuickSight::DataSource.TeradataParameters
  *
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-datasource-teradataparameters.html | AWS::QuickSight::DataSource.TeradataParameters}
@@ -10509,6 +10551,16 @@ export interface QuickSightDataSourceTeradataParameters {
   Port: number;
   Database: string;
   Host: string;
+}
+/**
+ * Type definition for AWS::QuickSight::DataSource.TrinoParameters
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-datasource-trinoparameters.html | AWS::QuickSight::DataSource.TrinoParameters}
+ */
+export interface QuickSightDataSourceTrinoParameters {
+  Port: number;
+  Host: string;
+  Catalog: string;
 }
 /**
  * Type definition for AWS::QuickSight::DataSource.VpcConnectionProperties
@@ -10621,6 +10673,15 @@ export interface QuickSightTemplateArcConfiguration {
  */
 export interface QuickSightTemplateArcOptions {
   ArcThickness?: string;
+}
+/**
+ * Type definition for AWS::QuickSight::Template.AssetOptions
+ *
+ * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-assetoptions.html | AWS::QuickSight::Template.AssetOptions}
+ */
+export interface QuickSightTemplateAssetOptions {
+  Timezone?: string;
+  WeekStart?: string;
 }
 /**
  * Type definition for AWS::QuickSight::Template.AttributeAggregationFunction
@@ -14843,6 +14904,7 @@ export interface QuickSightTemplateTemplateSourceTemplate {
 export interface QuickSightTemplateTemplateVersion {
   Status?: string;
   Errors?: any[];
+  Options?: QuickSightTemplateAssetOptions;
   CreatedTime?: string;
   Description?: string;
   ThemeArn?: string;
@@ -14857,6 +14919,7 @@ export interface QuickSightTemplateTemplateVersion {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-quicksight-template-templateversiondefinition.html | AWS::QuickSight::Template.TemplateVersionDefinition}
  */
 export interface QuickSightTemplateTemplateVersionDefinition {
+  Options?: QuickSightTemplateAssetOptions;
   FilterGroups?: any[];
   CalculatedFields?: any[];
   DataSetConfigurations: any[];
@@ -15924,18 +15987,19 @@ export class QuickSightAnalysis extends ResourceBase<
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-quicksight-dashboard.html | AWS::QuickSight::Dashboard}
  */
 export interface QuickSightDashboardProps {
-  DashboardPublishOptions?: QuickSightDashboardDashboardPublishOptions;
   Parameters?: QuickSightDashboardParameters;
   VersionDescription?: string;
   SourceEntity?: QuickSightDashboardDashboardSourceEntity;
   ThemeArn?: string;
   Definition?: QuickSightDashboardDashboardVersionDefinition;
-  AwsAccountId: string;
-  Permissions?: any[];
   ValidationStrategy?: QuickSightDashboardValidationStrategy;
   DashboardId: string;
-  Tags?: Tag[];
+  LinkSharingConfiguration?: QuickSightDashboardLinkSharingConfiguration;
   Name: string;
+  DashboardPublishOptions?: QuickSightDashboardDashboardPublishOptions;
+  AwsAccountId: string;
+  Permissions?: any[];
+  Tags?: Tag[];
 }
 /**
  * Attributes type definition for AWS::QuickSight::Dashboard
@@ -15943,6 +16007,7 @@ export interface QuickSightDashboardProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-quicksight-dashboard.html | AWS::QuickSight::Dashboard}
  */
 export interface QuickSightDashboardAttribs {
+  "Version.Options.Timezone"?: string;
   "Version.Status"?: string;
   CreatedTime?: string;
   LastUpdatedTime?: string;
@@ -15955,8 +16020,10 @@ export interface QuickSightDashboardAttribs {
   "Version.Description"?: string;
   LastPublishedTime?: string;
   Version?: QuickSightDashboardDashboardVersion;
+  "Version.Options"?: QuickSightDashboardAssetOptions;
   "Version.DataSetArns"?: any[];
   Arn?: string;
+  "Version.Options.WeekStart"?: string;
   "Version.SourceEntityArn"?: string;
 }
 /**
@@ -15972,6 +16039,7 @@ export class QuickSightDashboard extends ResourceBase<
   public static readonly Type = "AWS::QuickSight::Dashboard";
   public static readonly AttributeNames: readonly (keyof QuickSightDashboardAttribs)[] =
     [
+      "Version.Options.Timezone",
       "Version.Status",
       "CreatedTime",
       "LastUpdatedTime",
@@ -15984,8 +16052,10 @@ export class QuickSightDashboard extends ResourceBase<
       "Version.Description",
       "LastPublishedTime",
       "Version",
+      "Version.Options",
       "Version.DataSetArns",
       "Arn",
+      "Version.Options.WeekStart",
       "Version.SourceEntityArn",
     ];
   constructor(
@@ -16195,6 +16265,7 @@ export interface QuickSightTemplateProps {
  * @see {@link http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-quicksight-template.html | AWS::QuickSight::Template}
  */
 export interface QuickSightTemplateAttribs {
+  "Version.Options.Timezone"?: string;
   "Version.Status"?: string;
   CreatedTime?: string;
   "Version.DataSetConfigurations"?: any[];
@@ -16206,7 +16277,9 @@ export interface QuickSightTemplateAttribs {
   "Version.CreatedTime"?: string;
   "Version.Description"?: string;
   Version?: QuickSightTemplateTemplateVersion;
+  "Version.Options"?: QuickSightTemplateAssetOptions;
   Arn?: string;
+  "Version.Options.WeekStart"?: string;
   "Version.SourceEntityArn"?: string;
 }
 /**
@@ -16222,6 +16295,7 @@ export class QuickSightTemplate extends ResourceBase<
   public static readonly Type = "AWS::QuickSight::Template";
   public static readonly AttributeNames: readonly (keyof QuickSightTemplateAttribs)[] =
     [
+      "Version.Options.Timezone",
       "Version.Status",
       "CreatedTime",
       "Version.DataSetConfigurations",
@@ -16233,7 +16307,9 @@ export class QuickSightTemplate extends ResourceBase<
       "Version.CreatedTime",
       "Version.Description",
       "Version",
+      "Version.Options",
       "Arn",
+      "Version.Options.WeekStart",
       "Version.SourceEntityArn",
     ];
   constructor(
