@@ -11,12 +11,32 @@ export type ProcessResourceTypeSchemaOptions = {
   getDocumentation(typeName: string): string | undefined;
 };
 
+export type ProcessResourceTypeSchemaOutput = {
+  attributesTypeName?: string;
+  attributeNames: string[];
+  propertiesTypeName: string;
+  statements: ts.Statement[];
+};
+
 export async function processResourceTypeSchema(
   schema: ResourceTypeSchema,
   opts: ProcessResourceTypeSchemaOptions,
-): Promise<ts.Statement[]> {
+): Promise<ProcessResourceTypeSchemaOutput> {
   const { getDocumentation } = opts;
   const statements: ts.Statement[] = [];
+
+  let attributesTypeName: string | undefined;
+  const propertiesTypeName = mangleName(schema.typeName, "properties");
+
+  const attributeNames = schema.readOnlyProperties
+    ? schema.readOnlyProperties
+        .map((x) =>
+          x.startsWith(PropertiesPathPrefix)
+            ? x.slice(PropertiesPathPrefix.length)
+            : x,
+        )
+        .filter((x) => x in schema.properties)
+    : [];
 
   // resource properties type
   statements.push(
@@ -27,11 +47,11 @@ export async function processResourceTypeSchema(
       },
       ts.factory.createTypeAliasDeclaration(
         [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-        mangleName(schema.typeName, "properties"),
+        propertiesTypeName,
         undefined,
         makeObjectType(schema, schema, {
           propertyFilter: (name) =>
-            !schema.readOnlyProperties?.includes(`/properties/${name}`),
+            !schema.readOnlyProperties?.includes(PropertiesPathPrefix + name),
         }),
       ),
     ),
@@ -39,6 +59,11 @@ export async function processResourceTypeSchema(
 
   // resource attributes type
   if (schema.readOnlyProperties?.length) {
+    if (schema.definitions?.Attributes) {
+      attributesTypeName = mangleName(schema.typeName, "attributes-alt");
+    } else {
+      attributesTypeName = mangleName(schema.typeName, "attributes");
+    }
     statements.push(
       attachComment(
         {
@@ -47,24 +72,17 @@ export async function processResourceTypeSchema(
         },
         ts.factory.createTypeAliasDeclaration(
           [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-          mangleName(schema.typeName, "attributes"),
+          attributesTypeName,
           undefined,
           makeObjectType(
             schema,
             {
               ...schema,
               // attributes are non-optional
-              required: schema.readOnlyProperties.map((x) =>
-                x.startsWith(PropertiesPathPrefix)
-                  ? x.slice(PropertiesPathPrefix.length)
-                  : x,
-              ),
+              required: attributeNames,
             },
             {
-              propertyFilter: (name) =>
-                !!schema.readOnlyProperties?.includes(
-                  PropertiesPathPrefix + name,
-                ),
+              propertyFilter: (name) => attributeNames.includes(name),
             },
           ),
         ),
@@ -102,5 +120,10 @@ export async function processResourceTypeSchema(
     }
   }
 
-  return statements;
+  return {
+    attributeNames,
+    attributesTypeName,
+    propertiesTypeName,
+    statements,
+  };
 }

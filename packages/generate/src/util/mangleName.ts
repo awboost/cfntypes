@@ -2,7 +2,12 @@ import createDebug from "debug";
 
 const debug = createDebug("cfntypes:generate:mangleName");
 
-export type NameType = "attributes" | "properties" | "resource" | "type";
+export type NameType =
+  | "attributes"
+  | "attributes-alt"
+  | "properties"
+  | "resource"
+  | "type";
 
 export function mangleName(name: string, kind: NameType): string {
   const converted = name.replace(/^AWS|::|\./g, "");
@@ -11,6 +16,8 @@ export function mangleName(name: string, kind: NameType): string {
   switch (kind) {
     case "attributes":
       return converted + "Attributes";
+    case "attributes-alt":
+      return converted + "Attribs";
     case "properties":
       return converted + "Props";
     default:

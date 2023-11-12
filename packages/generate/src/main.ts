@@ -3,7 +3,6 @@ import { getLatestSpec } from "@awboost/cfnspec";
 import { writeFile } from "fs/promises";
 import { format } from "prettier";
 import ts from "typescript";
-import { mangleName } from "./util/mangleName.js";
 import { processResourceTypeSchema } from "./util/processResourceTypeSchema.js";
 
 const outputPath = process.argv[2];
@@ -20,7 +19,12 @@ const attributeTypeMap: Record<string, string> = {};
 const attributeNameMap: Record<string, string[]> = {};
 
 for await (const schema of schemas) {
-  const schemaStatements = await processResourceTypeSchema(schema, {
+  const {
+    attributeNames,
+    propertiesTypeName,
+    attributesTypeName,
+    statements: schemaStatements,
+  } = await processResourceTypeSchema(schema, {
     getDocumentation: (typeName) =>
       typeName.includes(".")
         ? spec.PropertyTypes[typeName]?.Documentation
@@ -28,17 +32,11 @@ for await (const schema of schemas) {
   });
   statements.push(...schemaStatements);
 
-  resourceTypeMap[schema.typeName] = mangleName(schema.typeName, "properties");
+  resourceTypeMap[schema.typeName] = propertiesTypeName;
+  attributeNameMap[schema.typeName] = attributeNames;
 
-  attributeNameMap[schema.typeName] = Object.keys(schema.properties).filter(
-    (x) => schema.readOnlyProperties?.includes(`/properties/${x}`),
-  );
-
-  if (schema.readOnlyProperties?.length) {
-    attributeTypeMap[schema.typeName] = mangleName(
-      schema.typeName,
-      "attributes",
-    );
+  if (attributesTypeName) {
+    attributeTypeMap[schema.typeName] = attributesTypeName;
   }
 }
 
@@ -92,9 +90,9 @@ statements.push(
           undefined,
           ts.factory.createAsExpression(
             ts.factory.createObjectLiteralExpression(
-              Object.keys(resourceTypeMap).map((name) =>
+              Object.entries(resourceTypeMap).map(([name, type]) =>
                 ts.factory.createPropertyAssignment(
-                  mangleName(name, "resource"),
+                  type,
                   ts.factory.createStringLiteral(name),
                 ),
               ),
