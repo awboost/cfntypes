@@ -49,6 +49,15 @@ jobs:
     if: github.ref == 'refs/heads/main' && needs.build.outputs.check == 'success'
 
     steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
+
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
