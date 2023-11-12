@@ -10,6 +10,7 @@
     "moduleResolution": "NodeNext",
     "noErrorTruncation": true,
     "noUnusedLocals": true,
+    "pretty": true,
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,

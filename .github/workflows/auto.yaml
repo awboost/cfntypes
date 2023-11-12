@@ -3,12 +3,13 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 0"
 
 jobs:
-  check:
-    name: Check for update
+  build:
+    name: Build
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       update: ${{ steps.check.outcome }}
 
@@ -18,31 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
-          cache: "npm"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: NPM install
-        run: npm ci
-
-      - id: check
-        name: Check version
-        continue-on-error: true
-        run: node check-version.js
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: check
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || needs.check.outputs.update == 'success'
-
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16.x"
+          node-version: "18.x"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
@@ -52,8 +29,32 @@ jobs:
       - name: Build all
         run: npm run build
 
+      - id: check
+        name: Check for changes
+        run: |
+          ! git diff --quiet
+
+      - name: Upload artifact
+        if: steps.check.outcome == 'success'
+        uses: actions/upload-artifact@v3
+        with:
+          name: cfntypes
+          path: packages/cfntypes/lib
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && needs.build.outputs.update == 'success'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: cfntypes
+          path: packages/cfntypes/lib
+
       - name: Git Commit
-        if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
@@ -61,13 +62,9 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "Github Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          (cd packages/cfntypes && npm version patch)
+          cfntypes_package_version=`jq -r '.version' packages/cfntypes/package.json` 
           git add -A
           git commit -m "v${cfntypes_package_version}"
           git tag -m "v${cfntypes_package_version}" -a "v${cfntypes_package_version}"
           git push --follow-tags origin main
-
-      - name: NPM publish
-        if: github.ref == 'refs/heads/main'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish -w packages/cfntypes

@@ -1,10 +1,11 @@
 {
   "name": "@awboost/cfntypes",
-  "version": "1.0.0-beta.68",
-  "private": false,
+  "version": "0.100.1",
   "publishConfig": {
     "access": "public"
   },
+  "types": "./lib/resources.generated.d.ts",
+  "main": "./lib/resources.generated.js",
   "type": "module",
   "author": {
     "email": "gordonmleigh@gmail.com",
@@ -12,26 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/awboost/cfntypes.git"
+    "url": "https://github.com/awboost/cfntypes"
   },
   "homepage": "https://github.com/awboost/cfntypes#readme",
   "license": "MIT",
   "exports": {
-    "./intrinsics": {
-      "types": "./lib/intrinsics.d.ts",
-      "default": "./lib/intrinsics.js"
-    },
-    "./resources/*": {
-      "types": "./lib/resources.generated/*.d.ts",
-      "default": "./lib/resources.generated/*.js"
-    },
-    "./template": {
-      "types": "./lib/template.d.ts",
-      "default": "./lib/template.js"
-    },
-    "./util": {
-      "types": "./lib/util.d.ts",
-      "default": "./lib/util.js"
+    ".": {
+      "types": "./lib/resources.generated.d.ts",
+      "default": "./lib/resources.generated.js"
     }
   },
   "files": [
@@ -42,6 +31,5 @@
   ],
   "scripts": {
     "lint": "eslint src/ --ext=ts"
-  },
-  "awsResourceSpecificationVersion": "148.0.0"
+  }
 }

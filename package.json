@@ -6,9 +6,9 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run generate && npm run compile",
-    "clean": "rimraf --glob '**/*.tsbuildinfo' 'packages/*/lib' 'packages/cfntypes/src/resources.generated'",
+    "clean": "rimraf --glob '**/*.tsbuildinfo' 'packages/*/lib' 'packages/cfntypes/src/resources.generated.ts'",
     "compile": "node tsbuild.js",
-    "generate": "npm start -w packages/generate -- ../cfntypes/src/resources.generated",
+    "generate": "npm start -w packages/generate -- ../cfntypes/src/resources.generated.ts",
     "lint": "npm run --workspaces --if-present lint",
     "watch:compile": "node tsbuild.js -w"
   },

@@ -1,79 +1,257 @@
+import { fetchResourceSchemas } from "@awboost/cfn-resource-schemas";
 import { getLatestSpec } from "@awboost/cfnspec";
-import createDebug from "debug";
-import { appendFile, mkdir, readFile, writeFile } from "fs/promises";
-import { join, resolve } from "path";
+import { writeFile } from "fs/promises";
 import { format } from "prettier";
-import semver from "semver";
 import ts from "typescript";
-import { AstBuilder } from "./AstBuilder.js";
+import { mangleName } from "./util/mangleName.js";
+import { processResourceTypeSchema } from "./util/processResourceTypeSchema.js";
 
-const debug = createDebug(`cfntypes:generate`);
+const outputPath = process.argv[2];
+if (!outputPath) {
+  console.error(`usage: ${process.argv[1]} <output-file>`);
+  process.exit(2);
+}
 
-await main(process.argv[2], process.argv[3] !== "no-version");
+const spec = await getLatestSpec();
+const schemas = fetchResourceSchemas();
+const statements: ts.Statement[] = [];
+const resourceTypeMap: Record<string, string> = {};
+const attributeTypeMap: Record<string, string> = {};
+const attributeNameMap: Record<string, string[]> = {};
 
-export async function main(
-  outputDir: string,
-  incrementPackageVersion: boolean,
-): Promise<void> {
-  const spec = await getLatestSpec();
+for await (const schema of schemas) {
+  const schemaStatements = await processResourceTypeSchema(schema, {
+    getDocumentation: (typeName) =>
+      typeName.includes(".")
+        ? spec.PropertyTypes[typeName]?.Documentation
+        : spec.ResourceTypes[typeName]?.Documentation,
+  });
+  statements.push(...schemaStatements);
 
-  // save the spec file so that changes can be tracked
-  await writeFile(
-    "CloudFormationResourceSpecification.json",
-    JSON.stringify(spec, null, 2),
+  resourceTypeMap[schema.typeName] = mangleName(schema.typeName, "properties");
+
+  attributeNameMap[schema.typeName] = Object.keys(schema.properties).filter(
+    (x) => schema.readOnlyProperties?.includes(`/properties/${x}`),
   );
 
-  const version = spec.ResourceSpecificationVersion;
-  debug(`version ${version}`);
-
-  // generate AST
-  const builder = new AstBuilder(spec);
-  const sourceFiles = builder.build();
-
-  await mkdir(outputDir, { recursive: true });
-  const printer = ts.createPrinter();
-
-  for (const [namespace, sourceFile] of Object.entries(sourceFiles)) {
-    const outputPath = join(outputDir, namespace.replace(/::/i, "-") + ".ts");
-    const output = await format(printer.printFile(sourceFile), {
-      filepath: outputPath,
-    });
-    await writeFile(outputPath, output, "utf8");
-  }
-
-  // increment the package version according to the new Resource Spec version
-  const pkgPath = resolve(outputDir, "../../package.json");
-  const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
-
-  if (incrementPackageVersion) {
-    pkg.version = incrementVersion(pkg.version);
-  }
-
-  console.log(`v${pkg.version}`);
-
-  if (process.env.GITHUB_ENV) {
-    await appendFile(
-      process.env.GITHUB_ENV,
-      `cfntypes_package_version=${pkg.version}\n`,
+  if (schema.readOnlyProperties?.length) {
+    attributeTypeMap[schema.typeName] = mangleName(
+      schema.typeName,
+      "attributes",
     );
   }
-
-  // save the Resource Spec version in the package.json
-  pkg.awsResourceSpecificationVersion = spec.ResourceSpecificationVersion;
-  await writeFile(pkgPath, JSON.stringify(pkg, null, 2));
 }
 
-function incrementVersion(pkgVersion: string): string {
-  const pre = semver.prerelease(pkgVersion);
-  if (pre) {
-    return semver.inc(pkgVersion, "prerelease") as string;
-  }
+// resource type map
+statements.push(
+  ts.factory.createInterfaceDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    "ResourceTypes",
+    undefined,
+    undefined,
+    Object.entries(resourceTypeMap).map(([name, type]) =>
+      ts.factory.createPropertySignature(
+        undefined,
+        ts.factory.createStringLiteral(name),
+        undefined,
+        ts.factory.createTypeReferenceNode(type),
+      ),
+    ),
+  ),
+);
 
-  const maj = semver.major(pkgVersion);
+// attribute type map
+statements.push(
+  ts.factory.createInterfaceDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    "AttributeTypes",
+    undefined,
+    undefined,
+    Object.entries(attributeTypeMap).map(([name, type]) =>
+      ts.factory.createPropertySignature(
+        undefined,
+        ts.factory.createStringLiteral(name),
+        undefined,
+        ts.factory.createTypeReferenceNode(type),
+      ),
+    ),
+  ),
+);
 
-  if (maj === 0) {
-    return semver.inc(pkgVersion, "patch") as string;
-  } else {
-    return semver.inc(pkgVersion, "minor") as string;
-  }
-}
+// resource type constant
+const ResourceTypeConstName = "ResourceType";
+
+statements.push(
+  ts.factory.createVariableStatement(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ResourceTypeConstName,
+          undefined,
+          undefined,
+          ts.factory.createAsExpression(
+            ts.factory.createObjectLiteralExpression(
+              Object.keys(resourceTypeMap).map((name) =>
+                ts.factory.createPropertyAssignment(
+                  mangleName(name, "resource"),
+                  ts.factory.createStringLiteral(name),
+                ),
+              ),
+            ),
+            ts.factory.createTypeReferenceNode("const"),
+          ),
+        ),
+      ],
+      ts.NodeFlags.Const,
+    ),
+  ),
+);
+
+// resource type constant type
+statements.push(
+  ts.factory.createTypeAliasDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    ResourceTypeConstName,
+    undefined,
+    ts.factory.createIndexedAccessTypeNode(
+      ts.factory.createParenthesizedType(
+        ts.factory.createTypeQueryNode(
+          ts.factory.createIdentifier(ResourceTypeConstName),
+        ),
+      ),
+      ts.factory.createParenthesizedType(
+        ts.factory.createTypeOperatorNode(
+          ts.SyntaxKind.KeyOfKeyword,
+          ts.factory.createTypeQueryNode(
+            ts.factory.createIdentifier(ResourceTypeConstName),
+          ),
+        ),
+      ),
+    ),
+  ),
+);
+
+// attribute type for resource type utility
+statements.push(
+  ts.factory.createTypeAliasDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    "AttributeTypeFor",
+    [
+      ts.factory.createTypeParameterDeclaration(
+        undefined,
+        "T",
+        ts.factory.createTypeReferenceNode("ResourceType"),
+      ),
+    ],
+    ts.factory.createConditionalTypeNode(
+      ts.factory.createTypeReferenceNode("T"),
+      ts.factory.createTypeOperatorNode(
+        ts.SyntaxKind.KeyOfKeyword,
+        ts.factory.createTypeReferenceNode("AttributeTypes"),
+      ),
+      ts.factory.createIndexedAccessTypeNode(
+        ts.factory.createTypeReferenceNode("AttributeTypes"),
+        ts.factory.createTypeReferenceNode("T"),
+      ),
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+    ),
+  ),
+);
+
+// Attribute names for resource type utility
+statements.push(
+  ts.factory.createTypeAliasDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    "AttributesFor",
+    [
+      ts.factory.createTypeParameterDeclaration(
+        undefined,
+        "T",
+        ts.factory.createTypeReferenceNode("ResourceType"),
+      ),
+    ],
+    ts.factory.createConditionalTypeNode(
+      ts.factory.createTypeReferenceNode("T"),
+      ts.factory.createTypeOperatorNode(
+        ts.SyntaxKind.KeyOfKeyword,
+        ts.factory.createTypeReferenceNode("AttributeTypes"),
+      ),
+      ts.factory.createTypeOperatorNode(
+        ts.SyntaxKind.KeyOfKeyword,
+        ts.factory.createIndexedAccessTypeNode(
+          ts.factory.createTypeReferenceNode("AttributeTypes"),
+          ts.factory.createTypeReferenceNode("T"),
+        ),
+      ),
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+    ),
+  ),
+);
+
+// attribute name constant type
+statements.push(
+  ts.factory.createTypeAliasDeclaration(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    "ResourceAttributeMap",
+    undefined,
+    ts.factory.createMappedTypeNode(
+      undefined,
+      ts.factory.createTypeParameterDeclaration(
+        undefined,
+        "K",
+        ts.factory.createTypeReferenceNode("ResourceType"),
+        undefined,
+      ),
+      undefined,
+      undefined,
+      ts.factory.createArrayTypeNode(
+        ts.factory.createParenthesizedType(
+          ts.factory.createTypeReferenceNode("AttributesFor", [
+            ts.factory.createTypeReferenceNode("K"),
+          ]),
+        ),
+      ),
+      undefined,
+    ),
+  ),
+);
+
+// attribute name constant
+statements.push(
+  ts.factory.createVariableStatement(
+    [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          "ResourceAttributeMap",
+          undefined,
+          ts.factory.createTypeReferenceNode("ResourceAttributeMap"),
+          ts.factory.createObjectLiteralExpression(
+            Object.entries(attributeNameMap).map(([name, attribs]) =>
+              ts.factory.createPropertyAssignment(
+                ts.factory.createStringLiteral(name),
+                ts.factory.createArrayLiteralExpression(
+                  attribs.map((x) => ts.factory.createStringLiteral(x)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+      ts.NodeFlags.Const,
+    ),
+  ),
+);
+
+const printer = ts.createPrinter();
+
+const output = printer.printFile(
+  ts.factory.createSourceFile(
+    statements,
+    ts.factory.createToken(ts.SyntaxKind.EndOfFileToken),
+    ts.NodeFlags.None,
+  ),
+);
+
+await writeFile(outputPath, await format(output, { filepath: outputPath }));

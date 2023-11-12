@@ -3,10 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": "src/",
-    "noEmit": true,
     "outDir": "lib/"
   },
   "include": ["src/"],
-  "exclude": ["node_modules/", "lib/"],
-  "references": []
+  "exclude": ["node_modules/", "lib/"]
 }

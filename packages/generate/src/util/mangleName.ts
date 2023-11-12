@@ -1,6 +1,6 @@
-import Debug from "debug";
+import createDebug from "debug";
 
-const debug = Debug("util:mangleName");
+const debug = createDebug("cfntypes:generate:mangleName");
 
 export type NameType = "attributes" | "properties" | "resource" | "type";
 
@@ -10,7 +10,7 @@ export function mangleName(name: string, kind: NameType): string {
 
   switch (kind) {
     case "attributes":
-      return converted + "Attribs";
+      return converted + "Attributes";
     case "properties":
       return converted + "Props";
     default:

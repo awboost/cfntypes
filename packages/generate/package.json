@@ -5,5 +5,14 @@
   "scripts": {
     "lint": "eslint src/ --ext=ts",
     "start": "node --loader=@swc-node/register/esm src/main.ts"
+  },
+  "dependencies": {
+    "@awboost/cfn-resource-schemas": "^0.1.0",
+    "@awboost/cfnspec": "^0.3.6",
+    "json-pointer": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/json-pointer": "^1.0.33",
+    "@types/json-schema": "^7.0.14"
   }
 }
