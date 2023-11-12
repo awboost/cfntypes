@@ -1,56 +1,29 @@
-# 🚧 Warning, unstable!
-
-Thanks for using my work! Please don't use the `v1.0.0-beta` versions right now, things are rapidly and wildly changing as I prototype other libraries in the suite. You can use `v0.*` versions but I don't intend to support this. Star the repo to keep up to date with new releases.
-
 # @awboost/cfntypes
 
 Typescript types for AWS CloudFormation types.
 
-## Template Types
-
-The template types are available via the `template` package subpath. For performance reasons, the resources are not fully typed, i.e. no type-checking
-is done for valid `Type` or `Properties` values.
-
-```typescript
-import { Template } from "@awboost/cfntypes/template";
-
-const template: Template = {
-  Resources: {
-    MyFunction: {
-      Type: "AWS::Lambda::Function",
-      Properties: {
-        // omitted for brevity
-      },
-    },
-  },
-};
-```
-
 ## Resource Types
 
-Instead, the accurate resource types can be imported from the `resources/*` package subpath.
+The resource types are all defined individually as interfaces with predictable names, and also as properties of the `ResourceTypes` interface keyed by the CloudFormation resource type.
 
 ```typescript
-import { LambdaFunction } from "@awboost/cfntypes/resources/AWS-Lambda";
-import { Template } from "@awboost/cfntypes/template";
+import { ResourceTypes, ResourceType } from "@cfnboost/cfntypes";
 
-const template: Template = {
-  Resources: {
-    MyFunction: new LambdaFunction("MyFunction", {
-      // props go here
-    }).toJSON(),
-  },
-};
+type ApiGatewayProps = ResourceTypes[ResourceType.ApiGatewayRestApi];
+// also exported as ApiGatewayRestApi
 ```
 
-The attributes of the resource can be conveniently accessed in the resource instance.
+## Attribute Types
+
+The attribute types are all defined individually as interfaces with predictable names, and also as properties of the `AttributeTypes` interface keyed by the CloudFormation resource type. Note that not all resource types have attributes.
 
 ```typescript
-const instance = new LambdaFunction("MyFunction", {
-  // props
-}).addToTemplate(template);
+import { AttributeTypes, AttributeTypeFor } from "@cfnboost/cfntypes";
 
-// all of the attributes are available via the attributes property.
-// this property actually returns { "Fn::GetAtt": [...] } intrinsic function.
-const arn = instance.attributes.Arn;
+type ApiGatewayRestApiAttribs = AttributeTypes["AWS::ApiGateway::RestApi"];
+// also exported as ApiGatewayRestApiAttributes
+
+// the AttributeTypeFor helper returns `never` for resources
+// with no attributes defined
+type NeverAttribs = AttributeTypeFor<"AWS::ApiGateway::Account">;
 ```

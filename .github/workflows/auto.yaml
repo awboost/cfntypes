@@ -78,3 +78,8 @@ jobs:
           git commit -m "v${cfntypes_package_version}"
           git tag -m "v${cfntypes_package_version}" -a "v${cfntypes_package_version}"
           git push --follow-tags origin main
+
+      - name: NPM publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
