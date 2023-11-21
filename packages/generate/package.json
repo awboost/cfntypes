@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "lint": "eslint src/ --ext=ts",
-    "start": "node --loader=@swc-node/register/esm src/main.ts"
+    "start": "node --enable-source-maps --loader=@swc-node/register/esm src/main.ts"
   },
   "dependencies": {
-    "@awboost/cfn-resource-schemas": "^0.1.0",
+    "@awboost/cfn-resource-schemas-db": "^0.1.8",
     "@awboost/cfnspec": "^0.3.6",
     "json-pointer": "^0.6.2"
   },
