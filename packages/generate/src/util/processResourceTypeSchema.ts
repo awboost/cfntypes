@@ -36,6 +36,7 @@ export async function processResourceTypeSchema(
             : x,
         )
         .filter((x) => x in schema.properties)
+        .sort()
     : [];
 
   // resource properties type
@@ -91,7 +92,8 @@ export async function processResourceTypeSchema(
   }
 
   if (schema.definitions) {
-    for (const [name, def] of Object.entries(schema.definitions)) {
+    for (const name of Object.keys(schema.definitions).sort()) {
+      const def = schema.definitions[name];
       try {
         if (!shouldInlineType(def)) {
           const typeName = `${schema.typeName}.${name}`;

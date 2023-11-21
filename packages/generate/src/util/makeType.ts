@@ -40,9 +40,8 @@ export function makeObjectType(
     return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
   const members: ts.TypeElement[] = [];
-  for (const [propertyName, propertySchema] of Object.entries(
-    objectSchema.properties,
-  )) {
+  for (const propertyName of Object.keys(objectSchema.properties).sort()) {
+    const propertySchema = objectSchema.properties[propertyName];
     try {
       assertSchema(propertySchema);
       if (propertyFilter && !propertyFilter(propertyName, propertySchema)) {

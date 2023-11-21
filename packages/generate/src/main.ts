@@ -1,4 +1,5 @@
 import { fetchResourceSchemas } from "@awboost/cfn-resource-schemas";
+import { ResourceTypeSchema } from "@awboost/cfn-resource-schemas/types";
 import { getLatestSpec } from "@awboost/cfnspec";
 import { writeFile } from "fs/promises";
 import { format } from "prettier";
@@ -12,13 +13,20 @@ if (!outputPath) {
 }
 
 const spec = await getLatestSpec();
-const schemas = fetchResourceSchemas();
+const schemas: ResourceTypeSchema[] = [];
 const statements: ts.Statement[] = [];
 const resourceTypeMap: Record<string, string> = {};
 const attributeTypeMap: Record<string, string> = {};
 const attributeNameMap: Record<string, string[]> = {};
 
-for await (const schema of schemas) {
+for await (const schema of fetchResourceSchemas()) {
+  schemas.push(schema);
+}
+schemas.sort((a, b) =>
+  a.typeName.toLowerCase().localeCompare(b.typeName.toLowerCase()),
+);
+
+for (const schema of schemas) {
   const {
     attributeNames,
     propertiesTypeName,
