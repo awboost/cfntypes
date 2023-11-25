@@ -7,7 +7,7 @@
     "start": "node --enable-source-maps --loader=@swc-node/register/esm src/main.ts"
   },
   "dependencies": {
-    "@awboost/cfn-resource-schemas-db": "^0.1.8",
+    "@awboost/cfn-resource-schemas-db": "^0.1.9",
     "@awboost/cfnspec": "^0.3.6",
     "json-pointer": "^0.6.2"
   },
