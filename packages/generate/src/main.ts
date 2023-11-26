@@ -21,6 +21,13 @@ type DocumentationProps = {
   pattern?: string;
 };
 
+type ResourceInfo = {
+  attributeNames: string[];
+  attributeTypeName?: string;
+  propertyTypeName: string;
+  resourceName: string;
+};
+
 const Names = {
   AttributeNameConst: "ResourceAttributes",
   AttributeNameMapType: "ResourceAttributeMap",
@@ -29,6 +36,7 @@ const Names = {
   AttributeTypeUtil: "AttributeTypeFor",
   ResourceAttribs: "Attributes",
   ResourceAttribsAlt: "Attribs",
+  ResourceName: "",
   ResourceProps: "Props",
   ResourceTypeConst: "ResourceType",
   ResourceTypeConstType: "ResourceType",
@@ -247,16 +255,18 @@ async function main(): Promise<void> {
 
   const resources = getResourceNamespaces();
   const statements: ts.Statement[] = [];
-  const resourceTypeMap: Record<string, string> = {};
-  const attributeTypeMap: Record<string, string> = {};
-  const attributeNameMap: Record<string, string[]> = {};
+  const resourceInfo: Record<string, ResourceInfo> = {};
 
   for await (const resource of resources) {
-    const resourcePropsName = mangleName(
-      resource.awsTypeName,
-      Names.ResourceProps,
-    );
-    resourceTypeMap[resource.awsTypeName] = resourcePropsName;
+    const thisResource: ResourceInfo = {
+      attributeNames: resource.attributes
+        ? resource.attributes.properties.map((x) => x.name)
+        : [],
+      propertyTypeName: mangleName(resource.awsTypeName, Names.ResourceProps),
+      resourceName: mangleName(resource.awsTypeName, Names.ResourceName),
+    };
+
+    resourceInfo[resource.awsTypeName] = thisResource;
 
     // resource props type
     statements.push(
@@ -269,16 +279,12 @@ async function main(): Promise<void> {
         },
         ts.factory.createTypeAliasDeclaration(
           [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-          resourcePropsName,
+          thisResource.propertyTypeName,
           undefined,
           createType(resource.resource, resource),
         ),
       ),
     );
-
-    attributeNameMap[resource.awsTypeName] = resource.attributes
-      ? resource.attributes.properties.map((x) => x.name)
-      : [];
 
     // attributes type
     if (resource.attributes) {
@@ -288,7 +294,7 @@ async function main(): Promise<void> {
           ? mangleName(resource.awsTypeName, Names.ResourceAttribsAlt)
           : mangleName(resource.awsTypeName, Names.ResourceAttribs);
 
-      attributeTypeMap[resource.awsTypeName] = attributesName;
+      thisResource.attributeTypeName = attributesName;
 
       statements.push(
         attachComment(
@@ -353,12 +359,12 @@ async function main(): Promise<void> {
       Names.ResourceTypeMapType,
       undefined,
       undefined,
-      Object.entries(resourceTypeMap).map(([name, type]) =>
+      Object.entries(resourceInfo).map(([name, info]) =>
         ts.factory.createPropertySignature(
           undefined,
           ts.factory.createStringLiteral(name),
           undefined,
-          ts.factory.createTypeReferenceNode(type),
+          ts.factory.createTypeReferenceNode(info.propertyTypeName),
         ),
       ),
     ),
@@ -371,14 +377,17 @@ async function main(): Promise<void> {
       Names.AttributeTypeMapType,
       undefined,
       undefined,
-      Object.entries(attributeTypeMap).map(([name, type]) =>
-        ts.factory.createPropertySignature(
-          undefined,
-          ts.factory.createStringLiteral(name),
-          undefined,
-          ts.factory.createTypeReferenceNode(type),
+      Object.entries(resourceInfo)
+        .map(([key, info]) => [key, info.attributeTypeName])
+        .filter((entry): entry is [string, string] => !!entry[1])
+        .map(([name, type]) =>
+          ts.factory.createPropertySignature(
+            undefined,
+            ts.factory.createStringLiteral(name),
+            undefined,
+            ts.factory.createTypeReferenceNode(type),
+          ),
         ),
-      ),
     ),
   );
 
@@ -394,9 +403,9 @@ async function main(): Promise<void> {
             undefined,
             ts.factory.createAsExpression(
               ts.factory.createObjectLiteralExpression(
-                Object.entries(resourceTypeMap).map(([name, type]) =>
+                Object.entries(resourceInfo).map(([name, info]) =>
                   ts.factory.createPropertyAssignment(
-                    type,
+                    info.resourceName,
                     ts.factory.createStringLiteral(name),
                   ),
                 ),
@@ -530,11 +539,13 @@ async function main(): Promise<void> {
             undefined,
             ts.factory.createTypeReferenceNode(Names.AttributeNameMapType),
             ts.factory.createObjectLiteralExpression(
-              Object.entries(attributeNameMap).map(([name, attribs]) =>
+              Object.entries(resourceInfo).map(([name, info]) =>
                 ts.factory.createPropertyAssignment(
                   ts.factory.createStringLiteral(name),
                   ts.factory.createArrayLiteralExpression(
-                    attribs.map((x) => ts.factory.createStringLiteral(x)),
+                    info.attributeNames.map((x) =>
+                      ts.factory.createStringLiteral(x),
+                    ),
                   ),
                 ),
               ),
