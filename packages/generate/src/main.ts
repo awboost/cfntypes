@@ -22,9 +22,17 @@ type DocumentationProps = {
 };
 
 const Names = {
-  ResourceProps: "Props",
+  AttributeNameConst: "ResourceAttributes",
+  AttributeNameMapType: "ResourceAttributeMap",
+  AttributeNameUtil: "AttributesFor",
+  AttributeTypeMapType: "AttributeTypes",
+  AttributeTypeUtil: "AttributeTypeFor",
   ResourceAttribs: "Attributes",
   ResourceAttribsAlt: "Attribs",
+  ResourceProps: "Props",
+  ResourceTypeConst: "ResourceType",
+  ResourceTypeConstType: "ResourceType",
+  ResourceTypeMapType: "ResourceTypes",
 };
 
 function mangleName(ns: string, type: string): string {
@@ -342,7 +350,7 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createInterfaceDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      "ResourceTypes",
+      Names.ResourceTypeMapType,
       undefined,
       undefined,
       Object.entries(resourceTypeMap).map(([name, type]) =>
@@ -360,7 +368,7 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createInterfaceDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      "AttributeTypes",
+      Names.AttributeTypeMapType,
       undefined,
       undefined,
       Object.entries(attributeTypeMap).map(([name, type]) =>
@@ -375,15 +383,13 @@ async function main(): Promise<void> {
   );
 
   // resource type constant
-  const ResourceTypeConstName = "ResourceType";
-
   statements.push(
     ts.factory.createVariableStatement(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
       ts.factory.createVariableDeclarationList(
         [
           ts.factory.createVariableDeclaration(
-            ResourceTypeConstName,
+            Names.ResourceTypeConst,
             undefined,
             undefined,
             ts.factory.createAsExpression(
@@ -408,19 +414,19 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createTypeAliasDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      ResourceTypeConstName,
+      Names.ResourceTypeConstType,
       undefined,
       ts.factory.createIndexedAccessTypeNode(
         ts.factory.createParenthesizedType(
           ts.factory.createTypeQueryNode(
-            ts.factory.createIdentifier(ResourceTypeConstName),
+            ts.factory.createIdentifier(Names.ResourceTypeConst),
           ),
         ),
         ts.factory.createParenthesizedType(
           ts.factory.createTypeOperatorNode(
             ts.SyntaxKind.KeyOfKeyword,
             ts.factory.createTypeQueryNode(
-              ts.factory.createIdentifier(ResourceTypeConstName),
+              ts.factory.createIdentifier(Names.ResourceTypeConst),
             ),
           ),
         ),
@@ -432,22 +438,22 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createTypeAliasDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      "AttributeTypeFor",
+      Names.AttributeTypeUtil,
       [
         ts.factory.createTypeParameterDeclaration(
           undefined,
           "T",
-          ts.factory.createTypeReferenceNode("ResourceType"),
+          ts.factory.createTypeReferenceNode(Names.ResourceTypeConstType),
         ),
       ],
       ts.factory.createConditionalTypeNode(
         ts.factory.createTypeReferenceNode("T"),
         ts.factory.createTypeOperatorNode(
           ts.SyntaxKind.KeyOfKeyword,
-          ts.factory.createTypeReferenceNode("AttributeTypes"),
+          ts.factory.createTypeReferenceNode(Names.AttributeTypeMapType),
         ),
         ts.factory.createIndexedAccessTypeNode(
-          ts.factory.createTypeReferenceNode("AttributeTypes"),
+          ts.factory.createTypeReferenceNode(Names.AttributeTypeMapType),
           ts.factory.createTypeReferenceNode("T"),
         ),
         ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
@@ -459,24 +465,24 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createTypeAliasDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      "AttributesFor",
+      Names.AttributeNameUtil,
       [
         ts.factory.createTypeParameterDeclaration(
           undefined,
           "T",
-          ts.factory.createTypeReferenceNode("ResourceType"),
+          ts.factory.createTypeReferenceNode(Names.ResourceTypeConstType),
         ),
       ],
       ts.factory.createConditionalTypeNode(
         ts.factory.createTypeReferenceNode("T"),
         ts.factory.createTypeOperatorNode(
           ts.SyntaxKind.KeyOfKeyword,
-          ts.factory.createTypeReferenceNode("AttributeTypes"),
+          ts.factory.createTypeReferenceNode(Names.AttributeTypeMapType),
         ),
         ts.factory.createTypeOperatorNode(
           ts.SyntaxKind.KeyOfKeyword,
           ts.factory.createIndexedAccessTypeNode(
-            ts.factory.createTypeReferenceNode("AttributeTypes"),
+            ts.factory.createTypeReferenceNode(Names.AttributeTypeMapType),
             ts.factory.createTypeReferenceNode("T"),
           ),
         ),
@@ -489,21 +495,21 @@ async function main(): Promise<void> {
   statements.push(
     ts.factory.createTypeAliasDeclaration(
       [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
-      "ResourceAttributeMap",
+      Names.AttributeNameMapType,
       undefined,
       ts.factory.createMappedTypeNode(
         undefined,
         ts.factory.createTypeParameterDeclaration(
           undefined,
           "K",
-          ts.factory.createTypeReferenceNode("ResourceType"),
+          ts.factory.createTypeReferenceNode(Names.ResourceTypeConstType),
           undefined,
         ),
         undefined,
         undefined,
         ts.factory.createArrayTypeNode(
           ts.factory.createParenthesizedType(
-            ts.factory.createTypeReferenceNode("AttributesFor", [
+            ts.factory.createTypeReferenceNode(Names.AttributeNameUtil, [
               ts.factory.createTypeReferenceNode("K"),
             ]),
           ),
@@ -520,9 +526,9 @@ async function main(): Promise<void> {
       ts.factory.createVariableDeclarationList(
         [
           ts.factory.createVariableDeclaration(
-            "ResourceAttributeMap",
+            Names.AttributeNameConst,
             undefined,
-            ts.factory.createTypeReferenceNode("ResourceAttributeMap"),
+            ts.factory.createTypeReferenceNode(Names.AttributeNameMapType),
             ts.factory.createObjectLiteralExpression(
               Object.entries(attributeNameMap).map(([name, attribs]) =>
                 ts.factory.createPropertyAssignment(
